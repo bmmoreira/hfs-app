@@ -1,10 +1,11 @@
 <!-- @format -->
 
-# WEB API - South America Hydrology from Space
+# South America Hydrology from Space Web Portal
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-This API-Web component of Web map application that uses open source libraries to collect, process and display satellite calibrated data from GPM Mission to visualize graphic chart data of river's orthometric water height.
+South America Hydrology from Space Web App
+This Web map application uses open source libraries to collect, process and display satellite calibrated data from GPM Mission.
 
 Currenctly show 2900+ virtual fluviometric stations in Amazon and Paraná basins in Brazil.
 

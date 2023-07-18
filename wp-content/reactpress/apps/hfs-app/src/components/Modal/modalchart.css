@@ -1,0 +1,14 @@
+/** @format */
+
+.dx-fieldset {
+	min-height: 500px;
+}
+
+.dx-field {
+	padding: 8px;
+	margin: 0 20 0 20;
+}
+
+.dx-field-label {
+	padding-left: 20px;
+}
