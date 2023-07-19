@@ -91,6 +91,41 @@ function MapComponent() {
 		filter: ['!', ['has', 'point_count']],
 	};
 
+	const unclusteredS3A: LayerProps = {
+		id: 'unclustered-symbol',
+		type: 'symbol',
+		source: 'vs_S3A',
+		filter: ['!', ['has', 'point_count']],
+	};
+
+	const unclusteredS3B: LayerProps = {
+		id: 'unclustered-symbol',
+		type: 'symbol',
+		source: 'vs_S3B',
+		filter: ['!', ['has', 'point_count']],
+	};
+
+	const unclusteredS6A: LayerProps = {
+		id: 'unclustered-symbol',
+		type: 'symbol',
+		source: 'vs_S6A',
+		filter: ['!', ['has', 'point_count']],
+	};
+
+	const unclusteredJ2: LayerProps = {
+		id: 'unclustered-symbol',
+		type: 'symbol',
+		source: 'vs_S6A',
+		filter: ['!', ['has', 'point_count']],
+	};
+
+	const unclusteredJ3: LayerProps = {
+		id: 'unclustered-symbol',
+		type: 'symbol',
+		source: 'vs_S6A',
+		filter: ['!', ['has', 'point_count']],
+	};
+
 	if (API_KEY == null) {
 		throw new Error(
 			'You have to configure env REACT_APP_API_KEY, see README'
@@ -501,9 +536,66 @@ function MapComponent() {
 					>
 						<Layer {...clusterLayerS3A} />
 						<Layer {...clusterCountLayerS3A} />
-						<Layer {...unclusteredPointLayerS3A} />
+						<Layer
+							id={'unclustered-point'}
+							type={'circle'}
+							source={'vs_S3A'}
+							filter={['!', ['has', 'point_count']]}
+							paint={{
+								'circle-color': [
+									'step',
+									['get', appState.ucField],
+									'#8f0000',
+									-3,
+									'#ff9400',
+									-2,
+									'#fbc500',
+									-1,
+									'#f9f602',
+									0,
+									'#b5e700',
+									1,
+									'#57d005',
+									2,
+									'#018414',
+									3,
+									'#014f0c',
+								],
+								'circle-radius': 18,
+								'circle-stroke-width': [
+									'step',
+									['get', appState.ucField],
+									5,
+									-3,
+									4,
+									-2,
+									3,
+									-1,
+									2,
+									0,
+									2,
+									1,
+									3,
+									2,
+									4,
+									3,
+									5,
+								],
+								'circle-stroke-color': '#fff',
+							}}
+						/>
 
-						<Layer {...unclusteredPointSymbolS3A} />
+						<Layer
+							layout={{
+								'text-field': ['get', appState.ucField],
+								'text-font': [
+									'DIN Offc Pro Medium',
+									'Arial Unicode MS Bold',
+								],
+								'text-size': 11,
+							}}
+							{...unclusteredS3A}
+						/>
 					</Source>
 				)}
 				{appState.satS3B && !appState.allSat && (
@@ -517,8 +609,65 @@ function MapComponent() {
 					>
 						<Layer {...clusterLayerS3B} />
 						<Layer {...clusterCountLayerS3B} />
-						<Layer {...unclusteredPointLayerS3B} />
-						<Layer {...unclusteredPointSymbolS3B} />
+						<Layer
+							id={'unclustered-point'}
+							type={'circle'}
+							source={'vs_S3B'}
+							filter={['!', ['has', 'point_count']]}
+							paint={{
+								'circle-color': [
+									'step',
+									['get', appState.ucField],
+									'#8f0000',
+									-3,
+									'#ff9400',
+									-2,
+									'#fbc500',
+									-1,
+									'#f9f602',
+									0,
+									'#b5e700',
+									1,
+									'#57d005',
+									2,
+									'#018414',
+									3,
+									'#014f0c',
+								],
+								'circle-radius': 18,
+								'circle-stroke-width': [
+									'step',
+									['get', appState.ucField],
+									5,
+									-3,
+									4,
+									-2,
+									3,
+									-1,
+									2,
+									0,
+									2,
+									1,
+									3,
+									2,
+									4,
+									3,
+									5,
+								],
+								'circle-stroke-color': '#fff',
+							}}
+						/>
+						<Layer
+							layout={{
+								'text-field': ['get', appState.ucField],
+								'text-font': [
+									'DIN Offc Pro Medium',
+									'Arial Unicode MS Bold',
+								],
+								'text-size': 11,
+							}}
+							{...unclusteredS3B}
+						/>
 					</Source>
 				)}
 				{appState.satS6A && !appState.allSat && (
@@ -532,8 +681,65 @@ function MapComponent() {
 					>
 						<Layer {...clusterLayerS6A} />
 						<Layer {...clusterCountLayerS6A} />
-						<Layer {...unclusteredPointLayerS6A} />
-						<Layer {...unclusteredPointSymbolS6A} />
+						<Layer
+							id={'unclustered-point'}
+							type={'circle'}
+							source={'vs_S6A'}
+							filter={['!', ['has', 'point_count']]}
+							paint={{
+								'circle-color': [
+									'step',
+									['get', appState.ucField],
+									'#8f0000',
+									-3,
+									'#ff9400',
+									-2,
+									'#fbc500',
+									-1,
+									'#f9f602',
+									0,
+									'#b5e700',
+									1,
+									'#57d005',
+									2,
+									'#018414',
+									3,
+									'#014f0c',
+								],
+								'circle-radius': 18,
+								'circle-stroke-width': [
+									'step',
+									['get', appState.ucField],
+									5,
+									-3,
+									4,
+									-2,
+									3,
+									-1,
+									2,
+									0,
+									2,
+									1,
+									3,
+									2,
+									4,
+									3,
+									5,
+								],
+								'circle-stroke-color': '#fff',
+							}}
+						/>
+						<Layer
+							layout={{
+								'text-field': ['get', appState.ucField],
+								'text-font': [
+									'DIN Offc Pro Medium',
+									'Arial Unicode MS Bold',
+								],
+								'text-size': 11,
+							}}
+							{...unclusteredS6A}
+						/>
 					</Source>
 				)}
 				{appState.satJ2 && !appState.allSat && (
@@ -547,8 +753,65 @@ function MapComponent() {
 					>
 						<Layer {...clusterLayerJ2} />
 						<Layer {...clusterCountLayerJ2} />
-						<Layer {...unclusteredPointLayerJ2} />
-						<Layer {...unclusteredPointSymbolJ2} />
+						<Layer
+							id={'unclustered-point'}
+							type={'circle'}
+							source={'vs_J2'}
+							filter={['!', ['has', 'point_count']]}
+							paint={{
+								'circle-color': [
+									'step',
+									['get', appState.ucField],
+									'#8f0000',
+									-3,
+									'#ff9400',
+									-2,
+									'#fbc500',
+									-1,
+									'#f9f602',
+									0,
+									'#b5e700',
+									1,
+									'#57d005',
+									2,
+									'#018414',
+									3,
+									'#014f0c',
+								],
+								'circle-radius': 18,
+								'circle-stroke-width': [
+									'step',
+									['get', appState.ucField],
+									5,
+									-3,
+									4,
+									-2,
+									3,
+									-1,
+									2,
+									0,
+									2,
+									1,
+									3,
+									2,
+									4,
+									3,
+									5,
+								],
+								'circle-stroke-color': '#fff',
+							}}
+						/>
+						<Layer
+							layout={{
+								'text-field': ['get', appState.ucField],
+								'text-font': [
+									'DIN Offc Pro Medium',
+									'Arial Unicode MS Bold',
+								],
+								'text-size': 11,
+							}}
+							{...unclusteredJ2}
+						/>
 					</Source>
 				)}
 				{appState.satJ3 && !appState.allSat && (
@@ -562,8 +825,65 @@ function MapComponent() {
 					>
 						<Layer {...clusterLayerJ3} />
 						<Layer {...clusterCountLayerJ3} />
-						<Layer {...unclusteredPointLayerJ3} />
-						<Layer {...unclusteredPointSymbolJ3} />
+						<Layer
+							id={'unclustered-point'}
+							type={'circle'}
+							source={'vs_J3'}
+							filter={['!', ['has', 'point_count']]}
+							paint={{
+								'circle-color': [
+									'step',
+									['get', appState.ucField],
+									'#8f0000',
+									-3,
+									'#ff9400',
+									-2,
+									'#fbc500',
+									-1,
+									'#f9f602',
+									0,
+									'#b5e700',
+									1,
+									'#57d005',
+									2,
+									'#018414',
+									3,
+									'#014f0c',
+								],
+								'circle-radius': 18,
+								'circle-stroke-width': [
+									'step',
+									['get', appState.ucField],
+									5,
+									-3,
+									4,
+									-2,
+									3,
+									-1,
+									2,
+									0,
+									2,
+									1,
+									3,
+									2,
+									4,
+									3,
+									5,
+								],
+								'circle-stroke-color': '#fff',
+							}}
+						/>
+						<Layer
+							layout={{
+								'text-field': ['get', appState.ucField],
+								'text-font': [
+									'DIN Offc Pro Medium',
+									'Arial Unicode MS Bold',
+								],
+								'text-size': 11,
+							}}
+							{...unclusteredJ3}
+						/>
 					</Source>
 				)}
 				<FullscreenControl position="top-left" />
