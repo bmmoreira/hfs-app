@@ -1,6 +1,6 @@
 /** @format */
 
-import React from "react";
+import React from 'react';
 import Chart, {
 	CommonSeriesSettings,
 	Series,
@@ -17,9 +17,9 @@ import Chart, {
 	Legend,
 	Label,
 	Tooltip,
-} from "devextreme-react/chart";
+} from 'devextreme-react/chart';
 
-import "./chart.css";
+import './chart.css';
 
 const ChartE = function (props) {
 	function onLegendClick(e) {
@@ -58,7 +58,12 @@ const ChartE = function (props) {
 					<Point size={10} />
 				</Series>
 				<Margin right={20} />
-				<ArgumentAxis valueMarginsEnabled={false} argumentType="datetime">
+				<ArgumentAxis
+					valueMarginsEnabled={false}
+					aggregationInterval={'month'}
+					argumentType="datetime"
+					tickInterval={'month'}
+				>
 					<Label displayMode="rotate" rotationAngle={45} />
 				</ArgumentAxis>
 				<ValueAxis name="temperature">
@@ -90,7 +95,7 @@ function customizeTooltip(pointInfo) {
 	const uncertainty =
 		Number(pointInfo.value) - Number(pointInfo.lowErrorValue);
 	const handlers = {
-		"Water Level": (arg) => ({
+		'Water Level': (arg) => ({
 			text: `<div>Water Level: ${
 				pointInfo.value
 			} <br> Uncertainty: ${uncertainty.toFixed(2)}

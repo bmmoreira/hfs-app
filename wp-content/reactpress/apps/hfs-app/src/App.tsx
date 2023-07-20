@@ -18,6 +18,8 @@ function App() {
 		chartData: [],
 		yearMax: 0,
 		yearMin: 0,
+		yearStart: 0,
+		yearEnd: 0,
 		yearData: [],
 		infoData: {},
 		selectedSat: 'vs_All',
@@ -132,6 +134,8 @@ function App() {
 				draft.chartData = action.infoChart;
 				draft.yearMax = action.valueMax;
 				draft.yearMin = action.valueMin;
+				draft.yearStart = action.valueStart;
+				draft.yearEnd = action.valueEnd;
 				/* () => {
 					toggleChartModal();
 				}; */

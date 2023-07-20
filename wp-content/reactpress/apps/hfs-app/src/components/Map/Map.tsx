@@ -289,6 +289,8 @@ function MapComponent() {
 					infoChart: chartData,
 					valueMin: dataset.overall.minYear,
 					valueMax: dataset.overall.maxYear,
+					valueStart: dataset.start,
+					valueEnd: dataset.end,
 				});
 
 				toggleChartModal();

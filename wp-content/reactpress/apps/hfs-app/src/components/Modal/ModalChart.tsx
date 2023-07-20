@@ -62,7 +62,7 @@ const ModalChart = function (props: ChartProps) {
 	}
 
 	useEffect(() => {
-		setChartYear(2019);
+		setChartYear(appState.yearStart);
 		console.log(appState.extraData);
 		return () => {};
 	}, []);

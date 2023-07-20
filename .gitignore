@@ -29,7 +29,7 @@ assets/data/
 # ignore everything in the "wp-content" directory, except:
 # mu-plugins, plugins, and themes directories
 
-
+wp-content/reactpress/apps/hfs-app/.env
 
 
 # ignore OS generated files
