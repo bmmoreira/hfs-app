@@ -12,6 +12,8 @@ import './App.css';
 import MapComponent from './components/Map/Map';
 
 function App() {
+	const BASE_URL = process.env.REACT_APP_URL_API;
+
 	const initialState = {
 		stationData: {},
 		extraData: {},
@@ -154,7 +156,7 @@ function App() {
 		}); */
 		console.log(type);
 		const res = await axios(
-			`http://localhost:1337/api/vstations?filters[${type}][$contains]=${value.toUpperCase()}`
+			`${BASE_URL}/api/vstations?filters[${type}][$contains]=${value.toUpperCase()}`
 		);
 		/* const res = await axios(
 		`https://api.maphidro.info/api/stations?filters[stName][$contains]=${val.toUpperCase()}`
