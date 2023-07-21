@@ -9,6 +9,11 @@
 	margin: 0 30px 15px 30px;
 }
 
+#chart2 {
+	height: 400px;
+	margin: 0 30px 15px 30px;
+}
+
 .options {
 	padding: 20px;
 	margin-top: 20px;
@@ -36,5 +41,5 @@
 }
 
 .chart-title {
-	font-size: 1rem;
+	font-size: 0.75rem;
 }

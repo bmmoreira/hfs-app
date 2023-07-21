@@ -28,7 +28,7 @@ const ChartE = function (props) {
 
 	return (
 		<div id="chart-demo">
-			<Chart id="chart" dataSource={props.chartData}>
+			<Chart id="chart2" dataSource={props.chartData}>
 				<CommonSeriesSettings argumentField="date" />
 				<Crosshair enabled={true}>
 					<Label visible={true} />
@@ -75,10 +75,6 @@ const ChartE = function (props) {
 					</Label>
 				</ValueAxis>
 
-				<Legend
-					verticalAlignment="bottom"
-					horizontalAlignment="center"
-				></Legend>
 				<Tooltip
 					enabled={true}
 					customizeTooltip={customizeTooltip}

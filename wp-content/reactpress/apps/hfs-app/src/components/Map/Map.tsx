@@ -284,18 +284,21 @@ function MapComponent() {
 				});
 
 				appDispatch({
-					type: 'loadData',
+					type: 'loadDataFromDB',
 					infoValue: overall,
 					infoChart: chartData,
 					valueMin: dataset.overall.minYear,
 					valueMax: dataset.overall.maxYear,
 					valueStart: dataset.start,
-					valueEnd: dataset.end,
+					valueEnd: dataset.last,
 				});
 
 				toggleChartModal();
 				// console.log(chartData);
-				console.log('click button getData');
+				console.log(
+					'%c EVENT: click button getData - toggleModalChat! ',
+					'background: #222; color: #bada55'
+				);
 			} else {
 				//console.log(data);
 			}

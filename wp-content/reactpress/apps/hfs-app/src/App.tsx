@@ -129,7 +129,7 @@ function App() {
 			case 'searchFunction':
 				search(action.searchTypeValue, action.searchEventValue);
 				break;
-			case 'loadData':
+			case 'loadDataFromDB':
 				draft.extraData = action.infoValue;
 				draft.chartData = action.infoChart;
 				draft.yearMax = action.valueMax;

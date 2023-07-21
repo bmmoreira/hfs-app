@@ -62,8 +62,10 @@ const ModalChart = function (props: ChartProps) {
 	}
 
 	useEffect(() => {
-		setChartYear(appState.yearStart);
-		console.log(appState.extraData);
+		setChartYear(new Date(appState.yearStart).getFullYear());
+		console.log('endyear: ' + appState.yearEnd);
+		console.log('startyear: ' + appState.yearStart);
+
 		return () => {};
 	}, []);
 
@@ -110,8 +112,10 @@ const ModalChart = function (props: ChartProps) {
 						<div className="dx-field-value">
 							<DateRangeBox
 								displayFormat="shortdate"
-								defaultStartDate={startDate}
-								defaultEndDate={endDate}
+								defaultStartDate={appState.yearStart}
+								defaultEndDate={appState.yearEnd}
+								min={appState.yearStart}
+								max={appState.yearEnd}
 								{...commonSettings}
 								onValueChanged={onValueChanged}
 							/>
