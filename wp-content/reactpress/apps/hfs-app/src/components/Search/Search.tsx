@@ -4,9 +4,15 @@ import React, { ChangeEvent, useState } from 'react';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
 import Select from 'react-select';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import Typography from '@mui/material/Typography';
 
 import { useContext } from 'react';
 import './search.css';
+import { Button } from '@mui/material';
 
 export type StationData = {
 	id: number;
@@ -93,6 +99,22 @@ const SearchComponent = (props: SearchProp) => {
 		});
 	};
 
+	const style = {
+		width: '100%',
+		maxWidth: 360,
+		bgcolor: 'background.paper',
+		paddingLeft: '0px',
+		m: 0,
+		p: 0,
+	};
+
+	const styleItem = {
+		fontWeight: 'bold',
+		mx: 0.5,
+		fontSize: 12,
+		bgcolor: 'red',
+	};
+
 	return (
 		<>
 			<div>
@@ -130,16 +152,12 @@ const SearchComponent = (props: SearchProp) => {
 					}}
 				>
 					<div className="toast-list-title">Stations List: </div>
-					<ul
-						style={{
-							margin: '0px',
-							padding: '0px',
-						}}
-					>
-						{appState.searchData.map((item, idx) => (
-							<li key={idx}>
-								<button
-									className="btn btn-default"
+					{appState.searchData.map((item, idx) => (
+						<>
+							<Typography component="div">
+								<Button
+									variant="contained"
+									sx={{ fontSize: 12, m: 1 }}
 									onClick={() => {
 										props.flyTo([
 											item.attributes.longitude,
@@ -147,13 +165,13 @@ const SearchComponent = (props: SearchProp) => {
 										]);
 									}}
 								>
-									<span className="font-search">
-										{item.attributes.name.slice(2)}
-									</span>
-								</button>
-							</li>
-						))}
-					</ul>
+									{item.attributes.name.slice(2)}
+								</Button>
+							</Typography>
+
+							<Divider />
+						</>
+					))}
 				</div>
 			</div>
 		</>
