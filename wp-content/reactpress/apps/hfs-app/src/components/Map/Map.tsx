@@ -240,7 +240,7 @@ function MapComponent() {
 	async function getStationData(id: string) {
 		try {
 			const sId = String(id).padStart(8, '0');
-
+			// comment test
 			const [stData] = await Promise.all([
 				axios.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`),
 			]);
