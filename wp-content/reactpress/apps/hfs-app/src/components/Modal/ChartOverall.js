@@ -18,6 +18,8 @@ import Chart, {
 } from 'devextreme-react/chart';
 import StateContext from '../../StateContext';
 import { useContext } from 'react';
+import Typography from '@mui/material/Typography';
+
 import './chart.css';
 
 const ChartOverall = function (props) {
@@ -96,7 +98,13 @@ const ChartOverall = function (props) {
 					horizontalAlignment="center"
 				></Legend>
 				<Tooltip enabled={false} />
-				<Title text="👪 Orthometric Height(m) of Water Surface" />
+				<Typography component="div">
+					<Title
+						text="Orthometric Height(m) of Water Surface"
+						sx={{ fontSize: 12, m: 1 }}
+					/>
+				</Typography>
+
 				<Export enabled={true} />
 			</Chart>
 		</div>

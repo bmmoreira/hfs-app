@@ -88,5 +88,5 @@ Thumbs.db
 !site.webmanifest
 
 /*.php
-
-
+.env
+wp-content/reactpress/apps/hfs-app/.env
