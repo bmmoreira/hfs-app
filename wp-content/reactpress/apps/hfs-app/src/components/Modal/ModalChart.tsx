@@ -7,9 +7,10 @@ import { useState, useEffect, useContext } from 'react';
 import { useImmer } from 'use-immer';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
-import ChartE from './Chart';
-import ChartS from './ChartS';
-
+import ChartSelection from './ChartSelection';
+import ChartOverall from './ChartOverall';
+import ChartSearch from './ChartSearch';
+import SearchComponent from '../Search/Search';
 import DateRangeBox from 'devextreme-react/date-range-box';
 import 'devextreme/dist/css/dx.light.css';
 import './modalchart.css';
@@ -19,6 +20,7 @@ interface ChartProps {
 	//stationObj: Station | undefined;
 	show: boolean;
 	onHide(): void;
+	searchChangeHandler(type: string, value: string): void;
 }
 
 const ModalChart = function (props: ChartProps) {
@@ -62,7 +64,7 @@ const ModalChart = function (props: ChartProps) {
 	}
 
 	useEffect(() => {
-		setChartYear(new Date(appState.yearStart).getFullYear());
+		//setChartYear(new Date(appState.yearStart).getFullYear());
 		console.log('endyear: ' + appState.yearEnd);
 		console.log('startyear: ' + appState.yearStart);
 
@@ -101,10 +103,13 @@ const ModalChart = function (props: ChartProps) {
 				className="mb-3"
 			>
 				<Tab eventKey="home" title="Overall Series">
-					<ChartS extraData={extraData} yearData={appState.yearData} />
+					<ChartOverall
+						extraData={extraData}
+						yearData={appState.yearData}
+					/>
 				</Tab>
 				<Tab eventKey="profile" title="Date Selection Series">
-					<ChartE chartData={chartData} />
+					<ChartSelection chartData={chartData} />
 					<div className="dx-field">
 						<div className="dx-field-label">
 							Click on calendar icon to select dates
@@ -118,6 +123,19 @@ const ModalChart = function (props: ChartProps) {
 								max={appState.yearEnd}
 								{...commonSettings}
 								onValueChanged={onValueChanged}
+							/>
+						</div>
+					</div>
+				</Tab>
+				<Tab eventKey="search" title="Search Stations">
+					<div className="containerM">
+						<div className="columnM">
+							<SearchComponent onSearch={props.searchChangeHandler} />
+						</div>
+						<div className="columnN">
+							<ChartSearch
+								dataChartOverall={extraData}
+								yearData={appState.yearData}
 							/>
 						</div>
 					</div>

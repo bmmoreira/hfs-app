@@ -906,6 +906,7 @@ function MapComponent() {
 				<ModalChart
 					show={chartModal}
 					onHide={() => setChartModal(false)}
+					searchChangeHandler={searchChangeHandler}
 				/>
 			)}
 
