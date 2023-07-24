@@ -77,7 +77,7 @@ function MapComponent() {
 	const appState = useContext(StateContext);
 
 	const API_KEY = process.env.REACT_APP_API_KEY;
-	const BASE_URL = 'https://api.hydrologyfromspace.org';
+	const BASE_URL = 'http://localhost:1337';
 	const COLLECTION_NAME = process.env.REACT_APP_COLLECTION_NAME;
 
 	const iniZoom: number = 4;
@@ -356,6 +356,9 @@ function MapComponent() {
 			yearStart: dataset.start,
 			yearEnd: dataset.last,
 			name: dataset.name,
+			latitude: dataset.latitude,
+			longitude: dataset.longitude,
+			lastUpdate: dataset.updatedAt,
 		};
 		return data;
 	}

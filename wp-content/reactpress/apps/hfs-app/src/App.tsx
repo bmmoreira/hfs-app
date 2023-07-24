@@ -38,6 +38,7 @@ function App() {
 		searchType: '',
 		searchData: [],
 		searchStation: {},
+		setSearchStation: false,
 		ucField: 'anomalia',
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
@@ -132,6 +133,7 @@ function App() {
 				break;
 			case 'searchPanel':
 				draft.searchStation = action.valueStation;
+				draft.setSearchStation = true;
 				break;
 			case 'loadDataFromDB':
 				draft.extraData = action.infoValue;
