@@ -77,7 +77,7 @@ function MapComponent() {
 	const appState = useContext(StateContext);
 
 	const API_KEY = process.env.REACT_APP_API_KEY;
-	const BASE_URL = process.env.REACT_APP_URL_API;
+	const BASE_URL = 'https://api.hydrologyfromspace.org';
 	const COLLECTION_NAME = process.env.REACT_APP_COLLECTION_NAME;
 
 	const iniZoom: number = 4;
@@ -240,71 +240,124 @@ function MapComponent() {
 	async function getStationData(id: string) {
 		try {
 			const sId = String(id).padStart(8, '0');
-			// comment test
-			const [stData] = await Promise.all([
-				axios.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`),
-			]);
 
-			const data = stData.data.data;
-			//console.log(data);
-			if (data.length > 0) {
-				const dataset = data[0].attributes;
+			const response = await axios
+				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
+				.then((response) => {
+					const entries = response.data.data;
+					console.log(entries);
+					if (entries.length > 0) {
+						const dataset = processData(entries[0].attributes);
 
-				const chartData = new Array();
-				console.log(dataset);
-				let separatedDataset = separateDataByYear(
-					dataset.data._dataSet,
-					'date'
-				);
-				//console.log(separatedDataset);
+						appDispatch({
+							type: 'loadDataFromDB',
+							infoValue: dataset.overall,
+							infoChart: dataset.chartData,
+							valueMin: dataset.yearMin,
+							valueMax: dataset.yearMax,
+							valueStart: dataset.yearStart,
+							valueEnd: dataset.yearEnd,
+						});
 
-				let max = dataset.overall.maxData;
-				let min = max.concat(dataset.overall.minData);
-				let men = min.concat(dataset.overall.men);
-				let cur = men.concat(dataset.overall.curData);
-				let overall = cur;
-				overall.sort(function (a, b) {
-					return a.dateTime - b.dateTime;
+						toggleChartModal();
+						// console.log(chartData);
+						console.log(
+							'%c EVENT: click button getData - toggleModalChat! ',
+							'background: #222; color: #bada55'
+						);
+					} else {
+						console.log(
+							'No entry found with the specified custom specific field.!!!'
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					console.log(
+						'No entry found with the specified custom specific field.!!!'
+					);
 				});
-
-				dataset.data._dataSet.forEach((value) => {
-					let dateObject = new Date(value.date);
-					let month = dateObject.getUTCMonth() + 1; //months from 1-12
-					let day = dateObject.getUTCDate();
-					let year = dateObject.getUTCFullYear();
-
-					chartData.push({
-						height: Number(value.height),
-						uncertainty: Number(value.ncertainty),
-						hv: Number(value.height) + Math.abs(value.uncertainty),
-						lv: Number(value.height) - Math.abs(value.uncertainty),
-						date: year + '-' + month + '-' + day,
-						dateString: value.date,
-					});
-				});
-
-				appDispatch({
-					type: 'loadDataFromDB',
-					infoValue: overall,
-					infoChart: chartData,
-					valueMin: dataset.overall.minYear,
-					valueMax: dataset.overall.maxYear,
-					valueStart: dataset.start,
-					valueEnd: dataset.last,
-				});
-
-				toggleChartModal();
-				// console.log(chartData);
-				console.log(
-					'%c EVENT: click button getData - toggleModalChat! ',
-					'background: #222; color: #bada55'
-				);
-			} else {
-				//console.log(data);
-			}
 		} catch (error: any) {
 			console.log(error);
 		}
+	}
+
+	async function getSearchStationData(id: string) {
+		try {
+			const sId = String(id).padStart(8, '0');
+
+			const response = await axios
+				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
+				.then((response) => {
+					const entries = response.data.data;
+					console.log(entries);
+					if (entries.length > 0) {
+						const dataset = processData(entries[0].attributes);
+
+						appDispatch({
+							type: 'searchPanel',
+							valueStation: dataset,
+						});
+
+						console.log(
+							'%c EVENT: Panel Search Event! ',
+							'background: #222; color: #bada55'
+						);
+					} else {
+						console.log(
+							'No entry found with the specified custom specific field.!!!'
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					console.log(
+						'No entry found with the specified custom specific field.!!!'
+					);
+				});
+		} catch (error: any) {
+			console.log(error);
+		}
+	}
+
+	function processData(dataset) {
+		console.log(dataset);
+		const chartData = new Array();
+		let max = dataset.overall.maxData;
+		let min = max.concat(dataset.overall.minData);
+		let men = min.concat(dataset.overall.men);
+		let cur = men.concat(dataset.overall.curData);
+		let overall = cur;
+		overall.sort(function (a, b) {
+			return a.dateTime - b.dateTime;
+		});
+
+		dataset.data._dataSet.forEach((value) => {
+			let dateObject = new Date(value.date);
+			let month = dateObject.getUTCMonth() + 1; //months from 1-12
+			let day = dateObject.getUTCDate();
+			let year = dateObject.getUTCFullYear();
+
+			chartData.push({
+				height: Number(value.height),
+				uncertainty: Number(value.ncertainty),
+				hv: Number(value.height) + Math.abs(value.uncertainty),
+				lv: Number(value.height) - Math.abs(value.uncertainty),
+				date: year + '-' + month + '-' + day,
+				dateString: value.date,
+			});
+		});
+
+		const data = {
+			overall: overall,
+			chartData: chartData,
+			yearMin: dataset.overall.minYear,
+			yearMax: dataset.overall.maxYear,
+			yearStart: dataset.start,
+			yearEnd: dataset.last,
+			name: dataset.name,
+		};
+		return data;
 	}
 
 	function separateDataByYear(dataset, dateProperty) {
@@ -389,6 +442,12 @@ function MapComponent() {
 		//console.log(appState);
 		console.log(type + ' ' + value);
 		search(type, value);
+	}
+
+	async function getSearchStation(value: string) {
+		//console.log(appState);
+		console.log('getSearchStation: ' + value);
+		getSearchStationData(value);
 	}
 
 	const flyToStation = (coord: number[]) => {
@@ -907,6 +966,7 @@ function MapComponent() {
 					show={chartModal}
 					onHide={() => setChartModal(false)}
 					searchChangeHandler={searchChangeHandler}
+					getSearchStation={getSearchStation}
 				/>
 			)}
 

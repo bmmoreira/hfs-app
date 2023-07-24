@@ -35,6 +35,7 @@ export type SearchData = {
 export interface SearchProp {
 	flyTo?(coord: [long: number, lat: number]): void;
 	onSearch?(type: string, value: string): void;
+	getSearchStation?(value: any): void;
 }
 
 const SearchComponent = (props: SearchProp) => {
@@ -159,10 +160,7 @@ const SearchComponent = (props: SearchProp) => {
 									variant="contained"
 									sx={{ fontSize: 12, m: 1 }}
 									onClick={() => {
-										props.flyTo([
-											item.attributes.longitude,
-											item.attributes.latitude,
-										]);
+										props.getSearchStation(item.attributes.name);
 									}}
 								>
 									{item.attributes.name.slice(2)}

@@ -37,6 +37,7 @@ function App() {
 		searchValue: '',
 		searchType: '',
 		searchData: [],
+		searchStation: {},
 		ucField: 'anomalia',
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
@@ -125,11 +126,12 @@ function App() {
 			case 'searchAction':
 				draft.searchValue = action.searchEventValue;
 				draft.searchType = action.searchTypeValue;
-				//search(action.searchTypeValue, action.searchEventValue);
-
 				break;
 			case 'searchFunction':
 				search(action.searchTypeValue, action.searchEventValue);
+				break;
+			case 'searchPanel':
+				draft.searchStation = action.valueStation;
 				break;
 			case 'loadDataFromDB':
 				draft.extraData = action.infoValue;
@@ -138,9 +140,6 @@ function App() {
 				draft.yearMin = action.valueMin;
 				draft.yearStart = action.valueStart;
 				draft.yearEnd = action.valueEnd;
-				/* () => {
-					toggleChartModal();
-				}; */
 				break;
 			case 'closePopup':
 				console.log('teste');

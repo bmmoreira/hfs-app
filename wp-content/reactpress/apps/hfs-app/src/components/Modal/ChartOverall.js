@@ -23,6 +23,10 @@ import './chart.css';
 const ChartOverall = function (props) {
 	const appState = useContext(StateContext);
 
+	const customTitleStyle = {
+		fontSize: 12,
+	};
+
 	function onLegendClick(e) {
 		e.target.isVisible() ? e.target.hide() : e.target.show();
 	}
@@ -96,7 +100,9 @@ const ChartOverall = function (props) {
 					horizontalAlignment="center"
 				></Legend>
 				<Tooltip enabled={false} />
-				<Title text="👪 Orthometric Height(m) of Water Surface" />
+				<Title text="Orthometric Height(m) of Water Surface">
+					<Font color="black" size={'1rem'} />
+				</Title>
 				<Export enabled={true} />
 			</Chart>
 		</div>

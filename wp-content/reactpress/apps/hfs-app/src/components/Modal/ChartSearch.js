@@ -10,6 +10,7 @@ import Chart, {
 	Margin,
 	ArgumentAxis,
 	ValueAxis,
+	Title,
 	Font,
 	Legend,
 	Label,
@@ -28,7 +29,7 @@ const ChartSearch = function (props) {
 
 	return (
 		<div id="chart-series">
-			<Chart id="chart3" dataSource={props.dataChartOverall}>
+			<Chart id="chart3" dataSource={appState.searchStation.overall}>
 				<CommonSeriesSettings type="spline" argumentField="date">
 					<Point visible={false}></Point>
 				</CommonSeriesSettings>
@@ -38,12 +39,12 @@ const ChartSearch = function (props) {
 
 				<Series
 					valueField="valueMax"
-					name={'Max ' + appState.yearMax}
+					name={'Max ' + appState.searchStation.yearMax}
 					color="#4c9c75"
 				/>
 				<Series
 					valueField="valueMin"
-					name={'Min ' + appState.yearMin}
+					name={'Min ' + appState.searchStation.yearMin}
 					color="#dfd447"
 				/>
 				<Series
@@ -80,7 +81,7 @@ const ChartSearch = function (props) {
 				<ValueAxis
 					name="level"
 					valueMarginsEnabled={true}
-					minValueMargin={0.1}
+					minValueMargin={0.08}
 				>
 					<Label>
 						<Font color="#6b6b76" />
@@ -91,6 +92,9 @@ const ChartSearch = function (props) {
 					verticalAlignment="bottom"
 					horizontalAlignment="center"
 				></Legend>
+				<Title text={appState.searchStation.name} margin={30}>
+					<Font color="black" size={'1rem'} />
+				</Title>
 				<Tooltip enabled={false} />
 				<Export enabled={true} />
 			</Chart>

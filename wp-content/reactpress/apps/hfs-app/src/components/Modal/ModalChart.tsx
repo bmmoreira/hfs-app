@@ -21,6 +21,7 @@ interface ChartProps {
 	show: boolean;
 	onHide(): void;
 	searchChangeHandler(type: string, value: string): void;
+	getSearchStation(value: string): void;
 }
 
 const ModalChart = function (props: ChartProps) {
@@ -29,7 +30,8 @@ const ModalChart = function (props: ChartProps) {
 
 	const appState = useContext(StateContext);
 	const [chartData, setChartData] = useState(appState.chartData);
-	const [extraData, setExtraData] = useState(appState.extraData);
+	const [chartDataOverall, setExtraData] = useState(appState.extraData);
+	const [chartDataSearch, setDataSearch] = useState(appState.extraData);
 
 	const commonSettings = {
 		showClearButton: false,
@@ -71,6 +73,11 @@ const ModalChart = function (props: ChartProps) {
 		return () => {};
 	}, []);
 
+	const setSearchStationData = (value) => {
+		props.getSearchStation(value);
+		setDataSearch(appState.searchStation.overall);
+	};
+
 	const onValueChanged = (e) => {
 		let initDate = new Date(e.value[0]);
 		let endDate = new Date(e.value[1]);
@@ -104,7 +111,7 @@ const ModalChart = function (props: ChartProps) {
 			>
 				<Tab eventKey="home" title="Overall Series">
 					<ChartOverall
-						extraData={extraData}
+						extraData={chartDataOverall}
 						yearData={appState.yearData}
 					/>
 				</Tab>
@@ -130,11 +137,14 @@ const ModalChart = function (props: ChartProps) {
 				<Tab eventKey="search" title="Search Stations">
 					<div className="containerM">
 						<div className="columnM">
-							<SearchComponent onSearch={props.searchChangeHandler} />
+							<SearchComponent
+								onSearch={props.searchChangeHandler}
+								getSearchStation={setSearchStationData}
+							/>
 						</div>
 						<div className="columnN">
 							<ChartSearch
-								dataChartOverall={extraData}
+								dataChartOverall={chartDataSearch}
 								yearData={appState.yearData}
 							/>
 						</div>

@@ -80,7 +80,9 @@ const ChartSelection = function (props) {
 					customizeTooltip={customizeTooltip}
 					zIndex={9999}
 				/>
-				<Title text="Orthometric Height(m) of Water Surface" />
+				<Title text="Orthometric Height(m) of Water Surface">
+					<Font color="black" size={'1rem'} />
+				</Title>
 				<Export enabled={true} />
 			</Chart>
 		</div>
