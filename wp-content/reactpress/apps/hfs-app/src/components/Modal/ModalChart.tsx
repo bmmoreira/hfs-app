@@ -14,7 +14,8 @@ import SearchComponent from '../Search/Search';
 import DateRangeBox from 'devextreme-react/date-range-box';
 import 'devextreme/dist/css/dx.light.css';
 import './modalchart.css';
-import { weatherData } from './data';
+import Switch from '@mui/material/Switch';
+import * as turf from '@turf/turf';
 
 interface ChartProps {
 	//stationObj: Station | undefined;
@@ -32,6 +33,7 @@ const ModalChart = function (props: ChartProps) {
 	const [chartData, setChartData] = useState(appState.chartData);
 	const [chartDataOverall, setExtraData] = useState(appState.extraData);
 	const [chartDataSearch, setDataSearch] = useState(appState.extraData);
+	const [secondAxis, setChecked] = useState(appState.showSecondAxis);
 
 	const commonSettings = {
 		showClearButton: false,
@@ -86,6 +88,50 @@ const ModalChart = function (props: ChartProps) {
 		// console.log(initDate.getFullYear() + " " + endDate.getFullYear());
 	};
 
+	const handleToggleChange = (e) => {
+		if (appState.searchStation.isSet) {
+			console.log('isSet');
+		}
+
+		setChecked((prevState) => {
+			console.log('toggle Overal Panel: ' + secondAxis + ' ' + e);
+			appDispatch({
+				type: 'toggleSecondAxis',
+				valueToggle: !prevState,
+			});
+			return !prevState;
+		});
+	};
+
+	function getDistance() {
+		console.log(appState.searchStation.longitude);
+		let from = turf.point([
+			Number(appState.searchStation.longitude),
+			Number(appState.searchStation.latitude),
+		]);
+		let to = turf.point(appState.stationData.lngLat);
+		let options = { units: 'kilometers' };
+		// @ts-ignore
+		let distance = turf.distance(from, to, options);
+		return distance;
+	}
+
+	function formatName(value) {
+		if (value === undefined) {
+			return '';
+		}
+
+		const nameSplit = value.split('_');
+		let name =
+			getDistance().toFixed(1) +
+			' Km to ' +
+			nameSplit[2] +
+			' ' +
+			nameSplit[3];
+
+		return name;
+	}
+
 	return (
 		<Modal
 			{...props}
@@ -101,8 +147,8 @@ const ModalChart = function (props: ChartProps) {
 					{appState.stationData.name}
 				</Modal.Title>
 			</Modal.Header>
-
 			<Modal.Body className="text-center"></Modal.Body>
+
 			<Tabs
 				id="chart-main-tab"
 				activeKey={key}
@@ -110,6 +156,25 @@ const ModalChart = function (props: ChartProps) {
 				className="mb-3"
 			>
 				<Tab eventKey="home" title="Overall Series">
+					<div
+						style={{
+							textAlign: 'left',
+							fontSize: '0.875rem',
+							fontWeight: '600',
+							width: '100%',
+							marginLeft: '30px',
+							color: '#9c27b0',
+						}}
+					>
+						Compare Stations{' '}
+						<Switch
+							color="secondary"
+							checked={secondAxis}
+							onChange={handleToggleChange}
+							inputProps={{ 'aria-label': 'controlled' }}
+						/>{' '}
+						River: {formatName(appState.searchStation.name)}
+					</div>
 					<ChartOverall
 						extraData={chartDataOverall}
 						yearData={appState.yearData}

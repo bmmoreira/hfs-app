@@ -294,11 +294,31 @@ function MapComponent() {
 					if (entries.length > 0) {
 						const dataset = processData(entries[0].attributes);
 
+						const dataCur2 = dataset.dataCur.map((element) => {
+							const obj = {
+								date: element.date,
+								dateTime: element.dateTime,
+								valueCur2: element.valueCur,
+							};
+							return obj;
+						});
+
+						const newArray = appState.extraData.filter(
+							(obj) => !obj.hasOwnProperty('valueCur2')
+						);
+
+						let cur = dataCur2.concat(newArray);
+						let overall = cur;
+						overall.sort(function (a, b) {
+							return a.dateTime - b.dateTime;
+						});
+
 						appDispatch({
 							type: 'searchPanel',
 							valueStation: dataset,
+							valueUpdatedChart: overall,
 						});
-
+						//console.log(dataCur2);
 						console.log(
 							'%c EVENT: Panel Search Event! ',
 							'background: #222; color: #bada55'
@@ -349,8 +369,10 @@ function MapComponent() {
 		});
 
 		const data = {
+			isSet: true,
 			overall: overall,
 			chartData: chartData,
+			dataCur: dataset.overall.curData,
 			yearMin: dataset.overall.minYear,
 			yearMax: dataset.overall.maxYear,
 			yearStart: dataset.start,
@@ -449,7 +471,7 @@ function MapComponent() {
 
 	async function getSearchStation(value: string) {
 		//console.log(appState);
-		console.log('getSearchStation: ' + value);
+
 		getSearchStationData(value);
 	}
 
