@@ -31,9 +31,20 @@ const ChartOverall = function (props) {
 		e.target.isVisible() ? e.target.hide() : e.target.show();
 	}
 
+	function formatName(value) {
+		if (value === undefined) {
+			return '';
+		}
+
+		const nameSplit = value.split('_');
+		let name = nameSplit[2] + ' ' + nameSplit[3];
+
+		return name;
+	}
+
 	return (
 		<div id="chart-series">
-			<Chart id="chart2" dataSource={props.extraData}>
+			<Chart id="chart2" dataSource={appState.extraData}>
 				<CommonSeriesSettings type="spline" argumentField="date">
 					<Point visible={false}></Point>
 				</CommonSeriesSettings>
@@ -42,22 +53,26 @@ const ChartOverall = function (props) {
 				</Crosshair>
 
 				<Series
+					axis="level1"
 					valueField="valueMax"
 					name={'Max ' + appState.yearMax}
 					color="#4c9c75"
 				/>
 				<Series
+					axis="level1"
 					valueField="valueMin"
 					name={'Min ' + appState.yearMin}
 					color="#dfd447"
 				/>
 				<Series
+					axis="level1"
 					valueField="valueMen"
 					name="Median"
 					dashStyle="dot"
 					width={4}
 				/>
 				<Series
+					axis="level1"
 					color="#b0daff"
 					type="rangeArea"
 					rangeValue1Field="valueHigh"
@@ -65,14 +80,25 @@ const ChartOverall = function (props) {
 					name="Median High-Low"
 				/>
 				<Series
+					axis="level1"
 					valueField="valueCur"
 					name={new Date().getFullYear()}
 					color="#c72729"
 					width={4}
 				>
-					<Point visibility={true} visible={true} />
+					<Point visible={true} />
 				</Series>
-
+				{appState.showSecondAxis && (
+					<Series
+						axis="level1"
+						valueField="valueCur2"
+						name={new Date().getFullYear()}
+						color="#9c27b0"
+						width={4}
+					>
+						<Point visible={true} />
+					</Series>
+				)}
 				<Margin right={20} />
 				<ArgumentAxis
 					valueMarginsEnabled={false}
@@ -83,17 +109,32 @@ const ChartOverall = function (props) {
 					<Label displayMode="rotate" rotationAngle={45} />
 				</ArgumentAxis>
 				<ValueAxis
-					name="level"
+					name="level1"
 					valueMarginsEnabled={true}
 					minValueMargin={0.1}
 				>
 					<Title text="Water Level, (m)">
-						<Font color="#4945ff" />
+						<Font color="#c72729" />
 					</Title>
 					<Label>
-						<Font color="#6b6b76" />
+						<Font color="#c72729" />
 					</Label>
 				</ValueAxis>
+				{appState.showSecondAxis && (
+					<ValueAxis name="level2" position="right">
+						<Title
+							text={
+								'Water Level, (m) \n' +
+								formatName(appState.searchStation.name)
+							}
+						>
+							<Font color="#9c27b0" />
+						</Title>
+						<Label>
+							<Font color="#9c27b0" />
+						</Label>
+					</ValueAxis>
+				)}
 
 				<Legend
 					verticalAlignment="bottom"

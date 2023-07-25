@@ -39,6 +39,7 @@ function App() {
 		searchData: [],
 		searchStation: {},
 		setSearchStation: false,
+		showSecondAxis: false,
 		ucField: 'anomalia',
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
@@ -133,7 +134,11 @@ function App() {
 				break;
 			case 'searchPanel':
 				draft.searchStation = action.valueStation;
+				draft.extraData = action.valueUpdatedChart;
 				draft.setSearchStation = true;
+				break;
+			case 'toggleSecondAxis':
+				draft.showSecondAxis = action.valueToggle;
 				break;
 			case 'loadDataFromDB':
 				draft.extraData = action.infoValue;
@@ -142,6 +147,10 @@ function App() {
 				draft.yearMin = action.valueMin;
 				draft.yearStart = action.valueStart;
 				draft.yearEnd = action.valueEnd;
+				break;
+			case 'resetExtraData':
+				draft.extraData = action.updatedArray;
+				console.log(action.updatedArray);
 				break;
 			case 'closePopup':
 				console.log('teste');
