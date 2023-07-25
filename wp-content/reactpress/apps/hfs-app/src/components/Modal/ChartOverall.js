@@ -90,7 +90,7 @@ const ChartOverall = function (props) {
 				</Series>
 				{appState.showSecondAxis && (
 					<Series
-						axis="level1"
+						axis="level2"
 						valueField="valueCur2"
 						name={new Date().getFullYear()}
 						color="#9c27b0"
