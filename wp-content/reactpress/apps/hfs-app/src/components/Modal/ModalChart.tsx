@@ -16,6 +16,7 @@ import 'devextreme/dist/css/dx.light.css';
 import './modalchart.css';
 import Switch from '@mui/material/Switch';
 import * as turf from '@turf/turf';
+import CheckBox from '@mui/material/Switch';
 
 interface ChartProps {
 	//stationObj: Station | undefined;
@@ -103,6 +104,12 @@ const ModalChart = function (props: ChartProps) {
 		});
 	};
 
+	const handleCheckBoxChange = (e) => {
+		if (appState.searchStation.isSet) {
+			console.log('isSet');
+		}
+	};
+
 	function getDistance() {
 		console.log(appState.searchStation.longitude);
 		let from = turf.point([
@@ -173,7 +180,14 @@ const ModalChart = function (props: ChartProps) {
 							onChange={handleToggleChange}
 							inputProps={{ 'aria-label': 'controlled' }}
 						/>{' '}
-						River: {formatName(appState.searchStation.name)}
+						River: {formatName(appState.searchStation.name)} Use Different
+						Scale
+						<CheckBox
+							color="secondary"
+							checked={secondAxis}
+							onChange={handleCheckBoxChange}
+							inputProps={{ 'aria-label': 'controlled' }}
+						/>
 					</div>
 					<ChartOverall
 						extraData={chartDataOverall}
