@@ -45,9 +45,10 @@ const ChartOverall = function (props) {
 	return (
 		<div id="chart-series">
 			<Chart id="chart2" dataSource={appState.extraData}>
-				<CommonSeriesSettings type="spline" argumentField="date">
-					<Point visible={false}></Point>
-				</CommonSeriesSettings>
+				<CommonSeriesSettings
+					type="spline"
+					argumentField="date"
+				></CommonSeriesSettings>
 				<Crosshair enabled={true}>
 					<Label visible={true} />
 				</Crosshair>
@@ -57,20 +58,18 @@ const ChartOverall = function (props) {
 					valueField="valueMax"
 					name={'Max ' + appState.yearMax}
 					color="#4c9c75"
-				/>
+				>
+					<Point size={5} />
+				</Series>
 				<Series
 					axis="level1"
 					valueField="valueMin"
 					name={'Min ' + appState.yearMin}
 					color="#dfd447"
-				/>
-				<Series
-					axis="level1"
-					valueField="valueMen"
-					name="Median"
-					dashStyle="dot"
-					width={4}
-				/>
+				>
+					<Point size={5} />
+				</Series>
+
 				<Series
 					axis="level1"
 					color="#b0daff"
@@ -84,9 +83,9 @@ const ChartOverall = function (props) {
 					valueField="valueCur"
 					name={new Date().getFullYear()}
 					color="#c72729"
-					width={4}
+					width={3}
 				>
-					<Point visible={true} />
+					<Point size={7} />
 				</Series>
 				{appState.showSecondAxis && (
 					<Series
@@ -96,10 +95,10 @@ const ChartOverall = function (props) {
 						color="#9c27b0"
 						width={4}
 					>
-						<Point visible={true} />
+						<Point size={7} />
 					</Series>
 				)}
-				<Margin right={20} />
+				<Margin right={10} />
 				<ArgumentAxis
 					valueMarginsEnabled={false}
 					aggregationInterval={'month'}
