@@ -77,7 +77,7 @@ function MapComponent() {
 	const appState = useContext(StateContext);
 
 	const API_KEY = process.env.REACT_APP_API_KEY;
-	const BASE_URL = 'http://localhost:1337';
+	const BASE_URL = 'https://api.hydrologyfromspace.org';
 	const COLLECTION_NAME = process.env.REACT_APP_COLLECTION_NAME;
 
 	const iniZoom: number = 4;

@@ -52,7 +52,14 @@ const ChartOverall = function (props) {
 				<Crosshair enabled={true}>
 					<Label visible={true} />
 				</Crosshair>
-
+				<Series
+					axis="level1"
+					color="#b0daff"
+					type="rangeArea"
+					rangeValue1Field="valueHigh"
+					rangeValue2Field="valueLow"
+					name="Median High-Low"
+				/>
 				<Series
 					axis="level1"
 					valueField="valueMax"
@@ -72,14 +79,6 @@ const ChartOverall = function (props) {
 
 				<Series
 					axis="level1"
-					color="#b0daff"
-					type="rangeArea"
-					rangeValue1Field="valueHigh"
-					rangeValue2Field="valueLow"
-					name="Median High-Low"
-				/>
-				<Series
-					axis="level1"
 					valueField="valueCur"
 					name={new Date().getFullYear()}
 					color="#c72729"
@@ -87,7 +86,18 @@ const ChartOverall = function (props) {
 				>
 					<Point size={7} />
 				</Series>
-				{appState.showSecondAxis && (
+				{appState.secondAxisOverall && appState.compareStationOverall && (
+					<Series
+						axis="level1"
+						valueField="valueCur2"
+						name={new Date().getFullYear()}
+						color="#9c27b0"
+						width={4}
+					>
+						<Point size={7} />
+					</Series>
+				)}
+				{appState.compareStationOverall && !appState.secondAxisOverall && (
 					<Series
 						axis="level2"
 						valueField="valueCur2"
@@ -119,7 +129,7 @@ const ChartOverall = function (props) {
 						<Font color="#c72729" />
 					</Label>
 				</ValueAxis>
-				{appState.showSecondAxis && (
+				{!appState.secondAxisOverall && (
 					<ValueAxis name="level2" position="right">
 						<Title
 							text={

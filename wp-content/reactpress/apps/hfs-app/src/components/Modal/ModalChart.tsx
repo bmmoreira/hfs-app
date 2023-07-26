@@ -16,7 +16,11 @@ import 'devextreme/dist/css/dx.light.css';
 import './modalchart.css';
 import Switch from '@mui/material/Switch';
 import * as turf from '@turf/turf';
-import CheckBox from '@mui/material/Switch';
+import Checkbox from '@mui/material/Checkbox';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { styled } from '@mui/material/styles';
 
 interface ChartProps {
 	//stationObj: Station | undefined;
@@ -24,6 +28,12 @@ interface ChartProps {
 	onHide(): void;
 	searchChangeHandler(type: string, value: string): void;
 	getSearchStation(value: string): void;
+}
+
+interface TabPanelProps {
+	children?: React.ReactNode;
+	index: number;
+	value: number;
 }
 
 const ModalChart = function (props: ChartProps) {
@@ -34,7 +44,15 @@ const ModalChart = function (props: ChartProps) {
 	const [chartData, setChartData] = useState(appState.chartData);
 	const [chartDataOverall, setExtraData] = useState(appState.extraData);
 	const [chartDataSearch, setDataSearch] = useState(appState.extraData);
-	const [secondAxis, setChecked] = useState(appState.showSecondAxis);
+	const [secondAxisOverall, setSecondAxisOverall] = useState(
+		appState.secondAxisOverall
+	);
+	const [compareStationsOverall, setCompareStationsOverall] = useState(
+		appState.compareStationsOverall
+	);
+	const [compareStationsSelection, setCompareStationsSelection] = useState(
+		appState.compareStationsSelection
+	);
 
 	const commonSettings = {
 		showClearButton: false,
@@ -94,10 +112,10 @@ const ModalChart = function (props: ChartProps) {
 			console.log('isSet');
 		}
 
-		setChecked((prevState) => {
-			console.log('toggle Overal Panel: ' + secondAxis + ' ' + e);
+		setCompareStationsOverall((prevState) => {
+			console.log('toggle Overall Panel: ' + secondAxisOverall + ' ' + e);
 			appDispatch({
-				type: 'toggleSecondAxis',
+				type: 'toggleCompareStationOverall',
 				valueToggle: !prevState,
 			});
 			return !prevState;
@@ -108,6 +126,14 @@ const ModalChart = function (props: ChartProps) {
 		if (appState.searchStation.isSet) {
 			console.log('isSet');
 		}
+		setSecondAxisOverall((prevState) => {
+			console.log('toggle Overall Panel: ' + secondAxisOverall + ' ' + e);
+			appDispatch({
+				type: 'toggleSecondAxisOverall',
+				valueToggle: !prevState,
+			});
+			return !prevState;
+		});
 	};
 
 	function getDistance() {
@@ -154,41 +180,50 @@ const ModalChart = function (props: ChartProps) {
 					{appState.stationData.name}
 				</Modal.Title>
 			</Modal.Header>
-			<Modal.Body className="text-center"></Modal.Body>
+			<Modal.Body className="chart-modal-body"></Modal.Body>
 
 			<Tabs
 				id="chart-main-tab"
 				activeKey={key}
 				onSelect={(k) => setKey(k)}
-				className="mb-3"
+				className="mb-3 chart-modal-tabs"
 			>
 				<Tab eventKey="home" title="Overall Series">
-					<div
-						style={{
-							textAlign: 'left',
+					<Box
+						sx={{
+							height: 50,
 							fontSize: '0.875rem',
-							fontWeight: '600',
-							width: '100%',
 							marginLeft: '30px',
+							marginRight: '30px',
 							color: '#9c27b0',
+							fontWeight: '600',
 						}}
 					>
-						Compare Stations{' '}
-						<Switch
-							color="secondary"
-							checked={secondAxis}
-							onChange={handleToggleChange}
-							inputProps={{ 'aria-label': 'controlled' }}
-						/>{' '}
-						River: {formatName(appState.searchStation.name)} Use Different
-						Scale
-						<CheckBox
-							color="secondary"
-							checked={secondAxis}
-							onChange={handleCheckBoxChange}
-							inputProps={{ 'aria-label': 'controlled' }}
-						/>
-					</div>
+						<Grid container spacing={1}>
+							<Grid item xs={3.5} md={3.5}>
+								Compare Stations{' '}
+								<Switch
+									color="secondary"
+									checked={compareStationsOverall}
+									onChange={handleToggleChange}
+									inputProps={{ 'aria-label': 'controlled' }}
+								/>
+							</Grid>
+							<Grid item xs={5.5} md={5.5} sx={{ alignSelf: 'center' }}>
+								{formatName(appState.searchStation.name)}
+							</Grid>
+							<Grid item xs={3} md={3} sx={{ alignSelf: 'center' }}>
+								Use Same Scale
+								<Checkbox
+									color="secondary"
+									checked={secondAxisOverall}
+									onChange={handleCheckBoxChange}
+									inputProps={{ 'aria-label': 'controlled' }}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+
 					<ChartOverall
 						extraData={chartDataOverall}
 						yearData={appState.yearData}

@@ -12,3 +12,12 @@
 .dx-field-label {
 	padding-left: 20px;
 }
+
+.chart-modal-body {
+	background-color: red;
+	padding: 0;
+}
+
+.chart-modal-tabs {
+	margin-top: 5px;
+}

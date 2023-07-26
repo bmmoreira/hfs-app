@@ -40,6 +40,10 @@ function App() {
 		searchStation: {},
 		setSearchStation: false,
 		showSecondAxis: false,
+		compareStationOverall: false,
+		compareStationSelection: false,
+		secondAxisOverall: false,
+		secondAxisSelection: false,
 		ucField: 'anomalia',
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
@@ -137,8 +141,11 @@ function App() {
 				draft.extraData = action.valueUpdatedChart;
 				draft.setSearchStation = true;
 				break;
-			case 'toggleSecondAxis':
-				draft.showSecondAxis = action.valueToggle;
+			case 'toggleSecondAxisOverall':
+				draft.secondAxisOverall = action.valueToggle;
+				break;
+			case 'toggleCompareStationOverall':
+				draft.compareStationOverall = action.valueToggle;
 				break;
 			case 'loadDataFromDB':
 				draft.extraData = action.infoValue;
