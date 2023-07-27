@@ -168,15 +168,18 @@ const SearchComponent = (props: SearchProp) => {
 					options={argList}
 					className="toast-select"
 				/>
-				<Select
-					menuPlacement="bottom"
-					defaultValue={{
-						label: satList[0].label,
-						value: satList[0].value,
-					}}
-					onChange={onSatValueChanged}
-					options={satList}
-				/>
+				{showSatSelectBox && (
+					<Select
+						menuPlacement="bottom"
+						defaultValue={{
+							label: satList[0].label,
+							value: satList[0].value,
+						}}
+						onChange={onSatValueChanged}
+						options={satList}
+						className="toast-select"
+					/>
+				)}
 				<input
 					onChange={(e) => {
 						onSearchChangeHandler(e);

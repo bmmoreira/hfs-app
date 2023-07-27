@@ -51,6 +51,9 @@ export const unclusteredPointSymbol: LayerProps = {
 		'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
 		'text-size': 11,
 	},
+	paint: {
+		'text-color': '#ffffff',
+	},
 };
 
 export const unclusteredPointLayer: LayerProps = {
