@@ -117,11 +117,7 @@ const ChartOverall = function (props) {
 				>
 					<Label displayMode="rotate" rotationAngle={45} />
 				</ArgumentAxis>
-				<ValueAxis
-					name="level1"
-					valueMarginsEnabled={true}
-					minValueMargin={0.1}
-				>
+				<ValueAxis name="level1">
 					<Title text="Water Level, (m)">
 						<Font color="#c72729" />
 					</Title>
