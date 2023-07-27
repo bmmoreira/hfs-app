@@ -272,8 +272,8 @@ function MapComponent() {
 
 						appDispatch({
 							type: 'loadDataFromDB',
-							infoValue: dataset.overall,
-							infoChart: dataset.chartData,
+							valueOverall: dataset.overall,
+							valueSelection: dataset.selection,
 							valueMin: dataset.yearMin,
 							valueMax: dataset.yearMax,
 							valueStart: dataset.yearStart,
@@ -281,7 +281,7 @@ function MapComponent() {
 						});
 
 						toggleChartModal();
-						// console.log(chartData);
+
 						console.log(
 							'%c EVENT: click button getData - toggleModalChat! ',
 							'background: #222; color: #bada55'
@@ -311,10 +311,11 @@ function MapComponent() {
 				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
 				.then((response) => {
 					const entries = response.data.data;
-					console.log(entries);
+
 					if (entries.length > 0) {
 						const dataset = processData(entries[0].attributes);
-
+						console.log(dataset);
+						// rename valueCur to valueCur2 to add it to the current chart source data
 						const dataCur2 = dataset.dataCur.map((element) => {
 							const obj = {
 								date: element.date,
@@ -323,21 +324,40 @@ function MapComponent() {
 							};
 							return obj;
 						});
+						// rename values to *2 to add it to the current chart source data
+						const dataSelection = dataset.selection.map((element) => {
+							const obj = {
+								date: element.date,
+								dateString: element.dateTime,
+								height2: element.height,
+								hv2: element.hv,
+								lv2: element.lv,
+								uncertainty2: element.uncertainty,
+							};
+							return obj;
+						});
 
-						const newArray = appState.extraData.filter(
+						// remove values from previous station added to data source
+						const filteredOverall = appState.chartOverall.filter(
 							(obj) => !obj.hasOwnProperty('valueCur2')
 						);
+						const filteredSelection = appState.chartSelection.filter(
+							(obj) => !obj.hasOwnProperty('height2')
+						);
 
-						let cur = dataCur2.concat(newArray);
-						let overall = cur;
-						overall.sort(function (a, b) {
+						// add search station data to the station selected in Modal
+						let updatedOverall = dataCur2.concat(filteredOverall);
+						let updatedSelection = dataSelection.concat(filteredSelection);
+
+						updatedOverall.sort(function (a, b) {
 							return a.dateTime - b.dateTime;
 						});
 
 						appDispatch({
 							type: 'searchPanel',
 							valueStation: dataset,
-							valueUpdatedChart: overall,
+							valueUpdatedOverall: updatedOverall,
+							valueUpdatedSelection: updatedSelection,
 						});
 						//console.log(dataCur2);
 						console.log(
@@ -363,7 +383,7 @@ function MapComponent() {
 
 	function processData(dataset) {
 		console.log(dataset);
-		const chartData = new Array();
+		const dataSelection = new Array();
 		let max = dataset.overall.maxData;
 		let min = max.concat(dataset.overall.minData);
 		let men = min.concat(dataset.overall.men);
@@ -379,9 +399,9 @@ function MapComponent() {
 			let day = dateObject.getUTCDate();
 			let year = dateObject.getUTCFullYear();
 
-			chartData.push({
+			dataSelection.push({
 				height: Number(value.height),
-				uncertainty: Number(value.ncertainty),
+				uncertainty: Number(value.uncertainty),
 				hv: Number(value.height) + Math.abs(value.uncertainty),
 				lv: Number(value.height) - Math.abs(value.uncertainty),
 				date: year + '-' + month + '-' + day,
@@ -392,7 +412,7 @@ function MapComponent() {
 		const data = {
 			isSet: true,
 			overall: overall,
-			chartData: chartData,
+			selection: dataSelection,
 			dataCur: dataset.overall.curData,
 			yearMin: dataset.overall.minYear,
 			yearMax: dataset.overall.maxYear,
@@ -404,70 +424,6 @@ function MapComponent() {
 			lastUpdate: dataset.updatedAt,
 		};
 		return data;
-	}
-
-	function separateDataByYear(dataset, dateProperty) {
-		var separatedData = {};
-		console.log(dataset);
-		let lowerValue = 0;
-		let higherValue = 0;
-		let higherValueYear = 0;
-		let lowerValueYear = 0;
-		let lastYear = 0;
-		let currentYearData = new Array();
-
-		dataset.forEach(function (item) {
-			let date = new Date(item[dateProperty]);
-			let year = date.getFullYear();
-
-			if (lowerValue == 0) {
-				lowerValue = item.orthometric_height_of_water;
-			}
-
-			if (item.orthometric_height_of_water > Number(higherValue)) {
-				higherValue = item.orthometric_height_of_water;
-				higherValueYear = year;
-			}
-
-			if (item.orthometric_height_of_water < Number(lowerValue)) {
-				lowerValue = item.orthometric_height_of_water;
-				lowerValueYear = year;
-			}
-
-			if (year > lastYear) {
-				lastYear = year;
-			}
-
-			if (!separatedData.hasOwnProperty(year)) {
-				separatedData[year] = [];
-			}
-
-			separatedData[year].push(item);
-		});
-
-		separatedData[lastYear].forEach((item) => {
-			currentYearData.push({
-				date: new Date(item.date),
-				valueCur: item.orthometric_height_of_water,
-				uncertainty: item.associated_uncertainty,
-			});
-		});
-
-		appDispatch({
-			type: 'extraData',
-			infoYears: {
-				hValue: higherValue,
-				hValueYear: higherValueYear,
-				lValue: lowerValue,
-				lValueYear: lowerValueYear,
-				currentYear: currentYearData,
-				cValueYear: lastYear,
-			},
-			infoData: separatedData,
-		});
-		console.log(higherValue + ' ' + higherValueYear);
-		console.log(lowerValue + ' ' + lowerValueYear);
-		return currentYearData;
 	}
 
 	const [searchValue, setSearchValue] = useState({
@@ -729,20 +685,20 @@ function MapComponent() {
 									'step',
 									['get', appState.ucField],
 									'#8f0000',
-									-3,
+									-1.5,
 									'#ff9400',
-									-2,
+									-1.0,
 									'#fbc500',
-									-1,
+									-0.5,
 									'#f9f602',
 									0,
-									'#b5e700',
-									1,
-									'#57d005',
-									2,
-									'#018414',
-									3,
-									'#014f0c',
+									'#b2d9ff',
+									0.5,
+									'#0080ff',
+									1.0,
+									'#004d99',
+									1.5,
+									'#001a33',
 								],
 								'circle-radius': 18,
 								'circle-stroke-width': [
@@ -801,20 +757,20 @@ function MapComponent() {
 									'step',
 									['get', appState.ucField],
 									'#8f0000',
-									-3,
+									-1.5,
 									'#ff9400',
-									-2,
+									-1.0,
 									'#fbc500',
-									-1,
+									-0.5,
 									'#f9f602',
 									0,
-									'#b5e700',
-									1,
-									'#57d005',
-									2,
-									'#018414',
-									3,
-									'#014f0c',
+									'#b2d9ff',
+									0.5,
+									'#0080ff',
+									1.0,
+									'#004d99',
+									1.5,
+									'#001a33',
 								],
 								'circle-radius': 18,
 								'circle-stroke-width': [
@@ -873,20 +829,20 @@ function MapComponent() {
 									'step',
 									['get', appState.ucField],
 									'#8f0000',
-									-3,
+									-1.5,
 									'#ff9400',
-									-2,
+									-1.0,
 									'#fbc500',
-									-1,
+									-0.5,
 									'#f9f602',
 									0,
-									'#b5e700',
-									1,
-									'#57d005',
-									2,
-									'#018414',
-									3,
-									'#014f0c',
+									'#b2d9ff',
+									0.5,
+									'#0080ff',
+									1.0,
+									'#004d99',
+									1.5,
+									'#001a33',
 								],
 								'circle-radius': 18,
 								'circle-stroke-width': [
@@ -945,20 +901,20 @@ function MapComponent() {
 									'step',
 									['get', appState.ucField],
 									'#8f0000',
-									-3,
+									-1.5,
 									'#ff9400',
-									-2,
+									-1.0,
 									'#fbc500',
-									-1,
+									-0.5,
 									'#f9f602',
 									0,
-									'#b5e700',
-									1,
-									'#57d005',
-									2,
-									'#018414',
-									3,
-									'#014f0c',
+									'#b2d9ff',
+									0.5,
+									'#0080ff',
+									1.0,
+									'#004d99',
+									1.5,
+									'#001a33',
 								],
 								'circle-radius': 18,
 								'circle-stroke-width': [

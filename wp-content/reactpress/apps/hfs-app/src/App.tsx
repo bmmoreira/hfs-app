@@ -16,8 +16,8 @@ function App() {
 
 	const initialState = {
 		stationData: {},
-		extraData: {},
-		chartData: [],
+		chartOverall: {},
+		chartSelection: [],
 		yearMax: 0,
 		yearMin: 0,
 		yearStart: 0,
@@ -54,7 +54,7 @@ function App() {
 			case 'loadStation':
 				draft.stationData = action.stValue;
 				break;
-			case 'extraData':
+			case 'reduceOverall':
 				draft.yearData = action.infoYears;
 				draft.infoData = action.infoData;
 				break;
@@ -138,7 +138,8 @@ function App() {
 				break;
 			case 'searchPanel':
 				draft.searchStation = action.valueStation;
-				draft.extraData = action.valueUpdatedChart;
+				draft.chartOverall = action.valueUpdatedOverall;
+				draft.chartSelection = action.valueUpdatedSelection;
 				draft.setSearchStation = true;
 				break;
 			case 'toggleSecondAxisOverall':
@@ -148,15 +149,15 @@ function App() {
 				draft.compareStationOverall = action.valueToggle;
 				break;
 			case 'loadDataFromDB':
-				draft.extraData = action.infoValue;
-				draft.chartData = action.infoChart;
+				draft.chartOverall = action.valueOverall;
+				draft.chartSelection = action.valueSelection;
 				draft.yearMax = action.valueMax;
 				draft.yearMin = action.valueMin;
 				draft.yearStart = action.valueStart;
 				draft.yearEnd = action.valueEnd;
 				break;
 			case 'resetExtraData':
-				draft.extraData = action.updatedArray;
+				draft.chartOverall = action.updatedArray;
 				console.log(action.updatedArray);
 				break;
 			case 'closePopup':

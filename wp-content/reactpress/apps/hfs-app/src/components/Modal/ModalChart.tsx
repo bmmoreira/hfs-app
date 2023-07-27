@@ -41,9 +41,9 @@ const ModalChart = function (props: ChartProps) {
 	const [key, setKey] = useState('home');
 
 	const appState = useContext(StateContext);
-	const [chartData, setChartData] = useState(appState.chartData);
-	const [chartDataOverall, setExtraData] = useState(appState.extraData);
-	const [chartDataSearch, setDataSearch] = useState(appState.extraData);
+	const [chartSelection, setChartData] = useState(appState.chartSelection);
+	const [chartOverall, setOverallData] = useState(appState.chartOverall);
+	const [chartDataSearch, setDataSearch] = useState(appState.chartOverall);
 	const [secondAxisOverall, setSecondAxisOverall] = useState(
 		appState.secondAxisOverall
 	);
@@ -65,7 +65,7 @@ const ModalChart = function (props: ChartProps) {
 	const endDate = new Date(now.getTime() + msInDay * 3);
 
 	function setChartYear(year) {
-		const result = appState.chartData.filter((value) => {
+		const result = appState.chartSelection.filter((value) => {
 			let dateString = value.date.split('-');
 			let yearDate = dateString[0];
 			// console.log(yearDate + " " + year);
@@ -76,7 +76,7 @@ const ModalChart = function (props: ChartProps) {
 	}
 
 	function setChart(initValue, endValue) {
-		const result = appState.chartData.filter((value) => {
+		const result = appState.chartSelection.filter((value) => {
 			let initDate = new Date(initValue);
 			let endDate = new Date(endValue);
 			let valueDate = new Date(value.dateString);
@@ -225,12 +225,12 @@ const ModalChart = function (props: ChartProps) {
 					</Box>
 
 					<ChartOverall
-						extraData={chartDataOverall}
+						dataOverall={chartOverall}
 						yearData={appState.yearData}
 					/>
 				</Tab>
 				<Tab eventKey="profile" title="Date Selection Series">
-					<ChartSelection chartData={chartData} />
+					<ChartSelection chartData={chartSelection} />
 					<div className="dx-field">
 						<div className="dx-field-label">
 							Click on calendar icon to select dates
@@ -265,7 +265,7 @@ const ModalChart = function (props: ChartProps) {
 					</div>
 				</Tab>
 			</Tabs>
-			<Modal.Footer>{appState.extraData._prodCitation}</Modal.Footer>
+			<Modal.Footer></Modal.Footer>
 		</Modal>
 	);
 };

@@ -1,4 +1,10 @@
 /** @format */
+import StateContext from '../../StateContext';
+import DispatchContext from '../../DispatchContext';
+import { useContext } from 'react';
+
+const appDispatch = useContext(DispatchContext);
+const appState = useContext(StateContext);
 
 export function formatDataSet(response) {
 	const dataset = response[0].attributes;
@@ -30,4 +36,68 @@ export function formatDataSet(response) {
 			dateString: value.date,
 		});
 	});
+}
+
+function separateDataByYear(dataset, dateProperty) {
+	var separatedData = {};
+	console.log(dataset);
+	let lowerValue = 0;
+	let higherValue = 0;
+	let higherValueYear = 0;
+	let lowerValueYear = 0;
+	let lastYear = 0;
+	let currentYearData = new Array();
+
+	dataset.forEach(function (item) {
+		let date = new Date(item[dateProperty]);
+		let year = date.getFullYear();
+
+		if (lowerValue == 0) {
+			lowerValue = item.orthometric_height_of_water;
+		}
+
+		if (item.orthometric_height_of_water > Number(higherValue)) {
+			higherValue = item.orthometric_height_of_water;
+			higherValueYear = year;
+		}
+
+		if (item.orthometric_height_of_water < Number(lowerValue)) {
+			lowerValue = item.orthometric_height_of_water;
+			lowerValueYear = year;
+		}
+
+		if (year > lastYear) {
+			lastYear = year;
+		}
+
+		if (!separatedData.hasOwnProperty(year)) {
+			separatedData[year] = [];
+		}
+
+		separatedData[year].push(item);
+	});
+
+	separatedData[lastYear].forEach((item) => {
+		currentYearData.push({
+			date: new Date(item.date),
+			valueCur: item.orthometric_height_of_water,
+			uncertainty: item.associated_uncertainty,
+		});
+	});
+
+	appDispatch({
+		type: 'reduceOverall',
+		infoYears: {
+			hValue: higherValue,
+			hValueYear: higherValueYear,
+			lValue: lowerValue,
+			lValueYear: lowerValueYear,
+			currentYear: currentYearData,
+			cValueYear: lastYear,
+		},
+		infoData: separatedData,
+	});
+	console.log(higherValue + ' ' + higherValueYear);
+	console.log(lowerValue + ' ' + lowerValueYear);
+	return currentYearData;
 }

@@ -62,10 +62,6 @@ const SearchComponent = (props: SearchProp) => {
 			value: `river`,
 			label: `River`,
 		},
-		{
-			value: `sat`,
-			label: `Satellite`,
-		},
 	];
 
 	const onCatValueChanged = (event: any) => {
@@ -74,7 +70,7 @@ const SearchComponent = (props: SearchProp) => {
 			label: event.label,
 		});
 
-		setSatSelectBox(event.value == 'sat');
+		// setSatSelectBox(event.value == 'sat');
 
 		console.log(event);
 	};
@@ -168,18 +164,18 @@ const SearchComponent = (props: SearchProp) => {
 					options={argList}
 					className="toast-select"
 				/>
-				{showSatSelectBox && (
-					<Select
-						menuPlacement="bottom"
-						defaultValue={{
-							label: satList[0].label,
-							value: satList[0].value,
-						}}
-						onChange={onSatValueChanged}
-						options={satList}
-						className="toast-select"
-					/>
-				)}
+
+				<Select
+					menuPlacement="bottom"
+					defaultValue={{
+						label: satList[0].label,
+						value: satList[0].value,
+					}}
+					onChange={onSatValueChanged}
+					options={satList}
+					className="toast-select"
+				/>
+
 				<input
 					onChange={(e) => {
 						onSearchChangeHandler(e);
@@ -197,7 +193,7 @@ const SearchComponent = (props: SearchProp) => {
 					className="toast-div"
 					style={{
 						width: '250px',
-						height: '300px',
+						height: '260px',
 						overflow: 'auto',
 						margin: '0px',
 						padding: '0px',

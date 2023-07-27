@@ -44,7 +44,7 @@ const ChartOverall = function (props) {
 
 	return (
 		<div id="chart-series">
-			<Chart id="chart2" dataSource={appState.extraData}>
+			<Chart id="chart2" dataSource={appState.chartOverall}>
 				<CommonSeriesSettings
 					type="spline"
 					argumentField="date"
