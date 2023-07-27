@@ -42,6 +42,8 @@ const SearchComponent = (props: SearchProp) => {
 	const appDispatch = useContext(DispatchContext);
 	const appState = useContext(StateContext);
 	const [searchResult, setSearchResult] = useState(appState.searchData);
+	const [showSatSelectBox, setSatSelectBox] = useState(false);
+
 	const [searchArg, setSearchArg] = useState({
 		value: `name`,
 		label: `Name`,
@@ -66,11 +68,13 @@ const SearchComponent = (props: SearchProp) => {
 		},
 	];
 
-	const onValueChanged = (event: any) => {
+	const onCatValueChanged = (event: any) => {
 		setSearchArg({
 			value: event.value,
 			label: event.label,
 		});
+
+		setSatSelectBox(event.value == 'sat');
 
 		console.log(event);
 	};
@@ -116,6 +120,41 @@ const SearchComponent = (props: SearchProp) => {
 		bgcolor: 'red',
 	};
 
+	const satList = [
+		{
+			value: `All`,
+			label: `All Satellites`,
+		},
+		{
+			value: `S3A`,
+			label: `S3A`,
+		},
+		{
+			value: `S3B`,
+			label: `S3B`,
+		},
+		{
+			value: `S6A`,
+			label: `S6A`,
+		},
+		{
+			value: `J2`,
+			label: `J2`,
+		},
+		{
+			value: `J3`,
+			label: `J3`,
+		},
+	];
+
+	const onSatValueChanged = (event: any) => {
+		appDispatch({
+			type: 'selectSat',
+			satName: event.value,
+		});
+		console.log('SatPanel ' + event.value);
+	};
+
 	return (
 		<>
 			<div>
@@ -125,9 +164,18 @@ const SearchComponent = (props: SearchProp) => {
 						label: argList[0].label,
 						value: argList[0].value,
 					}}
-					onChange={onValueChanged}
+					onChange={onCatValueChanged}
 					options={argList}
 					className="toast-select"
+				/>
+				<Select
+					menuPlacement="bottom"
+					defaultValue={{
+						label: satList[0].label,
+						value: satList[0].value,
+					}}
+					onChange={onSatValueChanged}
+					options={satList}
 				/>
 				<input
 					onChange={(e) => {
