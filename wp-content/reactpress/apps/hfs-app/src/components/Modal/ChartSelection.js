@@ -18,17 +18,31 @@ import Chart, {
 	Label,
 	Tooltip,
 } from 'devextreme-react/chart';
-
+import StateContext from '../../StateContext';
+import { useContext } from 'react';
 import './chart.css';
 
 const ChartSelection = function (props) {
+	const appState = useContext(StateContext);
+
 	function onLegendClick(e) {
 		e.target.isVisible() ? e.target.hide() : e.target.show();
 	}
 
+	function formatName(value) {
+		if (value === undefined) {
+			return '';
+		}
+
+		const nameSplit = value.split('_');
+		let name = nameSplit[2] + ' ' + nameSplit[3];
+
+		return name;
+	}
+
 	return (
 		<div id="chart-demo">
-			<Chart id="chart2" dataSource={props.chartData}>
+			<Chart id="chart2" dataSource={appState.chartSelection}>
 				<CommonSeriesSettings argumentField="date" />
 				<Crosshair enabled={true}>
 					<Label visible={true} />
@@ -42,6 +56,32 @@ const ChartSelection = function (props) {
 					name="Uncertainty"
 					hoverMode="none"
 				></Series>
+
+				{appState.secondAxisSelection &&
+					appState.compareStationSelection && (
+						<Series
+							axis="waterlevel"
+							valueField="height2"
+							name={formatName(appState.searchStation.name)}
+							color="#9c27b0"
+							width={3}
+						>
+							<Point size={6} />
+						</Series>
+					)}
+				{appState.compareStationSelection &&
+					!appState.secondAxisSelection && (
+						<Series
+							axis="waterlevel2"
+							valueField="height2"
+							name={formatName(appState.searchStation.name)}
+							color="#9c27b0"
+							width={3}
+						>
+							<Point size={6} />
+						</Series>
+					)}
+
 				<Series
 					axis="waterlevel"
 					color="#4945ff"
@@ -74,7 +114,21 @@ const ChartSelection = function (props) {
 						<Font color="#6b6b76" />
 					</Label>
 				</ValueAxis>
-
+				{!appState.secondAxisSelection && (
+					<ValueAxis name="waterlevel2" position="right">
+						<Title
+							text={
+								'Water Level, (m) \n' +
+								formatName(appState.searchStation.name)
+							}
+						>
+							<Font color="#9c27b0" />
+						</Title>
+						<Label>
+							<Font color="#9c27b0" />
+						</Label>
+					</ValueAxis>
+				)}
 				<Tooltip
 					enabled={true}
 					customizeTooltip={customizeTooltip}

@@ -145,8 +145,17 @@ function App() {
 			case 'toggleSecondAxisOverall':
 				draft.secondAxisOverall = action.valueToggle;
 				break;
+			case 'toggleSecondAxisSelection':
+				draft.secondAxisSelection = action.valueToggle;
+				break;
 			case 'toggleCompareStationOverall':
 				draft.compareStationOverall = action.valueToggle;
+				break;
+			case 'toggleCompareStationSelection':
+				draft.compareStationSelection = action.valueToggle;
+				break;
+			case 'setChartSelection':
+				draft.chartSelection = action.valueSelection;
 				break;
 			case 'loadDataFromDB':
 				draft.chartOverall = action.valueOverall;

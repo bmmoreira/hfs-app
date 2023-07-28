@@ -41,10 +41,12 @@ const ModalChart = function (props: ChartProps) {
 	const [key, setKey] = useState('home');
 
 	const appState = useContext(StateContext);
-	const [chartSelection, setChartData] = useState(appState.chartSelection);
 	const [chartOverall, setOverallData] = useState(appState.chartOverall);
 	const [chartDataSearch, setDataSearch] = useState(appState.chartOverall);
 	const [secondAxisOverall, setSecondAxisOverall] = useState(
+		appState.secondAxisOverall
+	);
+	const [secondAxisSelection, setSecondAxisSelection] = useState(
 		appState.secondAxisOverall
 	);
 	const [compareStationsOverall, setCompareStationsOverall] = useState(
@@ -64,17 +66,6 @@ const ModalChart = function (props: ChartProps) {
 	const startDate = new Date(now.getTime() - msInDay * 3);
 	const endDate = new Date(now.getTime() + msInDay * 3);
 
-	function setChartYear(year) {
-		const result = appState.chartSelection.filter((value) => {
-			let dateString = value.date.split('-');
-			let yearDate = dateString[0];
-			// console.log(yearDate + " " + year);
-			return yearDate == Number(year);
-		});
-		// console.log(result);
-		setChartData(result);
-	}
-
 	function setChart(initValue, endValue) {
 		const result = appState.chartSelection.filter((value) => {
 			let initDate = new Date(initValue);
@@ -83,7 +74,11 @@ const ModalChart = function (props: ChartProps) {
 			return valueDate >= initDate && valueDate <= endDate;
 		});
 		// console.log(result);
-		setChartData(result);
+		//setChartData(result);
+		appDispatch({
+			type: 'setChartSelection',
+			valueSelection: result,
+		});
 	}
 
 	useEffect(() => {
@@ -122,6 +117,23 @@ const ModalChart = function (props: ChartProps) {
 		});
 	};
 
+	const toggleSelection = (e) => {
+		if (appState.searchStation.isSet) {
+			console.log('isSet');
+		}
+
+		setCompareStationsSelection((prevState) => {
+			console.log(
+				'toggle Overall Panel: ' + secondAxisSelection + ' ' + e
+			);
+			appDispatch({
+				type: 'toggleCompareStationSelection',
+				valueToggle: !prevState,
+			});
+			return !prevState;
+		});
+	};
+
 	const handleCheckBoxChange = (e) => {
 		if (appState.searchStation.isSet) {
 			console.log('isSet');
@@ -130,6 +142,22 @@ const ModalChart = function (props: ChartProps) {
 			console.log('toggle Overall Panel: ' + secondAxisOverall + ' ' + e);
 			appDispatch({
 				type: 'toggleSecondAxisOverall',
+				valueToggle: !prevState,
+			});
+			return !prevState;
+		});
+	};
+
+	const checkBoxSelection = (e) => {
+		if (appState.searchStation.isSet) {
+			console.log('isSet');
+		}
+		setSecondAxisSelection((prevState) => {
+			console.log(
+				'toggle Selection Panel: ' + secondAxisSelection + ' ' + e
+			);
+			appDispatch({
+				type: 'toggleSecondAxisSelection',
 				valueToggle: !prevState,
 			});
 			return !prevState;
@@ -230,7 +258,41 @@ const ModalChart = function (props: ChartProps) {
 					/>
 				</Tab>
 				<Tab eventKey="profile" title="Date Selection Series">
-					<ChartSelection chartData={chartSelection} />
+					<Box
+						sx={{
+							height: 50,
+							fontSize: '0.875rem',
+							marginLeft: '30px',
+							marginRight: '30px',
+							color: '#9c27b0',
+							fontWeight: '600',
+						}}
+					>
+						<Grid container spacing={1}>
+							<Grid item xs={3.5} md={3.5}>
+								Compare Stations{' '}
+								<Switch
+									color="secondary"
+									checked={compareStationsSelection}
+									onChange={toggleSelection}
+									inputProps={{ 'aria-label': 'controlled' }}
+								/>
+							</Grid>
+							<Grid item xs={5.5} md={5.5} sx={{ alignSelf: 'center' }}>
+								{formatName(appState.searchStation.name)}
+							</Grid>
+							<Grid item xs={3} md={3} sx={{ alignSelf: 'center' }}>
+								Use Same Scale
+								<Checkbox
+									color="secondary"
+									checked={secondAxisSelection}
+									onChange={checkBoxSelection}
+									inputProps={{ 'aria-label': 'controlled' }}
+								/>
+							</Grid>
+						</Grid>
+					</Box>
+					<ChartSelection chartData={appState.chartSelection} />
 					<div className="dx-field">
 						<div className="dx-field-label">
 							Click on calendar icon to select dates
