@@ -4,7 +4,6 @@ import React from 'react';
 import Chart, {
 	CommonSeriesSettings,
 	Series,
-	Aggregation,
 	Crosshair,
 	ValueErrorBar,
 	Export,
@@ -16,6 +15,9 @@ import Chart, {
 	Font,
 	Legend,
 	Label,
+	Border,
+	ZoomAndPan,
+	ScrollBar,
 	Tooltip,
 } from 'devextreme-react/chart';
 import StateContext from '../../StateContext';
@@ -44,6 +46,8 @@ const ChartSelection = function (props) {
 		<div id="chart-demo">
 			<Chart id="chart2" dataSource={appState.chartSelection}>
 				<CommonSeriesSettings argumentField="date" />
+				<ScrollBar visible={true} />
+				<ZoomAndPan argumentAxis="both" />
 				<Crosshair enabled={true}>
 					<Label visible={true} />
 				</Crosshair>
@@ -104,7 +108,7 @@ const ChartSelection = function (props) {
 					argumentType="datetime"
 					tickInterval={'month'}
 				>
-					<Label displayMode="rotate" rotationAngle={45} />
+					<Label displayMode="rotate" rotationAngle={30} />
 				</ArgumentAxis>
 				<ValueAxis name="waterlevel">
 					<Title text="Water Level, (m)">
@@ -134,10 +138,9 @@ const ChartSelection = function (props) {
 					customizeTooltip={customizeTooltip}
 					zIndex={9999}
 				/>
-				<Title text="Orthometric Height(m) of Water Surface">
-					<Font color="black" size={'1rem'} />
-				</Title>
-				<Export enabled={true} />
+				<Legend position="inside">
+					<Border visible={true} />
+				</Legend>
 			</Chart>
 		</div>
 	);
