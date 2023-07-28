@@ -1,5 +1,5 @@
 /** @format */
-import React from 'react';
+import React, { useRef } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
@@ -20,7 +20,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { styled } from '@mui/material/styles';
+import Button from 'devextreme-react/button';
+import Chip from '@mui/material/Chip';
 
 interface ChartProps {
 	//stationObj: Station | undefined;
@@ -37,6 +38,7 @@ interface TabPanelProps {
 }
 
 const ModalChart = function (props: ChartProps) {
+	const modalRef = useRef();
 	const appDispatch = useContext(DispatchContext);
 	const [key, setKey] = useState('home');
 
@@ -220,7 +222,7 @@ const ModalChart = function (props: ChartProps) {
 					<Box
 						sx={{
 							height: 50,
-							fontSize: '0.875rem',
+							fontSize: '0.75rem',
 							marginLeft: '30px',
 							marginRight: '30px',
 							color: '#9c27b0',
@@ -228,8 +230,8 @@ const ModalChart = function (props: ChartProps) {
 						}}
 					>
 						<Grid container spacing={1}>
-							<Grid item xs={3.5} md={3.5}>
-								Compare Stations{' '}
+							<Grid item xs={3.2} md={3.2}>
+								<Chip label="Compare Stations" variant="outlined" />
 								<Switch
 									color="secondary"
 									checked={compareStationsOverall}
@@ -237,11 +239,11 @@ const ModalChart = function (props: ChartProps) {
 									inputProps={{ 'aria-label': 'controlled' }}
 								/>
 							</Grid>
-							<Grid item xs={5.5} md={5.5} sx={{ alignSelf: 'center' }}>
+							<Grid item xs={4.2} md={4.2} sx={{ alignSelf: 'center' }}>
 								{formatName(appState.searchStation.name)}
 							</Grid>
-							<Grid item xs={3} md={3} sx={{ alignSelf: 'center' }}>
-								Use Same Scale
+							<Grid item xs={2.8} md={2.8} sx={{ alignSelf: 'center' }}>
+								<Chip label="Use same Scale" variant="outlined" />
 								<Checkbox
 									color="secondary"
 									checked={secondAxisOverall}
@@ -249,13 +251,20 @@ const ModalChart = function (props: ChartProps) {
 									inputProps={{ 'aria-label': 'controlled' }}
 								/>
 							</Grid>
+							<Grid item xs={1.8} md={1.8} sx={{ alignSelf: 'center' }}>
+								<div id="buttonGroup">
+									<Button
+										icon="export"
+										text="Save"
+										// @ts-ignore
+										onClick={() => modalRef.current.log()}
+									/>
+								</div>
+							</Grid>
 						</Grid>
 					</Box>
 
-					<ChartOverall
-						dataOverall={chartOverall}
-						yearData={appState.yearData}
-					/>
+					<ChartOverall ref={modalRef} />
 				</Tab>
 				<Tab eventKey="profile" title="Date Selection Series">
 					<Box

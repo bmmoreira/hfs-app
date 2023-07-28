@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Chart, {
 	CommonSeriesSettings,
 	Series,
@@ -20,6 +20,13 @@ import Chart, {
 	ScrollBar,
 	Tooltip,
 } from 'devextreme-react/chart';
+import RangeSelector, {
+	Size,
+	Chart as ChartOptions,
+	Margin2,
+	Scale,
+	Behavior,
+} from 'devextreme-react/range-selector';
 import StateContext from '../../StateContext';
 import { useContext } from 'react';
 import './chart.css';
@@ -37,7 +44,7 @@ const ChartSelection = function (props) {
 		}
 
 		const nameSplit = value.split('_');
-		let name = nameSplit[2] + ' ' + nameSplit[3];
+		let name = nameSplit[2].substring(0, 2) + '... ' + nameSplit[3];
 
 		return name;
 	}
@@ -90,7 +97,7 @@ const ChartSelection = function (props) {
 					axis="waterlevel"
 					color="#4945ff"
 					valueField="height"
-					name="Water Level"
+					name={formatName(appState.stationData.name)}
 				>
 					<ValueErrorBar
 						lowValueField="lv"

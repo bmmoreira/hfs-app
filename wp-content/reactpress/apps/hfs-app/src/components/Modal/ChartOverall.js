@@ -1,6 +1,6 @@
 /** @format */
 
-import React from 'react';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import Chart, {
 	CommonSeriesSettings,
 	Series,
@@ -16,16 +16,22 @@ import Chart, {
 	Label,
 	Tooltip,
 } from 'devextreme-react/chart';
+import Button from 'devextreme-react/button';
 import StateContext from '../../StateContext';
 import { useContext } from 'react';
 import './chart.css';
 
-const ChartOverall = function (props) {
-	const appState = useContext(StateContext);
+const ChartOverall = forwardRef((props, ref) => {
+	useImperativeHandle(ref, () => ({
+		log() {
+			console.log('child function');
+			chartRef.current.instance.exportTo('chat-overall', 'png');
+		},
+	}));
 
-	const customTitleStyle = {
-		fontSize: 12,
-	};
+	const chartRef = useRef();
+
+	const appState = useContext(StateContext);
 
 	function onLegendClick(e) {
 		e.target.isVisible() ? e.target.hide() : e.target.show();
@@ -44,7 +50,7 @@ const ChartOverall = function (props) {
 
 	return (
 		<div id="chart-series">
-			<Chart id="chart2" dataSource={appState.chartOverall}>
+			<Chart ref={chartRef} id="chart1" dataSource={appState.chartOverall}>
 				<CommonSeriesSettings
 					type="spline"
 					argumentField="date"
@@ -146,13 +152,9 @@ const ChartOverall = function (props) {
 					horizontalAlignment="center"
 				></Legend>
 				<Tooltip enabled={false} />
-				<Title text="Orthometric Height(m) of Water Surface">
-					<Font color="black" size={'1rem'} />
-				</Title>
-				<Export enabled={true} />
 			</Chart>
 		</div>
 	);
-};
+});
 
 export default ChartOverall;
