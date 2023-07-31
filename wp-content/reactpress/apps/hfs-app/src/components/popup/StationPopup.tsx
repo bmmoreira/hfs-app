@@ -82,7 +82,7 @@ const StationPopup = (props: StPopupProp) => {
 		...theme.typography.body2,
 		padding: theme.spacing(1),
 		textAlign: 'center',
-		fontSize: '0.875rem',
+		fontSize: '0.8rem',
 		color: theme.palette.text.secondary,
 	}));
 	return (
