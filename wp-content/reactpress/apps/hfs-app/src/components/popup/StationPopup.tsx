@@ -107,15 +107,11 @@ const StationPopup = (props: StPopupProp) => {
 		>
 			{/* Customize the content of the popup */}
 			<div>
-				<h3>Code: {props.sObj.code}</h3>
+				<h3>
+					Code: {appState.stationData.river} {props.sObj.code}
+				</h3>
 				<Box sx={{ flexGrow: 1, minWidth: 250 }}>
 					<Grid container spacing={1}>
-						<Grid item xs={2}>
-							<Item>River:</Item>
-						</Grid>
-						<Grid item xs={10}>
-							<Item>{appState.stationData.river}</Item>
-						</Grid>
 						<Grid item xs={2}>
 							<Item>Basin:</Item>
 						</Grid>
@@ -137,7 +133,9 @@ const StationPopup = (props: StPopupProp) => {
 							<Item>Change: {props.sObj.change}(m)</Item>
 						</Grid>
 						<Grid item xs={4}>
-							<Item>Anom.: {props.sObj.anomalia}(m)</Item>
+							<Item>
+								Anomaly: {Number(props.sObj.anomalia).toFixed(1)}(m)
+							</Item>
 						</Grid>
 						<Grid item xs={6}>
 							<Item>Start: {props.sObj.sdate}</Item>
