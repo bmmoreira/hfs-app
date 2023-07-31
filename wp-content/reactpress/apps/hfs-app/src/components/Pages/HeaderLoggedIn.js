@@ -357,7 +357,7 @@ function HeaderLoggedIn(props) {
 					>
 						<div>
 							<IconButton
-								aria-label="delete"
+								aria-label="settings"
 								sx={{
 									backgroundColor: bgColorButton,
 									color: bgColorButtonTitle,
@@ -366,7 +366,7 @@ function HeaderLoggedIn(props) {
 								<SettingsIcon />
 							</IconButton>
 							<IconButton
-								aria-label="delete"
+								aria-label="mail"
 								sx={{
 									backgroundColor: bgColorButton,
 									color: bgColorButtonTitle,
@@ -375,7 +375,7 @@ function HeaderLoggedIn(props) {
 								<MailIcon />
 							</IconButton>
 							<IconButton
-								aria-label="delete"
+								aria-label="help"
 								sx={{
 									backgroundColor: bgColorButton,
 									color: bgColorButtonTitle,
@@ -385,7 +385,7 @@ function HeaderLoggedIn(props) {
 							</IconButton>
 						</div>
 						<Button
-							aria-label="delete"
+							aria-label="account"
 							endIcon={<PersonIcon />}
 							color="primary"
 							sx={{

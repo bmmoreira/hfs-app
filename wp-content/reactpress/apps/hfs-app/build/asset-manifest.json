@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/wp-content/reactpress/apps/hfs-app/build/static/css/main.2a77b34e.css",
-    "main.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.fdb4ffc1.js",
+    "main.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.f4599921.js",
     "static/js/483.5147e157.chunk.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/483.5147e157.chunk.js",
     "static/js/787.d921b961.chunk.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/787.d921b961.chunk.js",
     "static/media/dxicons.woff": "/wp-content/reactpress/apps/hfs-app/build/static/media/dxicons.88c9febb051d9204a743.woff",
@@ -9,12 +9,12 @@
     "static/media/dxicons.woff2": "/wp-content/reactpress/apps/hfs-app/build/static/media/dxicons.52cf573f82922400fd7f.woff2",
     "index.html": "/wp-content/reactpress/apps/hfs-app/build/index.html",
     "main.2a77b34e.css.map": "/wp-content/reactpress/apps/hfs-app/build/static/css/main.2a77b34e.css.map",
-    "main.fdb4ffc1.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.fdb4ffc1.js.map",
+    "main.f4599921.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.f4599921.js.map",
     "483.5147e157.chunk.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/483.5147e157.chunk.js.map",
     "787.d921b961.chunk.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/787.d921b961.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2a77b34e.css",
-    "static/js/main.fdb4ffc1.js"
+    "static/js/main.f4599921.js"
   ]
 }
