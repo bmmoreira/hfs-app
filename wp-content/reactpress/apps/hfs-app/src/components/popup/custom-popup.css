@@ -3,6 +3,8 @@
 .custom-popup {
 	padding: 0;
 	margin: 0;
+	z-index: 1;
+	max-width: 350px !important;
 }
 
 .popup-button {
