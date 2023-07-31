@@ -187,7 +187,7 @@ function MapComponent() {
 		// If we let the click event propagates to the map, it will immediately close the popup
 		// with `closeOnClick: true`
 		event.originalEvent.stopPropagation();
-		window.scrollTo(0, 0);
+		window.scrollTo(0, 150);
 		const zoom = 13;
 		const feature = event.features[0];
 
