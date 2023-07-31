@@ -44,7 +44,7 @@ const ChartSelection = function (props) {
 		}
 
 		const nameSplit = value.split('_');
-		let name = nameSplit[2].substring(0, 2) + '... ' + nameSplit[3];
+		let name = nameSplit[2].substring(0, 3) + '... ' + nameSplit[3];
 
 		return name;
 	}
