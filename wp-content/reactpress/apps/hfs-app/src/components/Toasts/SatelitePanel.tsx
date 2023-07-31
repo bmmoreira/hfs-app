@@ -89,9 +89,9 @@ const SatelliteToast = (props) => {
 			style={{
 				zIndex: '5',
 				width: '275px',
-				top: '100px',
+				top: '50px',
 				right: '0px',
-				marginRight: '20px',
+				marginRight: '25px',
 			}}
 		>
 			<Toast show={appState.satToast} onClose={closeToast}>

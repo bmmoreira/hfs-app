@@ -457,7 +457,7 @@ function MapComponent() {
 			center: [coord[0], coord[1]], // Fly to the selected target
 			duration: 6000, // Animate over 6 seconds
 			essential: true, // This animation is considered essential with
-			zoom: 12,
+			zoom: 10,
 			//respect to prefers-reduced-motion
 		});
 	};

@@ -109,8 +109,8 @@ const SearchToast = (props: SearchProp) => {
 				style={{
 					zIndex: '4',
 					width: '275px',
-					top: '350px',
-					right: '20px',
+					top: '280px',
+					right: '25px',
 				}}
 			>
 				<Toast show={appState.satToast} onClose={closeToast}>
