@@ -10,6 +10,12 @@ import StateContext from '../../StateContext';
 import SelectBox from 'devextreme-react/select-box';
 import { useContext } from 'react';
 import Select from 'react-select';
+import {
+	bgColor,
+	bgColorButton,
+	bgColorBox,
+	bgColorButtonTitle,
+} from '../Utils/constants.js';
 
 const SatelliteToast = (props) => {
 	const appDispatch = useContext(DispatchContext);
@@ -83,14 +89,17 @@ const SatelliteToast = (props) => {
 			style={{
 				zIndex: '5',
 				width: '275px',
-				top: '220px',
+				top: '100px',
 				right: '0px',
 				marginRight: '20px',
 			}}
 		>
 			<Toast show={appState.satToast} onClose={closeToast}>
 				<Toast.Header
-					style={{ backgroundColor: '#3887BE', color: 'white' }}
+					style={{
+						backgroundColor: bgColorButton,
+						color: bgColorButtonTitle,
+					}}
 					closeButton={false}
 				>
 					<strong className="mr-auto">Options Selection</strong>

@@ -9,7 +9,12 @@ import ToastContainer, {
 import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
 import Select from 'react-select';
-
+import {
+	bgColor,
+	bgColorButton,
+	bgColorBox,
+	bgColorButtonTitle,
+} from '../Utils/constants.js';
 import { useContext } from 'react';
 import './toasts.css';
 
@@ -104,13 +109,16 @@ const SearchToast = (props: SearchProp) => {
 				style={{
 					zIndex: '4',
 					width: '275px',
-					top: '470px',
+					top: '350px',
 					right: '20px',
 				}}
 			>
 				<Toast show={appState.satToast} onClose={closeToast}>
 					<Toast.Header
-						style={{ backgroundColor: '#3887BE', color: 'white' }}
+						style={{
+							backgroundColor: bgColorButton,
+							color: bgColorButtonTitle,
+						}}
 						closeButton={false}
 					>
 						<strong className="mr-auto">Search Box</strong>

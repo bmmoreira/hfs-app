@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import './App.css';
 import MapComponent from './components/Map/Map';
+import Header from './components/Pages/Header';
 
 function App() {
 	const BASE_URL = process.env.REACT_APP_URL_API;
@@ -201,6 +202,7 @@ function App() {
 		<>
 			<StateContext.Provider value={state}>
 				<DispatchContext.Provider value={dispatch}>
+					<Header />
 					<MapComponent />
 				</DispatchContext.Provider>
 			</StateContext.Provider>
