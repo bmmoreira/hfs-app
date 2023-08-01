@@ -31,6 +31,7 @@ import {
 	bgColorButton,
 	bgColorBox,
 	bgColorButtonTitle,
+	styleGray,
 } from '../Utils/constants.js';
 
 function HeaderLoggedIn(props) {

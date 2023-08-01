@@ -15,6 +15,7 @@ import {
 	bgColorButton,
 	bgColorBox,
 	bgColorButtonTitle,
+	styleGray,
 } from '../Utils/constants.js';
 import './custom-popup.css';
 
@@ -44,12 +45,12 @@ const StationPopup = (props: StPopupProp) => {
 	const BootstrapButton = styled(Button)({
 		boxShadow: 'none',
 		textTransform: 'none',
-		fontSize: 16,
+		fontSize: 14,
 		padding: '6px 12px',
 		border: '1px solid',
 		lineHeight: 1.5,
-		backgroundColor: '#0063cc',
-		borderColor: '#0063cc',
+		backgroundColor: styleGray.bgButton,
+		borderColor: styleGray.borderColor,
 		fontFamily: [
 			'-apple-system',
 			'BlinkMacSystemFont',
@@ -63,17 +64,17 @@ const StationPopup = (props: StPopupProp) => {
 			'"Segoe UI Symbol"',
 		].join(','),
 		'&:hover': {
-			backgroundColor: '#0069d9',
-			borderColor: '#0062cc',
+			backgroundColor: styleGray.bgButtonHover,
+			borderColor: styleGray.borderColorHover,
 			boxShadow: 'none',
 		},
 		'&:active': {
 			boxShadow: 'none',
-			backgroundColor: '#0062cc',
-			borderColor: '#005cbf',
+			backgroundColor: styleGray.bgButtonActive,
+			borderColor: styleGray.borderColorActive,
 		},
 		'&:focus': {
-			boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
+			boxShadow: styleGray.boxShadowFocus,
 		},
 	});
 
