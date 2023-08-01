@@ -46,6 +46,7 @@ function App() {
 		secondAxisOverall: false,
 		secondAxisSelection: false,
 		ucField: 'anomalia',
+		showHeader: true,
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
 	const [searchType, setSearchType] = useState('');
@@ -54,6 +55,7 @@ function App() {
 		switch (action.type) {
 			case 'loadStation':
 				draft.stationData = action.stValue;
+				draft.showHeader = false;
 				break;
 			case 'reduceOverall':
 				draft.yearData = action.infoYears;
@@ -171,6 +173,7 @@ function App() {
 				console.log(action.updatedArray);
 				break;
 			case 'closePopup':
+				draft.showHeader = true;
 				console.log('teste');
 				//popupNull();
 				break;
@@ -202,7 +205,7 @@ function App() {
 		<>
 			<StateContext.Provider value={state}>
 				<DispatchContext.Provider value={dispatch}>
-					<Header />
+					{state.showHeader && <Header />}
 					<MapComponent />
 				</DispatchContext.Provider>
 			</StateContext.Provider>

@@ -162,6 +162,11 @@ function MapComponent() {
 
 	function popupNull() {
 		setPopupInfo(null);
+		appDispatch({
+			type: 'closePopup',
+		});
+		let resizable = document.getElementById('map-wrap');
+		resizable.style.height = '100vh';
 		mapRef.current.easeTo({
 			center: [iniLon, iniLat],
 			zoom: iniZoom,
@@ -234,6 +239,10 @@ function MapComponent() {
 					code: nameSplit[3],
 				});
 				console.log(feature.properties.name);
+				let mapElement = document.getElementById('map-wrap');
+				let newHeight = Number(window.innerHeight) - 90;
+				mapElement.style.height = `${newHeight}px`;
+				mapRef.current.resize();
 			} else {
 				const clusterId = feature.properties.cluster_id;
 
@@ -504,7 +513,7 @@ function MapComponent() {
 
 	return (
 		<>
-			<div className="map-wrap">
+			<div id="map-wrap" className="map-wrap">
 				<Map
 					initialViewState={{
 						latitude: iniLat,
