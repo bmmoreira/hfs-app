@@ -178,6 +178,7 @@ function MapComponent() {
 
 	const mapRef = useRef<MapRef>(null);
 	const popupRef = useRef(null);
+	const [showOverlay, setShowOverlay] = useState(true);
 
 	const [cursor, setCursor] = useState<string>('auto');
 	const [popupInfo, setPopupInfo] = useState<PopupInfo | null>(null);
@@ -511,21 +512,68 @@ function MapComponent() {
 		}
 	}
 
+	const _onIdle = () => {
+		console.log(mapRef.current);
+		setShowOverlay(false);
+		console.log('teste onIdle');
+	};
+
+	const Overlay = () => {
+		return (
+			<div className="overlay">
+				<div className="spinner"></div>
+				{/* Optionally, you can add a loading message */}
+				<p
+					style={{
+						marginLeft: '-150px',
+						marginBottom: '180px',
+						fontWeight: '600',
+						fontSize: '1.5rem',
+						color: '#f0f0f0',
+					}}
+				>
+					Loading HFS-App...
+				</p>
+			</div>
+		);
+	};
+
+	const [state, setState] = useState({
+		messageClass: 'visible',
+		mapStyle: 'mapbox://styles/mapbox/dark-v9',
+		popupInfo: null,
+		x: 0,
+		y: 0,
+		width: 100,
+		height: 100,
+	});
+
+	useEffect(() => {
+		setState((prevState) => {
+			console.log(mapRef.current);
+			return {
+				...prevState,
+			};
+		});
+	}, []);
+
 	return (
 		<>
 			<div id="map-wrap" className="map-wrap">
+				{showOverlay && <Overlay />}
 				<Map
 					initialViewState={{
 						latitude: iniLat,
 						longitude: iniLon,
 						zoom: iniZoom,
 					}}
-					mapStyle="mapbox://styles/mapbox/dark-v9"
+					mapStyle={state.mapStyle}
 					mapboxAccessToken={API_KEY}
 					interactiveLayerIds={[clusterLayer.id, unclusteredPointLayer.id]}
 					onClick={onClick}
 					onMouseEnter={onMouseEnter}
 					onMouseLeave={onMouseLeave}
+					onIdle={_onIdle}
 					ref={mapRef}
 				>
 					{appState.allSat && (
