@@ -41,7 +41,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: calc(100vh - 130px);
-	background-color: rgba(49, 47, 56, 0.9);
+	background-color: rgba(49, 47, 56, 0.95);
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -64,4 +64,18 @@ body {
 	100% {
 		transform: rotate(360deg);
 	}
+}
+.my-node-enter {
+	opacity: 0;
+}
+.my-node-enter-active {
+	opacity: 1;
+	transition: opacity 200ms;
+}
+.my-node-exit {
+	opacity: 1;
+}
+.my-node-exit-active {
+	opacity: 0;
+	transition: opacity 200ms;
 }

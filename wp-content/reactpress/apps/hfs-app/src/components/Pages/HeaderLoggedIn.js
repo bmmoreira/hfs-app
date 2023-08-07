@@ -48,6 +48,18 @@ function HeaderLoggedIn(props) {
 		return `${count} notifications`;
 	}
 
+	function toggleTimeline() {
+		appDispatch({ type: 'togleTimeLineModal' });
+	}
+
+	function toggleProjects() {
+		appDispatch({ type: 'togleProjectsModal' });
+	}
+
+	function toggleSelect() {
+		appDispatch({ type: 'togleSelectModal' });
+	}
+
 	function handleLogout() {
 		appDispatch({ type: 'logout' });
 		appDispatch({
@@ -98,6 +110,7 @@ function HeaderLoggedIn(props) {
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
 							}}
+							onClick={toggleProjects}
 						>
 							<Badge
 								anchorOrigin={{
@@ -127,6 +140,7 @@ function HeaderLoggedIn(props) {
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
 							}}
+							onClick={toggleTimeline}
 						>
 							<Badge
 								anchorOrigin={{
@@ -270,6 +284,7 @@ function HeaderLoggedIn(props) {
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
 							}}
+							onClick={toggleSelect}
 						>
 							<Badge
 								anchorOrigin={{

@@ -57,6 +57,7 @@ import type { GeoJSONSource } from 'react-map-gl';
 import StationPopup from '../popup/StationPopup';
 import SatelliteToast from '../Toasts/SatelitePanel';
 import SearchToast from '../Toasts/SearchToast';
+import PanelModals from '../Modal/PanelModals';
 
 interface PopupInfo {
 	lngLat: [number, number];
@@ -208,6 +209,11 @@ function MapComponent() {
 					bearing: 60, // bearing in degrees
 					zoom: 8,
 					duration: 1500,
+				});
+
+				appDispatch({
+					type: 'stationArea',
+					valueSource: feature.properties.name,
 				});
 
 				appDispatch({
@@ -548,14 +554,59 @@ function MapComponent() {
 		height: 100,
 	});
 
-	useEffect(() => {
-		setState((prevState) => {
+	/* 	useEffect(() => {
+		if (mapRef.current) {
+			console.log('test ref2');
 			console.log(mapRef.current);
-			return {
-				...prevState,
-			};
-		});
-	}, []);
+		}
+		
+	}, [mapRef.current]); 
+
+		 	useEffect(() => {
+		if (mapRef.current) {
+			mapRef.current.flyTo({
+				center: [appState.stationData.lngLat[0], appState.stationData.lngLat[1]], // Fly to the selected target
+				duration: 2000, // Animate over 6 seconds
+				essential: true, // This animation is considered essential with
+				zoom: 12,
+				//respect to prefers-reduced-motion
+			});
+		}
+		
+	}, [mapRef.current]); */
+
+	const baciasFills2: LayerProps = {
+		id: 'bacias2-fills',
+		type: 'fill',
+		source: 'bacias2',
+		layout: {
+			// Make the layer visible by default.
+			visibility: 'visible',
+		},
+		paint: {
+			'fill-color': '#627BC1',
+			'fill-opacity': [
+				'case',
+				['boolean', ['feature-state', 'hover'], false],
+				0.7,
+				0.3,
+			],
+		},
+	};
+
+	const baciasBorders2: LayerProps = {
+		id: 'bacias2-borders',
+		type: 'line',
+		source: 'bacias2',
+		layout: {
+			// Make the layer visible by default.
+			visibility: 'visible',
+		},
+		paint: {
+			'line-color': '#627BC1',
+			'line-width': 2,
+		},
+	};
 
 	return (
 		<>
@@ -576,6 +627,26 @@ function MapComponent() {
 					onIdle={_onIdle}
 					ref={mapRef}
 				>
+					{appState.drainageArea ? (
+						<Source
+							id="bacias"
+							type="geojson"
+							data={`/assets/data/geojson/layer_${appState.stationLayer}.geojson`}
+						>
+							<Layer {...baciasFills2} />
+							<Layer {...baciasBorders2} />
+						</Source>
+					) : (
+						<Source
+							id="bacias"
+							type="geojson"
+							data={`/assets/data/geojson/layer_dummy.geojson`}
+						>
+							<Layer {...baciasFills2} />
+							<Layer {...baciasBorders2} />
+						</Source>
+					)}
+
 					{appState.allSat && (
 						<Source
 							id="vs_All"
@@ -648,7 +719,6 @@ function MapComponent() {
 							/>
 						</Source>
 					)}
-
 					{appState.satS3A && !appState.allSat && (
 						<Source
 							id="vs_S3A"
@@ -1010,6 +1080,7 @@ function MapComponent() {
 							/>
 						</Source>
 					)}
+
 					<FullscreenControl position="top-left" />
 					<NavigationControl position="top-left" />
 					<ScaleControl />
@@ -1020,7 +1091,9 @@ function MapComponent() {
 							closePopup={popupNull}
 						/>
 					)}
+					<PanelModals />
 				</Map>
+
 				{chartModal && (
 					<ModalChart
 						show={chartModal}
@@ -1029,7 +1102,6 @@ function MapComponent() {
 						getSearchStation={getSearchStation}
 					/>
 				)}
-
 				<SatelliteToast />
 				<SearchToast flyTo={flyToStation} onSearch={searchChangeHandler} />
 			</div>

@@ -1,0 +1,77 @@
+/** @format */
+
+.state-tooltip {
+	height: 90px;
+	background-color: red;
+	z-index: 5;
+}
+
+/* Define the entering animation when the component slides in from the top */
+.slide-timeline-enter {
+	transform: translateY(-100%);
+	opacity: 0;
+}
+
+.slide-timeline-enter-active {
+	transform: translateY(0);
+	opacity: 1;
+	transition: transform 500ms, opacity 500ms;
+}
+
+/* Define the exiting animation when the component slides out to the top */
+.slide-timeline-exit {
+	transform: translateY(0);
+	opacity: 1;
+}
+
+.slide-timeline-exit-active {
+	transform: translateY(-100%);
+	opacity: 0;
+	transition: transform 500ms, opacity 500ms;
+}
+
+.slide-projects-enter {
+	transform: translateX(-100%);
+	opacity: 0;
+}
+
+.slide-projects-enter-active {
+	transform: translateX(0);
+	opacity: 1;
+	transition: transform 500ms, opacity 500ms;
+}
+
+/* Define the exiting animation when the component slides out to the top */
+.slide-projects-exit {
+	transform: translateX(0);
+	opacity: 1;
+}
+
+.slide-projects-exit-active {
+	transform: translateX(-100%);
+	opacity: 0;
+	transition: transform 500ms, opacity 500ms;
+}
+
+.slide-select-enter {
+	transform: translateX(+100%);
+	opacity: 0;
+}
+
+.slide-select-enter-active {
+	transform: translateX(0);
+	opacity: 1;
+	transition: transform 500ms, opacity 500ms;
+}
+
+/* Define the exiting animation when the component slides out to the top */
+.slide-select-exit {
+	transform: translateX(0);
+	opacity: 1;
+}
+
+.slide-select-exit-active {
+	transform: translateX(+100%);
+	opacity: 0;
+	transition: transform 500ms, opacity 500ms;
+}

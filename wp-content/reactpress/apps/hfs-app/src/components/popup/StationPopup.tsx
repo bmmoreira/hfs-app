@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Popup } from 'react-map-gl';
+import DispatchContext from '../../DispatchContext';
 import StateContext from '../../StateContext';
 import { useContext } from 'react';
 import Box from '@mui/material/Box';
@@ -10,6 +11,7 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import ShowChartIcon from '@mui/icons-material/ShowChart';
+import WaterDropIcon from '@mui/icons-material/WaterDrop';
 import {
 	bgColor,
 	bgColorButton,
@@ -41,6 +43,7 @@ type StPopupProp = {
 
 const StationPopup = (props: StPopupProp) => {
 	const appState = useContext(StateContext);
+	const appDispatch = useContext(DispatchContext);
 
 	const BootstrapButton = styled(Button)({
 		boxShadow: 'none',
@@ -100,9 +103,10 @@ const StationPopup = (props: StPopupProp) => {
 			}}
 			onClose={() => {
 				props.closePopup();
-				/* appDispatch({
-					type: "closePopup",
-				}); */
+				appDispatch({
+					type: 'showDrainageArea',
+					valueShow: false,
+				});
 			}}
 			className="custom-popup"
 		>
@@ -146,7 +150,7 @@ const StationPopup = (props: StPopupProp) => {
 						</Grid>
 						<Grid
 							item
-							xs={12}
+							xs={6}
 							sx={{
 								display: 'flex',
 								justifyContent: 'center',
@@ -165,6 +169,32 @@ const StationPopup = (props: StPopupProp) => {
 								}}
 							>
 								Show Data
+							</BootstrapButton>
+						</Grid>
+						<Grid
+							item
+							xs={6}
+							sx={{
+								display: 'flex',
+								justifyContent: 'center',
+								alignItems: 'center',
+							}}
+						>
+							<BootstrapButton
+								variant="contained"
+								aria-label="drainage"
+								endIcon={<WaterDropIcon />}
+								color="primary"
+								disableRipple
+								onClick={() => {
+									appDispatch({
+										type: 'showDrainageArea',
+										valueShow: true,
+									});
+								}}
+								sx={{ backgroundColor: '#0677b2' }}
+							>
+								Show Drainage
 							</BootstrapButton>
 						</Grid>
 					</Grid>

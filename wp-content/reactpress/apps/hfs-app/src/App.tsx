@@ -47,6 +47,19 @@ function App() {
 		secondAxisSelection: false,
 		ucField: 'anomalia',
 		showHeader: true,
+		modals: {
+			projects: false,
+			timeline: false,
+			download: false,
+			where: false,
+			when: false,
+			how: false,
+			select: false,
+			filters: false,
+			results: false,
+		},
+		stationLayer: '',
+		drainageArea: false,
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
 	const [searchType, setSearchType] = useState('');
@@ -171,6 +184,30 @@ function App() {
 			case 'resetExtraData':
 				draft.chartOverall = action.updatedArray;
 				console.log(action.updatedArray);
+				break;
+			case 'togleTimeLineModal':
+				draft.modals.timeline = true;
+				break;
+			case 'closeTimeLineModal':
+				draft.modals.timeline = false;
+				break;
+			case 'togleProjectsModal':
+				draft.modals.projects = true;
+				break;
+			case 'closeProjectsModal':
+				draft.modals.projects = false;
+				break;
+			case 'togleSelectModal':
+				draft.modals.select = true;
+				break;
+			case 'closeSelectModal':
+				draft.modals.select = false;
+				break;
+			case 'stationArea':
+				draft.stationLayer = action.valueSource;
+				break;
+			case 'showDrainageArea':
+				draft.drainageArea = action.valueShow;
 				break;
 			case 'closePopup':
 				draft.showHeader = true;
