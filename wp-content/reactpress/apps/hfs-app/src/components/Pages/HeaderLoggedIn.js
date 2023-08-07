@@ -169,6 +169,7 @@ function HeaderLoggedIn(props) {
 								width: '80px',
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
+								disabled,
 							}}
 						>
 							<Badge
