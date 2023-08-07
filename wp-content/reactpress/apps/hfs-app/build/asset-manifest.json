@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/wp-content/reactpress/apps/hfs-app/build/static/css/main.3bf10dce.css",
+    "main.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.073b13a3.js",
+    "static/js/483.5147e157.chunk.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/483.5147e157.chunk.js",
+    "static/js/787.d921b961.chunk.js": "/wp-content/reactpress/apps/hfs-app/build/static/js/787.d921b961.chunk.js",
+    "static/media/dxicons.woff": "/wp-content/reactpress/apps/hfs-app/build/static/media/dxicons.88c9febb051d9204a743.woff",
+    "static/media/dxicons.ttf": "/wp-content/reactpress/apps/hfs-app/build/static/media/dxicons.dee5683ec0edb6c19034.ttf",
+    "static/media/dxicons.woff2": "/wp-content/reactpress/apps/hfs-app/build/static/media/dxicons.52cf573f82922400fd7f.woff2",
+    "index.html": "/wp-content/reactpress/apps/hfs-app/build/index.html",
+    "main.3bf10dce.css.map": "/wp-content/reactpress/apps/hfs-app/build/static/css/main.3bf10dce.css.map",
+    "main.073b13a3.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/main.073b13a3.js.map",
+    "483.5147e157.chunk.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/483.5147e157.chunk.js.map",
+    "787.d921b961.chunk.js.map": "/wp-content/reactpress/apps/hfs-app/build/static/js/787.d921b961.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3bf10dce.css",
+    "static/js/main.073b13a3.js"
+  ]
+}
