@@ -60,6 +60,8 @@ function App() {
 		},
 		stationLayer: '',
 		drainageArea: false,
+		drainageAreaName: null,
+		drainageData: null,
 	};
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
 	const [searchType, setSearchType] = useState('');
@@ -208,6 +210,10 @@ function App() {
 				break;
 			case 'showDrainageArea':
 				draft.drainageArea = action.valueShow;
+				draft.drainageAreaName = action.valueName;
+				break;
+			case 'drainageArea':
+				draft.drainageData = action.valueArea;
 				break;
 			case 'closePopup':
 				draft.showHeader = true;

@@ -319,6 +319,42 @@ function MapComponent() {
 		}
 	}
 
+	async function getDrainageArea(id: string) {
+		try {
+			const sId = String(id).padStart(8, '0');
+
+			const response = await axios
+				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
+				.then((response) => {
+					const entries = response.data.data;
+					console.log(entries);
+					if (entries.length > 0) {
+						appDispatch({
+							type: 'drainageArea',
+							valueArea: entries[0].attributes.drainage,
+						});
+
+						console.log(
+							'%c EVENT: click button getDrainageArea! ',
+							'background: #222; color: #bada55'
+						);
+					} else {
+						console.log(
+							'No entry found with the specified custom specific field.!!!'
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					console.log(
+						'No entry found with the specified custom specific field.!!!'
+					);
+				});
+		} catch (error: any) {
+			console.log(error);
+		}
+	}
+
 	async function getSearchStationData(id: string) {
 		try {
 			const sId = String(id).padStart(8, '0');
@@ -575,6 +611,12 @@ function MapComponent() {
 		
 	}, [mapRef.current]); */
 
+	useEffect(() => {
+		if (appState.drainageAreaName) {
+			getDrainageArea(appState.drainageAreaName);
+		}
+	}, [appState.drainageAreaName]);
+
 	const baciasFills2: LayerProps = {
 		id: 'bacias2-fills',
 		type: 'fill',
@@ -631,7 +673,7 @@ function MapComponent() {
 						<Source
 							id="bacias"
 							type="geojson"
-							data={`/assets/data/geojson/layer_${appState.stationLayer}.geojson`}
+							data={appState.drainageData}
 						>
 							<Layer {...baciasFills2} />
 							<Layer {...baciasBorders2} />

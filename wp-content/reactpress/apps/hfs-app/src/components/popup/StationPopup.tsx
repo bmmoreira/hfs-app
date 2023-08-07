@@ -190,6 +190,7 @@ const StationPopup = (props: StPopupProp) => {
 									appDispatch({
 										type: 'showDrainageArea',
 										valueShow: true,
+										valueName: appState.stationData.name,
 									});
 								}}
 								sx={{ backgroundColor: '#0677b2' }}
