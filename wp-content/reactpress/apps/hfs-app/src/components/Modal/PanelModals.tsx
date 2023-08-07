@@ -107,10 +107,7 @@ export default function PanelModals() {
 								</Grid>
 							</Grid>
 
-							<Typography sx={{ mt: 2 }}>
-								Duis mollis, est non commodo luctus, nisi erat porttitor
-								ligula.
-							</Typography>
+							<Typography sx={{ mt: 2 }}></Typography>
 						</Box>
 					</CSSTransition>
 				</Grid>
@@ -156,10 +153,7 @@ export default function PanelModals() {
 								</Grid>
 							</Grid>
 
-							<Typography sx={{ mt: 2 }}>
-								Duis mollis, est non commodo luctus, nisi erat porttitor
-								ligula.
-							</Typography>
+							<Typography sx={{ mt: 2 }}></Typography>
 						</Box>
 					</CSSTransition>
 				</Grid>
@@ -205,10 +199,7 @@ export default function PanelModals() {
 								</Grid>
 							</Grid>
 
-							<Typography sx={{ mt: 2 }}>
-								Duis mollis, est non commodo luctus, nisi erat porttitor
-								ligula.
-							</Typography>
+							<Typography sx={{ mt: 2 }}></Typography>
 						</Box>
 					</CSSTransition>
 				</Grid>
