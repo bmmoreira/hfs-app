@@ -1,7 +1,13 @@
 /** @format */
 
 import * as React from 'react';
-import { useRef, useState, useCallback, useContext } from 'react';
+import {
+	useRef,
+	useState,
+	useCallback,
+	useContext,
+	useEffect,
+} from 'react';
 import { render } from 'react-dom';
 import { useImmerReducer } from 'use-immer';
 import StateContext from './StateContext';
@@ -11,8 +17,11 @@ import axios from 'axios';
 import './App.css';
 import MapComponent from './components/Map/Map';
 import Header from './components/Pages/Header';
+import useWindowDimensions from './components/Utils/useWindowDimensions';
 
 function App() {
+	const { height, width } = useWindowDimensions();
+
 	const BASE_URL = process.env.REACT_APP_URL_API;
 
 	const initialState = {
@@ -140,6 +149,7 @@ function App() {
 				break;
 			case 'searchDataAction':
 				draft.searchData = action.searchDataValue;
+				draft.searchResult = true;
 				break;
 			case 'searchValues':
 				draft.searchValue = action.searchValue;
@@ -196,6 +206,13 @@ function App() {
 			case 'togleProjectsModal':
 				draft.modals.projects = true;
 				break;
+			case 'closeSearchModal':
+				draft.modals.search = false;
+				break;
+			case 'toggleSearchModal':
+				draft.modals.timeline = false;
+				draft.modals.search = true;
+				break;
 			case 'closeProjectsModal':
 				draft.modals.projects = false;
 				break;
@@ -220,27 +237,50 @@ function App() {
 				console.log('teste');
 				//popupNull();
 				break;
+			case 'toggleBackdrop':
+				draft.backdrop = action.value;
+				break;
 		}
 	}
 
-	async function search(type, value) {
-		/* 		dispatch({
-			type: 'searchLoading',
-			searchState: true,
-		}); */
+	useEffect(() => {
+		if (state.searchValue) {
+			search('name', state.searchValue);
+		}
+		/*
+    If that was just set and now it's true,
+    then this is where we would want to save data
+    into localStorage.
+    */
+	}, [state.searchValue]);
+
+	async function search(type: string, value: string) {
+		const cancelTokenSource = axios.CancelToken.source();
 		console.log(type);
-		const res = await axios(
-			`${BASE_URL}/api/vstations?filters[${type}][$contains]=${value.toUpperCase()}`
-		);
-		/* const res = await axios(
-		`https://api.maphidro.info/api/stations?filters[stName][$contains]=${val.toUpperCase()}`
-	); */
-		const stationData = await res.data.data;
-		if (stationData.length > 0) {
+		try {
+			const res = await axios(
+				`${BASE_URL}/api/vstations?filters[${type}][$contains]=${value.toUpperCase()}`,
+				{
+					cancelToken: cancelTokenSource.token,
+				}
+			);
 			dispatch({
-				type: 'searchDataAction',
-				searchDataValue: stationData,
+				type: 'toggleBackdrop',
+				value: !state.backdrop,
 			});
+			const stationData = await res.data.data;
+			if (stationData.length > 0) {
+				dispatch({
+					type: 'searchDataAction',
+					searchDataValue: stationData,
+				});
+				if (width < 600) {
+				} else {
+					dispatch({ type: 'toggleSearchModal' });
+				}
+			}
+		} catch (e) {
+			console.log(e);
 		}
 	}
 

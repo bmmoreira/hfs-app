@@ -68,6 +68,46 @@ function HeaderLoggedIn(props) {
 		});
 	}
 
+	let timeoutId;
+	const onSearchChangeHandler = (event) => {
+		const inputValue = event.target.value;
+
+		clearTimeout(timeoutId); // Clear any existing timeout
+
+		if (!appState.modals.panelBox) {
+			appDispatch({
+				type: 'toglePanelModal',
+				value: !appState.modals.panelBox,
+			});
+		}
+		// Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
+		if (inputValue == '') {
+			appDispatch({ type: 'closeSearchModal' });
+			appDispatch({
+				type: 'searchDataAction',
+				searchDataValue: [],
+			});
+			appDispatch({
+				type: 'searchAction',
+				searchEventValue: '',
+			});
+		} else {
+			timeoutId = setTimeout(() => {
+				// Perform the desired action or function call here
+				appDispatch({ type: 'closeSearchModal' });
+				appDispatch({
+					type: 'searchAction',
+					searchEventValue: inputValue,
+				});
+				appDispatch({
+					type: 'toggleBackdrop',
+					value: !appState.backdrop,
+				});
+				console.log('Input value:', inputValue);
+			}, 1300);
+		}
+	};
+
 	return (
 		<div style={{ width: '100%', margin: 0, padding: 0 }}>
 			<Box
@@ -141,6 +181,7 @@ function HeaderLoggedIn(props) {
 								color: bgColorButtonTitle,
 							}}
 							onClick={toggleTimeline}
+							disabled
 						>
 							<Badge
 								anchorOrigin={{
@@ -211,6 +252,9 @@ function HeaderLoggedIn(props) {
 								width: '400px',
 								fontStyle: 'italic',
 								height: '20px',
+							}}
+							onChange={(e) => {
+								onSearchChangeHandler(e);
 							}}
 							InputProps={{
 								style: {
@@ -315,6 +359,7 @@ function HeaderLoggedIn(props) {
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
 							}}
+							disabled
 						>
 							<Badge
 								anchorOrigin={{
@@ -345,6 +390,7 @@ function HeaderLoggedIn(props) {
 								borderRadius: '5px',
 								color: bgColorButtonTitle,
 							}}
+							disabled
 						>
 							<Badge
 								anchorOrigin={{

@@ -58,6 +58,10 @@ import StationPopup from '../popup/StationPopup';
 import SatelliteToast from '../Toasts/SatelitePanel';
 import SearchToast from '../Toasts/SearchToast';
 import PanelModals from '../Modal/PanelModals';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+
+import { BASE_URL, COLLECTION_NAME } from '../Utils/constants';
 
 interface PopupInfo {
 	lngLat: [number, number];
@@ -78,8 +82,6 @@ function MapComponent() {
 	const appState = useContext(StateContext);
 
 	const API_KEY = process.env.REACT_APP_API_KEY;
-	const BASE_URL = 'https://api.hydrologyfromspace.org';
-	const COLLECTION_NAME = process.env.REACT_APP_COLLECTION_NAME;
 
 	const iniZoom: number = 4;
 	const iniLat = -13.91;
@@ -156,6 +158,11 @@ function MapComponent() {
 
 	const [chartModal, setChartModal] = useState(false);
 	const toggleChartModal = () => {
+		// change search value to blank to fix next search with same value useEffect
+		appDispatch({
+			type: 'searchAction',
+			searchEventValue: '',
+		});
 		setChartModal((prevState) => {
 			return !prevState;
 		});
@@ -1133,7 +1140,7 @@ function MapComponent() {
 							closePopup={popupNull}
 						/>
 					)}
-					<PanelModals />
+					<PanelModals flyTo={flyToStation} />
 				</Map>
 
 				{chartModal && (
@@ -1145,7 +1152,16 @@ function MapComponent() {
 					/>
 				)}
 				<SatelliteToast />
-				<SearchToast flyTo={flyToStation} onSearch={searchChangeHandler} />
+
+				<Backdrop
+					sx={{
+						color: '#fff',
+						zIndex: (theme) => theme.zIndex.drawer + 1,
+					}}
+					open={appState.backdrop}
+				>
+					<CircularProgress color="inherit" />
+				</Backdrop>
 			</div>
 		</>
 	);
