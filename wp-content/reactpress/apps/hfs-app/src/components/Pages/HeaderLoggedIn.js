@@ -115,6 +115,7 @@ function HeaderLoggedIn(props) {
 				display: 'flex',
 				gap: '10px',
 				justifyContent: 'center',
+				backgroundColor: 'red',
 			}}
 		>
 			<IconButton
@@ -218,9 +219,10 @@ function HeaderLoggedIn(props) {
 				display: 'flex',
 				height: '60px',
 				gap: '10px',
-				justifyContent: 'center',
-				alignItems: 'center',
+
+				alignItems: 'end',
 				paddingTop: '0px',
+				paddingRight: '20px',
 			}}
 		>
 			<img src="/assets/images/sgb_60h.png" height={40} alt="SGB" />
