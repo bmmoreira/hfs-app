@@ -213,26 +213,28 @@ function HeaderLoggedIn(props) {
 	);
 
 	const gridIcons = (
-		<Grid
-			xs={8}
-			sx={{
-				display: 'flex',
-				height: '60px',
-				gap: '10px',
+		<Grid container spacing={0} sx={{ display: 'flex' }}>
+			<Grid
+				xs={12}
+				sx={{
+					display: 'flex',
+					height: '60px',
+					gap: '10px',
 
-				alignItems: 'end',
-				paddingTop: '0px',
-				paddingRight: '20px',
-			}}
-		>
-			<img src="/assets/images/sgb_60h.png" height={40} alt="SGB" />
-			<img src="/assets/images/ird_60h.png" height={60} alt="IRD" />
-			<img src="/assets/images/iph_60.png" height={60} alt="IPH" />
-			<img
-				src="/assets/images/hydromatters_60.png"
-				height={60}
-				alt="hydromatters"
-			/>
+					alignItems: 'end',
+					paddingTop: '0px',
+					paddingRight: '20px',
+				}}
+			>
+				<img src="/assets/images/sgb_60h.png" height={40} alt="SGB" />
+				<img src="/assets/images/ird_60h.png" height={60} alt="IRD" />
+				<img src="/assets/images/iph_60.png" height={60} alt="IPH" />
+				<img
+					src="/assets/images/hydromatters_60.png"
+					height={60}
+					alt="hydromatters"
+				/>
+			</Grid>
 		</Grid>
 	);
 
@@ -505,9 +507,7 @@ function HeaderLoggedIn(props) {
 					</Grid>
 				</Grid>
 
-				<Grid container spacing={0} sx={{ display: 'flex' }}>
-					{gridIcons}
-				</Grid>
+				{gridIcons}
 			</Box>
 		</div>
 	);
