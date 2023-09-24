@@ -223,7 +223,7 @@ function HeaderLoggedIn(props) {
 
 					alignItems: 'end',
 					paddingTop: '0px',
-					paddingRight: '20px',
+					paddingLeft: '20px',
 				}}
 			>
 				<img src="/assets/images/sgb_60h.png" height={40} alt="SGB" />
@@ -308,7 +308,6 @@ function HeaderLoggedIn(props) {
 				m: 0,
 			}}
 		>
-			<Grid xs={4}></Grid>
 			<Grid
 				xs={8}
 				sx={{
@@ -408,6 +407,7 @@ function HeaderLoggedIn(props) {
 					<div>Select</div>
 				</IconButton>
 			</Grid>
+			{gridProfile}
 		</Grid>
 	);
 
@@ -425,8 +425,7 @@ function HeaderLoggedIn(props) {
 					m: 0,
 				}}
 			>
-				{gridLeftButtons}
-
+				{gridIcons}
 				<Grid container spacing={0} sx={{ display: 'flex' }}>
 					<Grid
 						xs={12}
@@ -507,7 +506,7 @@ function HeaderLoggedIn(props) {
 					</Grid>
 				</Grid>
 
-				{gridIcons}
+				{gridLeftButtons}
 			</Box>
 		</div>
 	);
