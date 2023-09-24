@@ -68,6 +68,10 @@ function HeaderLoggedIn(props) {
 		});
 	}
 
+	function configButton() {
+		window.location.reload(); // refresh the browser
+	}
+
 	let timeoutId;
 	const onSearchChangeHandler = (event) => {
 		const inputValue = event.target.value;
@@ -256,6 +260,7 @@ function HeaderLoggedIn(props) {
 						backgroundColor: bgColorButton,
 						color: bgColorButtonTitle,
 					}}
+					onClick={configButton}
 				>
 					<SettingsIcon />
 				</IconButton>
