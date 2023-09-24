@@ -440,7 +440,7 @@ function HeaderLoggedIn(props) {
 							size="small"
 							placeholder="search for stations"
 							sx={{
-								width: '400px',
+								width: '350px',
 								fontStyle: 'italic',
 								height: '20px',
 							}}
