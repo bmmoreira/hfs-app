@@ -512,6 +512,11 @@ function MapComponent() {
 	}
 
 	const flyToStation = (coord: number[]) => {
+		// blank search value to avoid bug on next search
+		appDispatch({
+			type: 'searchAction',
+			searchEventValue: '',
+		});
 		mapRef.current.flyTo({
 			center: [coord[0], coord[1]], // Fly to the selected target
 			duration: 6000, // Animate over 6 seconds

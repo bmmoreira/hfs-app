@@ -108,6 +108,305 @@ function HeaderLoggedIn(props) {
 		}
 	};
 
+	const gridRightButtons = (
+		<Grid
+			xs={8}
+			sx={{
+				display: 'flex',
+				gap: '10px',
+				justifyContent: 'center',
+			}}
+		>
+			<IconButton
+				aria-label={notificationsLabel(100)}
+				sx={{
+					backgroundColor: bgColorButton,
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '20px',
+					justifyContent: 'center',
+					fontSize: '0.9rem',
+					height: '80px',
+					width: '80px',
+					borderRadius: '5px',
+					color: bgColorButtonTitle,
+				}}
+				onClick={toggleSelect}
+			>
+				<Badge
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+					badgeContent={7}
+					color="secondary"
+				>
+					<AddLocationAltIcon
+						sx={{ position: 'relative', top: '0px', left: '0px' }}
+					/>
+				</Badge>
+				<div>Select</div>
+			</IconButton>
+			<IconButton
+				aria-label={notificationsLabel(100)}
+				sx={{
+					backgroundColor: bgColorButton,
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '20px',
+					justifyContent: 'center',
+					fontSize: '0.9rem',
+					height: '80px',
+					width: '80px',
+					borderRadius: '5px',
+					color: bgColorButtonTitle,
+				}}
+				disabled
+			>
+				<Badge
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+					badgeContent={3}
+					color="secondary"
+				>
+					<FilterAltIcon
+						sx={{ position: 'relative', top: '0px', left: '0px' }}
+					/>
+				</Badge>
+				<div>Filters</div>
+			</IconButton>
+
+			<IconButton
+				aria-label={notificationsLabel(100)}
+				sx={{
+					backgroundColor: bgColorButton,
+					display: 'flex',
+					flexDirection: 'column',
+					gap: '20px',
+					justifyContent: 'center',
+					fontSize: '0.9rem',
+					height: '80px',
+					width: '80px',
+					borderRadius: '5px',
+					color: bgColorButtonTitle,
+				}}
+				disabled
+			>
+				<Badge
+					anchorOrigin={{
+						vertical: 'bottom',
+						horizontal: 'right',
+					}}
+					badgeContent={22}
+					color="secondary"
+				>
+					<AutoAwesomeMotionIcon
+						sx={{ position: 'relative', top: '0px', left: '0px' }}
+					/>
+				</Badge>
+				<div>Results</div>
+			</IconButton>
+		</Grid>
+	);
+
+	const gridIcons = (
+		<Grid
+			xs={8}
+			sx={{
+				display: 'flex',
+				height: '60px',
+				gap: '10px',
+				justifyContent: 'center',
+				alignItems: 'center',
+				paddingTop: '0px',
+			}}
+		>
+			<img src="/assets/images/sgb_60h.png" height={40} alt="SGB" />
+			<img src="/assets/images/ird_60h.png" height={60} alt="IRD" />
+			<img src="/assets/images/iph_60.png" height={60} alt="IPH" />
+			<img
+				src="/assets/images/hydromatters_60.png"
+				height={60}
+				alt="hydromatters"
+			/>
+		</Grid>
+	);
+
+	const gridProfile = (
+		<Grid
+			xs={4}
+			sx={{
+				display: 'flex',
+				flexDirection: 'column',
+				alignItems: 'flex-end',
+				paddingRight: '20px',
+				height: '80px',
+			}}
+		>
+			<div>
+				<IconButton
+					aria-label="settings"
+					sx={{
+						backgroundColor: bgColorButton,
+						color: bgColorButtonTitle,
+					}}
+				>
+					<SettingsIcon />
+				</IconButton>
+				<IconButton
+					aria-label="mail"
+					sx={{
+						backgroundColor: bgColorButton,
+						color: bgColorButtonTitle,
+					}}
+				>
+					<MailIcon />
+				</IconButton>
+				<IconButton
+					aria-label="help"
+					sx={{
+						backgroundColor: bgColorButton,
+						color: bgColorButtonTitle,
+					}}
+				>
+					<HelpIcon />
+				</IconButton>
+			</div>
+			<Button
+				aria-label="account"
+				endIcon={<PersonIcon />}
+				color="primary"
+				sx={{
+					backgroundColor: bgColorButton,
+					display: 'flex',
+					flexDirection: 'row',
+					justifyContent: 'center',
+					fontSize: '0.9rem',
+					height: '30px',
+					width: '140px',
+					borderRadius: '5px',
+					marginTop: '5px',
+					color: bgColorButtonTitle,
+				}}
+			>
+				Log in
+			</Button>
+		</Grid>
+	);
+
+	const gridLeftButtons = (
+		<Grid
+			container
+			spacing={0}
+			sx={{
+				m: 0,
+			}}
+		>
+			<Grid xs={4}></Grid>
+			<Grid
+				xs={8}
+				sx={{
+					display: 'flex',
+					gap: '10px',
+				}}
+			>
+				<IconButton
+					aria-label={notificationsLabel(100)}
+					sx={{
+						backgroundColor: bgColorButton,
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '20px',
+						justifyContent: 'center',
+						fontSize: '0.9rem',
+						height: '80px',
+						width: '80px',
+						borderRadius: '5px',
+						color: bgColorButtonTitle,
+					}}
+					onClick={toggleProjects}
+				>
+					<Badge
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right',
+						}}
+						badgeContent={1}
+						color="secondary"
+					>
+						<BookIcon
+							sx={{ position: 'relative', top: '0px', left: '0px' }}
+						/>
+					</Badge>
+					<div>Projects</div>
+				</IconButton>
+				<IconButton
+					aria-label={notificationsLabel(100)}
+					sx={{
+						backgroundColor: bgColorButton,
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '20px',
+						justifyContent: 'center',
+						fontSize: '0.9rem',
+						height: '80px',
+						width: '80px',
+						borderRadius: '5px',
+						color: bgColorButtonTitle,
+					}}
+					onClick={toggleTimeline}
+					disabled
+				>
+					<Badge
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right',
+						}}
+						badgeContent={15}
+						color="secondary"
+					>
+						<HistoryIcon
+							sx={{ position: 'relative', top: '0px', left: '0px' }}
+						/>
+					</Badge>
+					<div>Timeline</div>
+				</IconButton>
+				<IconButton
+					aria-label={notificationsLabel(100)}
+					sx={{
+						backgroundColor: bgColorButton,
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '20px',
+						justifyContent: 'center',
+						fontSize: '0.9rem',
+						height: '80px',
+						width: '80px',
+						borderRadius: '5px',
+						color: bgColorButtonTitle,
+					}}
+					onClick={toggleSelect}
+				>
+					<Badge
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right',
+						}}
+						badgeContent={7}
+						color="secondary"
+					>
+						<AddLocationAltIcon
+							sx={{ position: 'relative', top: '0px', left: '0px' }}
+						/>
+					</Badge>
+					<div>Select</div>
+				</IconButton>
+			</Grid>
+		</Grid>
+	);
+
 	return (
 		<div style={{ width: '100%', margin: 0, padding: 0 }}>
 			<Box
@@ -115,126 +414,16 @@ function HeaderLoggedIn(props) {
 					display: 'grid',
 					gridTemplateColumns: 'repeat(3, 1fr)',
 					alignItems: { xs: 'center', md: 'center' },
-					backgroundColor: bgColorBox,
+					backgroundColor: bgColor,
 					height: '90px',
+					borderBottom: '2px solid #4cadc5',
+					borderTop: '2px solid #4cadc5',
 					m: 0,
 				}}
 			>
-				<Grid
-					container
-					spacing={0}
-					sx={{
-						m: 0,
-					}}
-				>
-					<Grid xs={4} sx={{ backgroundColor: bgColor }}></Grid>
-					<Grid
-						xs={8}
-						sx={{
-							backgroundColor: bgColor,
-							display: 'flex',
-							gap: '10px',
-						}}
-					>
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							onClick={toggleProjects}
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={1}
-								color="secondary"
-							>
-								<BookIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Projects</div>
-						</IconButton>
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							onClick={toggleTimeline}
-							disabled
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={15}
-								color="secondary"
-							>
-								<HistoryIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Timeline</div>
-						</IconButton>
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							disabled
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={23}
-								color="secondary"
-							>
-								<DownloadIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Download</div>
-						</IconButton>
-					</Grid>
-				</Grid>
+				{gridLeftButtons}
 
-				<Grid
-					container
-					spacing={0}
-					sx={{ backgroundColor: bgColor, display: 'flex' }}
-				>
+				<Grid container spacing={0} sx={{ display: 'flex' }}>
 					<Grid
 						xs={12}
 						sx={{
@@ -287,186 +476,35 @@ function HeaderLoggedIn(props) {
 						<Chip
 							icon={<PublicIcon />}
 							label="Where"
-							sx={{ color: bgColorButtonTitle, backgroundColor: bgColor }}
+							sx={{
+								color: bgColorButtonTitle,
+								backgroundColor: bgColor,
+								height: '20px',
+							}}
 						/>
 						<Chip
 							icon={<WatchLaterIcon />}
 							label="When"
-							sx={{ color: bgColorButtonTitle, backgroundColor: bgColor }}
+							sx={{
+								color: bgColorButtonTitle,
+								backgroundColor: bgColor,
+								height: '20px',
+							}}
 						/>
 						<Chip
 							icon={<TuneIcon />}
 							label="How"
-							sx={{ color: bgColorButtonTitle, backgroundColor: bgColor }}
+							sx={{
+								color: bgColorButtonTitle,
+								backgroundColor: bgColor,
+								height: '20px',
+							}}
 						/>
 					</Grid>
 				</Grid>
 
-				<Grid
-					container
-					spacing={0}
-					sx={{ backgroundColor: bgColor, display: 'flex' }}
-				>
-					<Grid
-						xs={8}
-						sx={{
-							display: 'flex',
-							gap: '10px',
-							justifyContent: 'center',
-						}}
-					>
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							onClick={toggleSelect}
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={7}
-								color="secondary"
-							>
-								<AddLocationAltIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Select</div>
-						</IconButton>
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							disabled
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={3}
-								color="secondary"
-							>
-								<FilterAltIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Filters</div>
-						</IconButton>
-
-						<IconButton
-							aria-label={notificationsLabel(100)}
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'column',
-								gap: '20px',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '80px',
-								width: '80px',
-								borderRadius: '5px',
-								color: bgColorButtonTitle,
-							}}
-							disabled
-						>
-							<Badge
-								anchorOrigin={{
-									vertical: 'bottom',
-									horizontal: 'right',
-								}}
-								badgeContent={22}
-								color="secondary"
-							>
-								<AutoAwesomeMotionIcon
-									sx={{ position: 'relative', top: '0px', left: '0px' }}
-								/>
-							</Badge>
-							<div>Results</div>
-						</IconButton>
-					</Grid>
-
-					<Grid
-						xs={4}
-						sx={{
-							display: 'flex',
-							flexDirection: 'column',
-							alignItems: 'flex-end',
-							paddingRight: '20px',
-							height: '80px',
-						}}
-					>
-						<div>
-							<IconButton
-								aria-label="settings"
-								sx={{
-									backgroundColor: bgColorButton,
-									color: bgColorButtonTitle,
-								}}
-							>
-								<SettingsIcon />
-							</IconButton>
-							<IconButton
-								aria-label="mail"
-								sx={{
-									backgroundColor: bgColorButton,
-									color: bgColorButtonTitle,
-								}}
-							>
-								<MailIcon />
-							</IconButton>
-							<IconButton
-								aria-label="help"
-								sx={{
-									backgroundColor: bgColorButton,
-									color: bgColorButtonTitle,
-								}}
-							>
-								<HelpIcon />
-							</IconButton>
-						</div>
-						<Button
-							aria-label="account"
-							endIcon={<PersonIcon />}
-							color="primary"
-							sx={{
-								backgroundColor: bgColorButton,
-								display: 'flex',
-								flexDirection: 'row',
-								justifyContent: 'center',
-								fontSize: '0.9rem',
-								height: '30px',
-								width: '140px',
-								borderRadius: '5px',
-								marginTop: '5px',
-								color: bgColorButtonTitle,
-							}}
-						>
-							Log in
-						</Button>
-					</Grid>
+				<Grid container spacing={0} sx={{ display: 'flex' }}>
+					{gridIcons}
 				</Grid>
 			</Box>
 		</div>
