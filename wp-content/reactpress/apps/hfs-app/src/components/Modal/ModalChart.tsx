@@ -92,7 +92,12 @@ const ModalChart = function (props: ChartProps) {
 	}, []);
 
 	const setSearchStationData = (value) => {
+		/* search and merge data to compare stations on 
+		Chart Overall Tab. This function is executed in
+		map.tsx
+		*/
 		props.getSearchStation(value);
+		// chartData is update to show both stations values on chart
 		setDataSearch(appState.searchStation.overall);
 	};
 

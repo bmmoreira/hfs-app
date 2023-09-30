@@ -362,6 +362,13 @@ function MapComponent() {
 		}
 	}
 
+	/*
+		Function to search a second station to compare it with the
+		current selected virtual station.
+		This function merge data with current virtual station data
+		so it can be show on the Chart Graphic engine,
+		because it can only have a unique array in the Chart Engine.
+	*/
 	async function getSearchStationData(id: string) {
 		try {
 			const sId = String(id).padStart(8, '0');

@@ -18,245 +18,24 @@ import './App.css';
 import MapComponent from './components/Map/Map';
 import Header from './components/Pages/Header';
 import useWindowDimensions from './components/Utils/useWindowDimensions';
+import { initialState, mapReducer } from './reducer';
+import { COLLECTION_NAME, BASE_URL } from './components/Utils/constants';
 
 function App() {
 	const { height, width } = useWindowDimensions();
 
-	const BASE_URL = process.env.REACT_APP_URL_API;
-
-	const initialState = {
-		stationData: {},
-		chartOverall: {},
-		chartSelection: [],
-		yearMax: 0,
-		yearMin: 0,
-		yearStart: 0,
-		yearEnd: 0,
-		yearData: [],
-		infoData: {},
-		selectedSat: 'vs_All',
-		satToast: true,
-		searchToast: true,
-		patternToast: true,
-		allSat: true,
-		satS3A: false,
-		satS3B: false,
-		satS6A: false,
-		satJ2: false,
-		satJ3: false,
-		searchValue: '',
-		searchType: '',
-		searchData: [],
-		searchStation: {},
-		setSearchStation: false,
-		showSecondAxis: false,
-		compareStationOverall: false,
-		compareStationSelection: false,
-		secondAxisOverall: false,
-		secondAxisSelection: false,
-		ucField: 'anomalia',
-		showHeader: true,
-		modals: {
-			projects: false,
-			timeline: false,
-			download: false,
-			where: false,
-			when: false,
-			how: false,
-			select: false,
-			filters: false,
-			results: false,
-		},
-		stationLayer: '',
-		drainageArea: false,
-		drainageAreaName: null,
-		drainageData: null,
-	};
+	//const BASE_URL = process.env.REACT_APP_URL_API;
 	const [state, dispatch] = useImmerReducer(mapReducer, initialState);
-	const [searchType, setSearchType] = useState('');
-
-	function mapReducer(draft: any, action: any) {
-		switch (action.type) {
-			case 'loadStation':
-				draft.stationData = action.stValue;
-				draft.showHeader = false;
-				break;
-			case 'reduceOverall':
-				draft.yearData = action.infoYears;
-				draft.infoData = action.infoData;
-				break;
-			case 'selectSat':
-				draft.selectedSat = action.satName;
-				if (action.satName == 'S3A') {
-					draft.allSat = false;
-					draft.satS3A = true;
-					draft.satS3B = false;
-					draft.satS6A = false;
-					draft.satJ2 = false;
-					draft.satJ3 = false;
-					draft.selectedSat = 'vs_' + action.satName;
-				} else if (action.satName == 'All') {
-					draft.allSat = true;
-					draft.satS3A = false;
-					draft.satS3B = false;
-					draft.satS6A = false;
-					draft.satJ2 = false;
-					draft.satJ3 = false;
-					draft.selectedSat = 'vs_' + action.satName;
-				} else if (action.satName == 'S3B') {
-					draft.allSat = false;
-					draft.satS3A = false;
-					draft.satS3B = true;
-					draft.satS6A = false;
-					draft.satJ2 = false;
-					draft.satJ3 = false;
-					draft.selectedSat = 'vs_' + action.satName;
-				} else if (action.satName == 'S6A') {
-					draft.allSat = false;
-					draft.satS3A = false;
-					draft.satS3B = false;
-					draft.satS6A = true;
-					draft.satJ2 = false;
-					draft.satJ3 = false;
-					draft.selectedSat = 'vs_' + action.satName;
-				} else if (action.satName == 'J2') {
-					draft.allSat = false;
-					draft.satS3A = false;
-					draft.satS3B = false;
-					draft.satS6A = false;
-					draft.satJ2 = true;
-					draft.satJ3 = false;
-					draft.selectedSat = 'vs_' + action.satName;
-				} else if (action.satName == 'J3') {
-					draft.allSat = false;
-					draft.satS3A = false;
-					draft.satS3B = false;
-					draft.satS6A = false;
-					draft.satJ2 = false;
-					draft.satJ3 = true;
-					draft.selectedSat = 'vs_' + action.satName;
-				}
-				console.log('SatPanel ' + action.satName);
-				break;
-			case 'togleSatToast':
-				draft.satToast = action.closeSatToast;
-				break;
-			case 'togleSearchToast':
-				draft.searchToast = action.closeSearchToast;
-				break;
-			case 'toglePatternToast':
-				draft.patternToast = action.closePatternToast;
-				break;
-			case 'searchDataAction':
-				draft.searchData = action.searchDataValue;
-				draft.searchResult = true;
-				break;
-			case 'searchValues':
-				draft.searchValue = action.searchValue;
-				break;
-			case 'ucAction':
-				draft.ucField = action.ucValue;
-				break;
-			case 'searchAction':
-				draft.searchValue = action.searchEventValue;
-				draft.searchType = action.searchTypeValue;
-				break;
-			case 'searchFunction':
-				search(action.searchTypeValue, action.searchEventValue);
-				break;
-			case 'searchPanel':
-				draft.searchStation = action.valueStation;
-				draft.chartOverall = action.valueUpdatedOverall;
-				draft.chartSelection = action.valueUpdatedSelection;
-				draft.setSearchStation = true;
-				break;
-			case 'toggleSecondAxisOverall':
-				draft.secondAxisOverall = action.valueToggle;
-				break;
-			case 'toggleSecondAxisSelection':
-				draft.secondAxisSelection = action.valueToggle;
-				break;
-			case 'toggleCompareStationOverall':
-				draft.compareStationOverall = action.valueToggle;
-				break;
-			case 'toggleCompareStationSelection':
-				draft.compareStationSelection = action.valueToggle;
-				break;
-			case 'setChartSelection':
-				draft.chartSelection = action.valueSelection;
-				break;
-			case 'loadDataFromDB':
-				draft.chartOverall = action.valueOverall;
-				draft.chartSelection = action.valueSelection;
-				draft.yearMax = action.valueMax;
-				draft.yearMin = action.valueMin;
-				draft.yearStart = action.valueStart;
-				draft.yearEnd = action.valueEnd;
-				break;
-			case 'resetExtraData':
-				draft.chartOverall = action.updatedArray;
-				console.log(action.updatedArray);
-				break;
-			case 'togleTimeLineModal':
-				draft.modals.timeline = true;
-				break;
-			case 'closeTimeLineModal':
-				draft.modals.timeline = false;
-				break;
-			case 'togleProjectsModal':
-				draft.modals.projects = true;
-				break;
-			case 'closeSearchModal':
-				draft.modals.search = false;
-				break;
-			case 'toggleSearchModal':
-				draft.modals.timeline = false;
-				draft.modals.search = true;
-				break;
-			case 'closeProjectsModal':
-				draft.modals.projects = false;
-				break;
-			case 'togleSelectModal':
-				draft.modals.select = true;
-				break;
-			case 'closeSelectModal':
-				draft.modals.select = false;
-				break;
-			case 'stationArea':
-				draft.stationLayer = action.valueSource;
-				break;
-			case 'showDrainageArea':
-				draft.drainageArea = action.valueShow;
-				draft.drainageAreaName = action.valueName;
-				break;
-			case 'drainageArea':
-				draft.drainageData = action.valueArea;
-				break;
-			case 'closePopup':
-				draft.showHeader = true;
-				console.log('teste');
-				//popupNull();
-				break;
-			case 'toggleBackdrop':
-				draft.backdrop = action.value;
-				break;
-		}
-	}
 
 	useEffect(() => {
 		if (state.searchValue) {
 			search('name', state.searchValue);
 		}
-		/*
-    If that was just set and now it's true,
-    then this is where we would want to save data
-    into localStorage.
-    */
 	}, [state.searchValue]);
 
 	async function search(type: string, value: string) {
 		const cancelTokenSource = axios.CancelToken.source();
-		console.log(type);
+
 		try {
 			const res = await axios(
 				`${BASE_URL}/api/vstations?filters[${type}][$contains]=${value.toUpperCase()}`,
@@ -264,16 +43,20 @@ function App() {
 					cancelToken: cancelTokenSource.token,
 				}
 			);
+			// toggle loading circle off
 			dispatch({
 				type: 'toggleBackdrop',
-				value: !state.backdrop,
+				value: false,
 			});
 			const stationData = await res.data.data;
+			// if there are results to search value
 			if (stationData.length > 0) {
+				// add the search array result
 				dispatch({
 					type: 'searchDataAction',
 					searchDataValue: stationData,
 				});
+				// open search modal results
 				if (width < 600) {
 				} else {
 					dispatch({ type: 'toggleSearchModal' });
@@ -282,6 +65,188 @@ function App() {
 		} catch (e) {
 			console.log(e);
 		}
+	}
+
+	useEffect(() => {
+		if (state.searchValue2) {
+			search2('name', state.searchValue2);
+		}
+	}, [state.searchValue2]);
+
+	async function search2(type: string, value: string) {
+		const sat = state.selectedSat.slice(3);
+
+		console.log(state.selectedSat);
+
+		if (state.selectedSat === '' || state.selectedSat === 'vs_All') {
+			try {
+				const res = await axios(
+					`${BASE_URL}/${COLLECTION_NAME}?filters[${type}][$contains]=${value.toUpperCase()}`
+				);
+				const stationData = await res.data.data;
+				if (stationData.length > 0) {
+					dispatch({
+						type: 'searchDataAction2',
+						searchDataValue: stationData,
+					});
+					console.log(stationData);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		} else {
+			try {
+				const res = await axios(
+					`${BASE_URL}/${COLLECTION_NAME}?filters[sat][$contains]=${sat}&filters[${type}][$contains]=${value.toUpperCase()}`
+				);
+				const stationData = await res.data.data;
+				if (stationData.length > 0) {
+					dispatch({
+						type: 'searchDataAction2',
+						searchDataValue: stationData,
+					});
+					console.log(stationData);
+				}
+			} catch (error) {
+				console.log(error);
+			}
+		}
+	}
+
+	useEffect(() => {
+		if (state.compareStationName) {
+			getSearchStationData(state.compareStationName);
+		}
+	}, [state.compareStationName]);
+	/*
+		Function to search a second station and compare it with the
+		current selected virtual station.
+		This function merge data with current virtual station data
+		so it can be show on the Chart Graphic engine,
+		because it can only have a unique array in the Chart Engine,
+		we have to arrange a workaround.
+	*/
+	async function getSearchStationData(id: string) {
+		try {
+			const sId = String(id).padStart(8, '0');
+
+			const response = await axios
+				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
+				.then((response) => {
+					const entries = response.data.data;
+
+					if (entries.length > 0) {
+						const dataset = processData(entries[0].attributes);
+						console.log(dataset);
+						// rename valueCur to valueCur2 to add it to the current chart source data
+						const dataCur2 = dataset.dataCur.map((element) => {
+							const obj = {
+								date: element.date,
+								dateTime: element.dateTime,
+								valueCur2: element.valueCur,
+							};
+							return obj;
+						});
+						// rename values to *2 to add it to the current chart source data
+						const dataSelection = dataset.selection.map((element) => {
+							const obj = {
+								date: element.date,
+								dateString: element.dateTime,
+								height2: element.height,
+								hv2: element.hv,
+								lv2: element.lv,
+								uncertainty2: element.uncertainty,
+							};
+							return obj;
+						});
+
+						// remove values from previous station added to data source
+						const filteredOverall = state.chartOverall.filter(
+							(obj) => !obj.hasOwnProperty('valueCur2')
+						);
+						const filteredSelection = state.chartSelection.filter(
+							(obj) => !obj.hasOwnProperty('height2')
+						);
+
+						// add search station data to the station selected in Modal
+						let updatedOverall = dataCur2.concat(filteredOverall);
+						let updatedSelection = dataSelection.concat(filteredSelection);
+
+						updatedOverall.sort(function (a, b) {
+							return a.dateTime - b.dateTime;
+						});
+
+						dispatch({
+							type: 'searchPanel',
+							valueStation: dataset,
+							valueUpdatedOverall: updatedOverall,
+							valueUpdatedSelection: updatedSelection,
+						});
+						//console.log(dataCur2);
+						console.log(
+							'%c EVENT: Panel Search Event! ',
+							'background: #222; color: #bada55'
+						);
+					} else {
+						console.log(
+							'No entry found with the specified custom specific field.!!!'
+						);
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					console.log(
+						'No entry found with the specified custom specific field.!!!'
+					);
+				});
+		} catch (error: any) {
+			console.log(error);
+		}
+	}
+
+	function processData(dataset) {
+		console.log(dataset);
+		const dataSelection = new Array();
+		let max = dataset.overall.maxData;
+		let min = max.concat(dataset.overall.minData);
+		let men = min.concat(dataset.overall.men);
+		let cur = men.concat(dataset.overall.curData);
+		let overall = cur;
+		overall.sort(function (a, b) {
+			return a.dateTime - b.dateTime;
+		});
+
+		dataset.data._dataSet.forEach((value) => {
+			let dateObject = new Date(value.date);
+			let month = dateObject.getUTCMonth() + 1; //months from 1-12
+			let day = dateObject.getUTCDate();
+			let year = dateObject.getUTCFullYear();
+
+			dataSelection.push({
+				height: Number(value.height),
+				uncertainty: Number(value.uncertainty),
+				hv: Number(value.height) + Math.abs(value.uncertainty),
+				lv: Number(value.height) - Math.abs(value.uncertainty),
+				date: year + '-' + month + '-' + day,
+				dateString: value.date,
+			});
+		});
+
+		const data = {
+			isSet: true,
+			overall: overall,
+			selection: dataSelection,
+			dataCur: dataset.overall.curData,
+			yearMin: dataset.overall.minYear,
+			yearMax: dataset.overall.maxYear,
+			yearStart: dataset.start,
+			yearEnd: dataset.last,
+			name: dataset.name,
+			latitude: dataset.latitude,
+			longitude: dataset.longitude,
+			lastUpdate: dataset.updatedAt,
+		};
+		return data;
 	}
 
 	return (

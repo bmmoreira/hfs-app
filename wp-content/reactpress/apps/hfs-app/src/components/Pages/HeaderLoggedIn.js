@@ -84,8 +84,10 @@ function HeaderLoggedIn(props) {
 				value: !appState.modals.panelBox,
 			});
 		}
-		// Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
+
+		// if user has clear the search box with empty value
 		if (inputValue == '') {
+			// if the search result is open close it
 			appDispatch({ type: 'closeSearchModal' });
 			appDispatch({
 				type: 'searchDataAction',
@@ -96,18 +98,21 @@ function HeaderLoggedIn(props) {
 				searchEventValue: '',
 			});
 		} else {
+			// Set a new timeout to handle the event after a delay (e.g., 500 milliseconds)
 			timeoutId = setTimeout(() => {
-				// Perform the desired action or function call here
+				// if the search result is open close it
 				appDispatch({ type: 'closeSearchModal' });
+				// dispatch action to search value use effect in App.js
 				appDispatch({
 					type: 'searchAction',
 					searchEventValue: inputValue,
 				});
+				// toggle loading circle on
 				appDispatch({
 					type: 'toggleBackdrop',
-					value: !appState.backdrop,
+					value: true,
 				});
-				console.log('Input value:', inputValue);
+				console.log('searching for input value:', inputValue);
 			}, 1300);
 		}
 	};

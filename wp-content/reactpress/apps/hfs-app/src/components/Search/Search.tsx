@@ -83,13 +83,13 @@ const SearchComponent = (props: SearchProp) => {
 		timeoutId = setTimeout(() => {
 			// Perform the desired action or function call here
 			appDispatch({
-				type: 'searchAction',
+				type: 'searchAction2',
 				searchEventValue: inputValue,
 				searchTypeValue: searchArg.value,
 			});
 
-			console.log('Input value:', inputValue);
-			props.onSearch(searchArg.value, inputValue);
+			console.log('Search Modal input value:', inputValue);
+			//props.onSearch(searchArg.value, inputValue);
 		}, 800);
 	};
 
@@ -200,14 +200,19 @@ const SearchComponent = (props: SearchProp) => {
 					}}
 				>
 					<div className="toast-list-title">Stations List: </div>
-					{appState.searchData.map((item, idx) => (
+					{appState.searchData2.map((item, idx) => (
 						<>
 							<Typography component="div">
 								<Button
 									variant="contained"
 									sx={{ fontSize: 12, m: 1 }}
 									onClick={() => {
-										props.getSearchStation(item.attributes.name);
+										// call this function on ModalChart.tsx
+										//props.getSearchStation(item.attributes.name);
+										appDispatch({
+											type: 'compareStationAction',
+											stationName: item.attributes.name,
+										});
 									}}
 								>
 									{item.attributes.name.slice(2)}
