@@ -27,8 +27,6 @@ interface ChartProps {
 	//stationObj: Station | undefined;
 	show: boolean;
 	onHide(): void;
-	searchChangeHandler(type: string, value: string): void;
-	getSearchStation(value: string): void;
 }
 
 interface TabPanelProps {
@@ -96,7 +94,7 @@ const ModalChart = function (props: ChartProps) {
 		Chart Overall Tab. This function is executed in
 		map.tsx
 		*/
-		props.getSearchStation(value);
+		//props.getSearchStation(value);
 		// chartData is update to show both stations values on chart
 		setDataSearch(appState.searchStation.overall);
 	};
@@ -327,10 +325,7 @@ const ModalChart = function (props: ChartProps) {
 				<Tab eventKey="search" title="Search Stations">
 					<div className="containerM">
 						<div className="columnM">
-							<SearchComponent
-								onSearch={props.searchChangeHandler}
-								getSearchStation={setSearchStationData}
-							/>
+							<SearchComponent getSearchStation={setSearchStationData} />
 						</div>
 						<div className="columnN">
 							<ChartSearch

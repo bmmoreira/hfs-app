@@ -221,6 +221,20 @@ function HeaderLoggedIn(props) {
 		</Grid>
 	);
 
+	const gridRightIcons = (
+		<Grid
+			xs={8}
+			sx={{
+				display: 'flex',
+				gap: '10px',
+				justifyContent: 'center',
+				backgroundColor: 'red',
+			}}
+		>
+			<img src="/assets/images/theia_60h.png" height={60} alt="IRD" />
+		</Grid>
+	);
+
 	const gridIcons = (
 		<Grid container spacing={0} sx={{ display: 'flex' }}>
 			<Grid
@@ -421,6 +435,32 @@ function HeaderLoggedIn(props) {
 		</Grid>
 	);
 
+	const gridRight = (
+		<Grid
+			container
+			spacing={0}
+			sx={{
+				m: 0,
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}
+		>
+			<Grid
+				xs={8}
+				sx={{
+					display: 'flex',
+					gap: '10px',
+					height: '60px',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<img src="/assets/images/theia_60h.png" height={60} alt="IRD" />
+			</Grid>
+			{gridProfile}
+		</Grid>
+	);
+
 	return (
 		<div style={{ width: '100%', margin: 0, padding: 0 }}>
 			<Box
@@ -516,7 +556,7 @@ function HeaderLoggedIn(props) {
 					</Grid>
 				</Grid>
 
-				{gridLeftButtons}
+				{gridRight}
 			</Box>
 		</div>
 	);

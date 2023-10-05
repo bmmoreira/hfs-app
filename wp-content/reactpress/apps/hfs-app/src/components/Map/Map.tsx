@@ -362,91 +362,6 @@ function MapComponent() {
 		}
 	}
 
-	/*
-		Function to search a second station to compare it with the
-		current selected virtual station.
-		This function merge data with current virtual station data
-		so it can be show on the Chart Graphic engine,
-		because it can only have a unique array in the Chart Engine.
-	*/
-	async function getSearchStationData(id: string) {
-		try {
-			const sId = String(id).padStart(8, '0');
-
-			const response = await axios
-				.get(`${BASE_URL}/${COLLECTION_NAME}?filters[name]=${id}`)
-				.then((response) => {
-					const entries = response.data.data;
-
-					if (entries.length > 0) {
-						const dataset = processData(entries[0].attributes);
-						console.log(dataset);
-						// rename valueCur to valueCur2 to add it to the current chart source data
-						const dataCur2 = dataset.dataCur.map((element) => {
-							const obj = {
-								date: element.date,
-								dateTime: element.dateTime,
-								valueCur2: element.valueCur,
-							};
-							return obj;
-						});
-						// rename values to *2 to add it to the current chart source data
-						const dataSelection = dataset.selection.map((element) => {
-							const obj = {
-								date: element.date,
-								dateString: element.dateTime,
-								height2: element.height,
-								hv2: element.hv,
-								lv2: element.lv,
-								uncertainty2: element.uncertainty,
-							};
-							return obj;
-						});
-
-						// remove values from previous station added to data source
-						const filteredOverall = appState.chartOverall.filter(
-							(obj) => !obj.hasOwnProperty('valueCur2')
-						);
-						const filteredSelection = appState.chartSelection.filter(
-							(obj) => !obj.hasOwnProperty('height2')
-						);
-
-						// add search station data to the station selected in Modal
-						let updatedOverall = dataCur2.concat(filteredOverall);
-						let updatedSelection = dataSelection.concat(filteredSelection);
-
-						updatedOverall.sort(function (a, b) {
-							return a.dateTime - b.dateTime;
-						});
-
-						appDispatch({
-							type: 'searchPanel',
-							valueStation: dataset,
-							valueUpdatedOverall: updatedOverall,
-							valueUpdatedSelection: updatedSelection,
-						});
-						//console.log(dataCur2);
-						console.log(
-							'%c EVENT: Panel Search Event! ',
-							'background: #222; color: #bada55'
-						);
-					} else {
-						console.log(
-							'No entry found with the specified custom specific field.!!!'
-						);
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-					console.log(
-						'No entry found with the specified custom specific field.!!!'
-					);
-				});
-		} catch (error: any) {
-			console.log(error);
-		}
-	}
-
 	function processData(dataset) {
 		console.log(dataset);
 		const dataSelection = new Array();
@@ -505,18 +420,6 @@ function MapComponent() {
 			return !prevState;
 		});
 	};
-
-	async function searchChangeHandler(type: string, value: string) {
-		//console.log(appState);
-		console.log(type + ' ' + value);
-		search(type, value);
-	}
-
-	async function getSearchStation(value: string) {
-		//console.log(appState);
-
-		getSearchStationData(value);
-	}
 
 	const flyToStation = (coord: number[]) => {
 		// blank search value to avoid bug on next search
@@ -1159,8 +1062,6 @@ function MapComponent() {
 					<ModalChart
 						show={chartModal}
 						onHide={() => setChartModal(false)}
-						searchChangeHandler={searchChangeHandler}
-						getSearchStation={getSearchStation}
 					/>
 				)}
 				<SatelliteToast />
