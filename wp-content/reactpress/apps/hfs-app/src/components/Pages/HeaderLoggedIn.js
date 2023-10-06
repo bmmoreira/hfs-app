@@ -455,7 +455,7 @@ function HeaderLoggedIn(props) {
 					alignItems: 'center',
 				}}
 			>
-				<img src="/assets/images/theia_60h.png" height={60} alt="IRD" />
+				<img src="/assets/images/theia_60h2.png" height={60} alt="IRD" />
 			</Grid>
 			{gridProfile}
 		</Grid>
