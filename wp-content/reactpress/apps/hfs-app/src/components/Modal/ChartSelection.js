@@ -145,7 +145,7 @@ const ChartSelection = function (props) {
 					customizeTooltip={customizeTooltip}
 					zIndex={9999}
 				/>
-				<Legend position="outside">
+				<Legend verticalAlignment="bottom" horizontalAlignment="center">
 					<Border visible={true} />
 				</Legend>
 			</Chart>
