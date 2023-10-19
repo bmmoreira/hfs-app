@@ -346,24 +346,14 @@ export default function PanelModals(props: any) {
 								label="None"
 								labelPlacement="bottom"
 							/>
-							<FormControlLabel
-								value="1"
-								control={<Radio />}
-								label="1"
-								labelPlacement="bottom"
-							/>
+
 							<FormControlLabel
 								value="2"
 								control={<Radio />}
 								label="2"
 								labelPlacement="bottom"
 							/>
-							<FormControlLabel
-								value="3"
-								control={<Radio />}
-								label="3"
-								labelPlacement="bottom"
-							/>
+
 							<FormControlLabel
 								value="5"
 								control={<Radio />}
