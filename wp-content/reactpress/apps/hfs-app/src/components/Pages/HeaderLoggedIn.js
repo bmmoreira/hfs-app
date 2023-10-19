@@ -324,7 +324,7 @@ function HeaderLoggedIn(props) {
 		</Grid>
 	);
 
-	const gridLeftButtons = (
+	const gridtoLeft = (
 		<Grid
 			container
 			spacing={0}
@@ -333,7 +333,7 @@ function HeaderLoggedIn(props) {
 			}}
 		>
 			<Grid
-				xs={8}
+				xs={5}
 				sx={{
 					display: 'flex',
 					gap: '10px',
@@ -431,7 +431,81 @@ function HeaderLoggedIn(props) {
 					<div>Filters</div>
 				</IconButton>
 			</Grid>
-			{gridProfile}
+			<Grid
+				xs={7}
+				sx={{
+					display: 'flex',
+					gap: '10px',
+					height: '60px',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<img src="/assets/images/theia_60h2.png" height={60} alt="IRD" />
+			</Grid>
+		</Grid>
+	);
+
+	const gridLeftButtons = (
+		<Grid
+			container
+			spacing={0}
+			sx={{
+				m: 0,
+				justifyContent: 'center',
+				alignItems: 'center',
+			}}
+		>
+			<Grid
+				xs={2}
+				sx={{
+					display: 'flex',
+					gap: '10px',
+				}}
+			>
+				<IconButton
+					aria-label={notificationsLabel(100)}
+					sx={{
+						backgroundColor: bgColorButton,
+						display: 'flex',
+						flexDirection: 'column',
+						gap: '20px',
+						justifyContent: 'center',
+						fontSize: '0.9rem',
+						height: '80px',
+						width: '80px',
+						borderRadius: '5px',
+						color: bgColorButtonTitle,
+					}}
+					onClick={toggleSelect}
+				>
+					<Badge
+						anchorOrigin={{
+							vertical: 'bottom',
+							horizontal: 'right',
+						}}
+						badgeContent={2}
+						color="secondary"
+					>
+						<AddLocationAltIcon
+							sx={{ position: 'relative', top: '0px', left: '0px' }}
+						/>
+					</Badge>
+					<div>Filters</div>
+				</IconButton>
+			</Grid>
+			<Grid
+				xs={10}
+				sx={{
+					display: 'flex',
+					gap: '10px',
+					height: '60px',
+					justifyContent: 'center',
+					alignItems: 'center',
+				}}
+			>
+				<img src="/assets/images/theia_60h2.png" height={60} alt="IRD" />
+			</Grid>
 		</Grid>
 	);
 
