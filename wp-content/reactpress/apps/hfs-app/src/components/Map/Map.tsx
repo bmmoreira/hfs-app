@@ -55,8 +55,7 @@ import type { LayerProps, MapRef } from 'react-map-gl';
 
 import type { GeoJSONSource } from 'react-map-gl';
 import StationPopup from '../popup/StationPopup';
-import SatelliteToast from '../Toasts/SatelitePanel';
-import SearchToast from '../Toasts/SearchToast';
+import ScaleToast from '../Toasts/ScaleToast';
 import PanelModals from '../Modal/PanelModals';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -1094,7 +1093,7 @@ function MapComponent() {
 						onHide={() => setChartModal(false)}
 					/>
 				)}
-				<SatelliteToast />
+				<ScaleToast />
 
 				<Backdrop
 					sx={{
