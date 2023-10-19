@@ -1074,7 +1074,6 @@ function MapComponent() {
 						</Source>
 					)}
 
-					<FullscreenControl position="top-left" />
 					<NavigationControl position="top-left" />
 					<ScaleControl />
 					{popupInfo && (

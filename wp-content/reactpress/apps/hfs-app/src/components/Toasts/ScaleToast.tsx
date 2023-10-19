@@ -89,7 +89,7 @@ const ScaleToast = (props) => {
 			style={{
 				zIndex: '5',
 				width: '220px',
-				top: '250px',
+				top: '160px',
 				left: '15px',
 				marginRight: '25px',
 			}}
@@ -102,7 +102,7 @@ const ScaleToast = (props) => {
 					}}
 					closeButton={false}
 				>
-					<strong className="mr-auto">Stations Level Change</strong>
+					<strong className="mr-auto">Anomaly/Change Scale</strong>
 					<CloseButton
 						variant="white"
 						onClick={() => closeToast()}

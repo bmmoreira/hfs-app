@@ -22,8 +22,8 @@ import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
+import Slider from '@mui/material/Slider';
 
-import { CSSTransition } from 'react-transition-group';
 import './styles.css';
 import { feature } from '@turf/turf';
 
@@ -43,6 +43,37 @@ export default function PanelModals(props: any) {
 
 	const appState = useContext(StateContext);
 	const appDispatch = useContext(DispatchContext);
+
+	const marks = [
+		{
+			value: 0,
+			label: 'None',
+		},
+		{
+			value: 2,
+			label: '2',
+		},
+		{
+			value: 5,
+			label: '5',
+		},
+		{
+			value: 7,
+			label: '7',
+		},
+		{
+			value: 15,
+			label: '15',
+		},
+		{
+			value: 21,
+			label: '21',
+		},
+	];
+
+	function valuetext(value: number) {
+		return `${value} Days`;
+	}
 
 	//const [open, setOpen] = React.useState(appState.modals.timeline);
 	//const handleOpen = () => setOpen(true);
@@ -112,6 +143,46 @@ export default function PanelModals(props: any) {
 					'features': result,
 				},
 			});
+		}
+	};
+
+	const handleChangeSlider = (
+		event: Event,
+		newValue: number | number[]
+	) => {
+		if (typeof newValue === 'number') {
+			if (newValue == 0) {
+				appDispatch({
+					type: 'filterFeatures',
+					value: appState.stationFeatures,
+				});
+			} else {
+				const days = Number(newValue);
+				const result = appState.stationFeatures.features.filter(
+					(feature) => {
+						const dateString = feature.properties.e_date;
+						const dateFormatted = new Date(dateString);
+						const dateNow = new Date();
+						const differenceMiliseconds =
+							Number(dateNow) - Number(dateFormatted);
+						const differenceinDays =
+							differenceMiliseconds / (1000 * 60 * 60 * 24);
+						return differenceinDays <= days;
+					}
+				);
+				appDispatch({
+					type: 'filterFeatures',
+					value: {
+						'type': 'FeatureCollection',
+						'name': 'sv',
+						'crs': {
+							'type': 'name',
+							'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+						},
+						'features': result,
+					},
+				});
+			}
 		}
 	};
 
@@ -284,7 +355,7 @@ export default function PanelModals(props: any) {
 				>
 					<FormControl>
 						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
-							Choose to show station color parameter by
+							Choose to show station color parameter by**
 						</FormLabel>
 						<RadioGroup
 							row
@@ -307,6 +378,18 @@ export default function PanelModals(props: any) {
 							/>
 						</RadioGroup>
 					</FormControl>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					sx={{
+						fontSize: '1rem',
+						display: 'flex',
+						justifyContent: 'center',
+					}}
+				>
+					{' '}
+					**Change from last two measurements.
 				</Grid>
 				<Grid item xs={12}>
 					<ItemTitle
@@ -382,6 +465,27 @@ export default function PanelModals(props: any) {
 							/>
 						</RadioGroup>
 					</FormControl>
+				</Grid>
+				<Grid
+					item
+					xs={12}
+					sx={{
+						fontSize: '1rem',
+						display: 'flex',
+						justifyContent: 'center',
+						margin: '0 50px 0 50px',
+					}}
+				>
+					<Slider
+						aria-label="Custom marks"
+						defaultValue={0}
+						getAriaValueText={valuetext}
+						step={1}
+						max={21}
+						valueLabelDisplay="auto"
+						marks={marks}
+						onChange={handleChangeSlider}
+					/>
 				</Grid>
 			</Grid>
 		</Box>
