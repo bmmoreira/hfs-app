@@ -355,7 +355,7 @@ export default function PanelModals(props: any) {
 				>
 					<FormControl>
 						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
-							Choose to show station color parameter by**
+							Choose to show station color parameter by
 						</FormLabel>
 						<RadioGroup
 							row
@@ -373,7 +373,7 @@ export default function PanelModals(props: any) {
 							<FormControlLabel
 								value="change"
 								control={<Radio />}
-								label="Level Change(meters)"
+								label="Level Change(meters)**"
 								labelPlacement="bottom"
 							/>
 						</RadioGroup>
@@ -412,59 +412,8 @@ export default function PanelModals(props: any) {
 						justifyContent: 'center',
 					}}
 				>
-					<FormControl>
-						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
-							Show stations that updated in the last : (Days)
-						</FormLabel>
-						<RadioGroup
-							row
-							aria-labelledby="satellite-selection"
-							name="position"
-							defaultValue="none"
-							onChange={handleRadioTime}
-						>
-							<FormControlLabel
-								value="none"
-								control={<Radio />}
-								label="None"
-								labelPlacement="bottom"
-							/>
-
-							<FormControlLabel
-								value="2"
-								control={<Radio />}
-								label="2"
-								labelPlacement="bottom"
-							/>
-
-							<FormControlLabel
-								value="5"
-								control={<Radio />}
-								label="5"
-								labelPlacement="bottom"
-							/>
-
-							<FormControlLabel
-								value="7"
-								control={<Radio />}
-								label="7"
-								labelPlacement="bottom"
-							/>
-							<FormControlLabel
-								value="14"
-								control={<Radio />}
-								label="14"
-								labelPlacement="bottom"
-							/>
-
-							<FormControlLabel
-								value="21"
-								control={<Radio />}
-								label="21"
-								labelPlacement="bottom"
-							/>
-						</RadioGroup>
-					</FormControl>
+					{' '}
+					Show stations that updated in the last : (Days)
 				</Grid>
 				<Grid
 					item
@@ -489,6 +438,72 @@ export default function PanelModals(props: any) {
 				</Grid>
 			</Grid>
 		</Box>
+	);
+
+	const timeFilterRadio = (
+		<Grid
+			item
+			xs={12}
+			sx={{
+				fontSize: '1rem',
+				display: 'flex',
+				justifyContent: 'center',
+			}}
+		>
+			<FormControl>
+				<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
+					Show stations that updated in the last : (Days)
+				</FormLabel>
+				<RadioGroup
+					row
+					aria-labelledby="satellite-selection"
+					name="position"
+					defaultValue="none"
+					onChange={handleRadioTime}
+				>
+					<FormControlLabel
+						value="none"
+						control={<Radio />}
+						label="None"
+						labelPlacement="bottom"
+					/>
+
+					<FormControlLabel
+						value="2"
+						control={<Radio />}
+						label="2"
+						labelPlacement="bottom"
+					/>
+
+					<FormControlLabel
+						value="5"
+						control={<Radio />}
+						label="5"
+						labelPlacement="bottom"
+					/>
+
+					<FormControlLabel
+						value="7"
+						control={<Radio />}
+						label="7"
+						labelPlacement="bottom"
+					/>
+					<FormControlLabel
+						value="14"
+						control={<Radio />}
+						label="14"
+						labelPlacement="bottom"
+					/>
+
+					<FormControlLabel
+						value="21"
+						control={<Radio />}
+						label="21"
+						labelPlacement="bottom"
+					/>
+				</RadioGroup>
+			</FormControl>
+		</Grid>
 	);
 
 	const search = (
