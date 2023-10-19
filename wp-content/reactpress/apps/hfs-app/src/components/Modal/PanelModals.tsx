@@ -331,7 +331,7 @@ export default function PanelModals(props: any) {
 				>
 					<FormControl>
 						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
-							Choose Last Time Change (Days)
+							Show stations that updated in the last : (Days)
 						</FormLabel>
 						<RadioGroup
 							row
@@ -360,19 +360,20 @@ export default function PanelModals(props: any) {
 								label="5"
 								labelPlacement="bottom"
 							/>
+
 							<FormControlLabel
 								value="7"
 								control={<Radio />}
 								label="7"
 								labelPlacement="bottom"
 							/>
-
 							<FormControlLabel
 								value="14"
 								control={<Radio />}
 								label="14"
 								labelPlacement="bottom"
 							/>
+
 							<FormControlLabel
 								value="21"
 								control={<Radio />}
