@@ -132,8 +132,8 @@ const SatelliteToast = (props) => {
 					<Select
 						menuPlacement="bottom"
 						defaultValue={{
-							label: optionList[0].label,
-							value: optionList[0].value,
+							label: optionList[1].label,
+							value: optionList[1].value,
 						}}
 						onChange={onValueChangedOptions}
 						options={optionList}

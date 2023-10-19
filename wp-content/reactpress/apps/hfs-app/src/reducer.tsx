@@ -2,6 +2,8 @@
 
 export const initialState = {
 	stationData: {},
+	filteredFeatures: [],
+	stationFeatures: [],
 	chartOverall: {},
 	chartSelection: [],
 	yearMax: 0,
@@ -34,7 +36,7 @@ export const initialState = {
 	compareStationSelection: false,
 	secondAxisOverall: false,
 	secondAxisSelection: false,
-	ucField: 'anomalia',
+	ucField: 'change',
 	showHeader: true,
 	modals: {
 		projects: false,
@@ -55,6 +57,12 @@ export const initialState = {
 
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
+		case 'filterFeatures':
+			draft.filteredFeatures = action.value;
+			break;
+		case 'stationFeatures':
+			draft.stationFeatures = action.value;
+			break;
 		case 'loadStation':
 			draft.stationData = action.stValue;
 			draft.showHeader = false;

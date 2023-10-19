@@ -539,6 +539,36 @@ function MapComponent() {
 		}
 	}, [appState.drainageAreaName]);
 
+	useEffect(() => {
+		loadFeatures();
+	}, []);
+
+	async function loadFeatures() {
+		try {
+			const res = await axios({
+				method: 'get',
+				url: `/assets/data/geojson/vs_All.geojson`,
+				headers: {
+					'Access-Control-Allow-Origin': true,
+				},
+			});
+			console.log(res);
+
+			if (res.data.features.length > 0) {
+				appDispatch({
+					type: 'filterFeatures',
+					value: res.data,
+				});
+				appDispatch({
+					type: 'stationFeatures',
+					value: res.data,
+				});
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	}
+
 	const baciasFills2: LayerProps = {
 		id: 'bacias2-fills',
 		type: 'fill',
@@ -615,7 +645,7 @@ function MapComponent() {
 						<Source
 							id="vs_All"
 							type="geojson"
-							data="/assets/data/geojson/vs_All.geojson"
+							data={appState.filteredFeatures}
 							cluster={true}
 							clusterMaxZoom={6}
 							clusterRadius={50}

@@ -421,14 +421,14 @@ function HeaderLoggedIn(props) {
 							vertical: 'bottom',
 							horizontal: 'right',
 						}}
-						badgeContent={7}
+						badgeContent={2}
 						color="secondary"
 					>
 						<AddLocationAltIcon
 							sx={{ position: 'relative', top: '0px', left: '0px' }}
 						/>
 					</Badge>
-					<div>Select</div>
+					<div>Filters</div>
 				</IconButton>
 			</Grid>
 			{gridProfile}
@@ -556,7 +556,7 @@ function HeaderLoggedIn(props) {
 					</Grid>
 				</Grid>
 
-				{gridRight}
+				{gridLeftButtons}
 			</Box>
 		</div>
 	);
