@@ -94,11 +94,45 @@ export default function PanelModals(props: any) {
 	};
 
 	const handleRadioSat = (event: React.ChangeEvent<HTMLInputElement>) => {
-		appDispatch({
+		/* appDispatch({
 			type: 'selectSat',
 			satName: (event.target as HTMLInputElement).value,
+		}); */
+		appDispatch({
+			type: 'setSat',
+			value: (event.target as HTMLInputElement).value,
 		});
-		console.log('SatPanel ' + (event.target as HTMLInputElement).value);
+		appDispatch({
+			type: 'setFilterSat',
+			filterSat: (event.target as HTMLInputElement).value,
+		});
+		if ((event.target as HTMLInputElement).value == 'All') {
+			appDispatch({
+				type: 'filterFeatures',
+				value: appState.stationFeatures,
+			});
+		} else {
+			console.log('SatPanel ' + (event.target as HTMLInputElement).value);
+			const result = appState.stationFeatures.features.filter(
+				(feature) => {
+					return feature.properties.sat.includes(
+						(event.target as HTMLInputElement).value
+					);
+				}
+			);
+			appDispatch({
+				type: 'filterFeatures',
+				value: {
+					'type': 'FeatureCollection',
+					'name': 'sv',
+					'crs': {
+						'type': 'name',
+						'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+					},
+					'features': result,
+				},
+			});
+		}
 	};
 
 	const handleRadioStation = (
@@ -107,6 +141,10 @@ export default function PanelModals(props: any) {
 		appDispatch({
 			type: 'ucAction',
 			ucValue: (event.target as HTMLInputElement).value,
+		});
+		appDispatch({
+			type: 'setFilterMeasurament',
+			filterMeasurament: (event.target as HTMLInputElement).value,
 		});
 		console.log('SatPanel ' + (event.target as HTMLInputElement).value);
 	};
@@ -117,7 +155,7 @@ export default function PanelModals(props: any) {
 				type: 'filterFeatures',
 				value: appState.stationFeatures,
 			});
-		} else {
+		} else if (appState.selectedSat == 'vs_All') {
 			const days = Number((event.target as HTMLInputElement).value);
 			const result = appState.stationFeatures.features.filter(
 				(feature) => {
@@ -143,6 +181,35 @@ export default function PanelModals(props: any) {
 					'features': result,
 				},
 			});
+		} else {
+			const days = Number((event.target as HTMLInputElement).value);
+			const result = appState.stationFeatures.features.filter(
+				(feature) => {
+					const dateString = feature.properties.e_date;
+					const dateFormatted = new Date(dateString);
+					const dateNow = new Date();
+					const differenceMiliseconds =
+						Number(dateNow) - Number(dateFormatted);
+					const differenceinDays =
+						differenceMiliseconds / (1000 * 60 * 60 * 24);
+					return (
+						differenceinDays <= days &&
+						feature.properties.sat.substring.includes(appState.selectedSat)
+					);
+				}
+			);
+			appDispatch({
+				type: 'filterFeatures',
+				value: {
+					'type': 'FeatureCollection',
+					'name': 'sv',
+					'crs': {
+						'type': 'name',
+						'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+					},
+					'features': result,
+				},
+			});
 		}
 	};
 
@@ -151,37 +218,72 @@ export default function PanelModals(props: any) {
 		newValue: number | number[]
 	) => {
 		if (typeof newValue === 'number') {
+			appDispatch({
+				type: 'setFilterTimeDays',
+				filterTimeDays: Number((event.target as HTMLInputElement).value),
+			});
 			if (newValue == 0) {
 				appDispatch({
 					type: 'filterFeatures',
 					value: appState.stationFeatures,
 				});
 			} else {
-				const days = Number(newValue);
-				const result = appState.stationFeatures.features.filter(
-					(feature) => {
-						const dateString = feature.properties.e_date;
-						const dateFormatted = new Date(dateString);
-						const dateNow = new Date();
-						const differenceMiliseconds =
-							Number(dateNow) - Number(dateFormatted);
-						const differenceinDays =
-							differenceMiliseconds / (1000 * 60 * 60 * 24);
-						return differenceinDays <= days;
-					}
-				);
-				appDispatch({
-					type: 'filterFeatures',
-					value: {
-						'type': 'FeatureCollection',
-						'name': 'sv',
-						'crs': {
-							'type': 'name',
-							'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+				if (appState.selectedSat == 'All') {
+					const days = Number((event.target as HTMLInputElement).value);
+					const result = appState.stationFeatures.features.filter(
+						(feature) => {
+							const dateString = feature.properties.e_date;
+							const dateFormatted = new Date(dateString);
+							const dateNow = new Date();
+							const differenceMiliseconds =
+								Number(dateNow) - Number(dateFormatted);
+							const differenceinDays =
+								differenceMiliseconds / (1000 * 60 * 60 * 24);
+							return differenceinDays <= days;
+						}
+					);
+					appDispatch({
+						type: 'filterFeatures',
+						value: {
+							'type': 'FeatureCollection',
+							'name': 'sv',
+							'crs': {
+								'type': 'name',
+								'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+							},
+							'features': result,
 						},
-						'features': result,
-					},
-				});
+					});
+				} else {
+					const days = Number((event.target as HTMLInputElement).value);
+					const result = appState.stationFeatures.features.filter(
+						(feature) => {
+							const dateString = feature.properties.e_date;
+							const dateFormatted = new Date(dateString);
+							const dateNow = new Date();
+							const differenceMiliseconds =
+								Number(dateNow) - Number(dateFormatted);
+							const differenceinDays =
+								differenceMiliseconds / (1000 * 60 * 60 * 24);
+							return (
+								differenceinDays <= days &&
+								feature.properties.sat.includes(appState.selectedSat)
+							);
+						}
+					);
+					appDispatch({
+						type: 'filterFeatures',
+						value: {
+							'type': 'FeatureCollection',
+							'name': 'sv',
+							'crs': {
+								'type': 'name',
+								'properties': { 'name': 'urn:ogc:def:crs:OGC:1.3:CRS84' },
+							},
+							'features': result,
+						},
+					});
+				}
 			}
 		}
 	};
@@ -290,7 +392,7 @@ export default function PanelModals(props: any) {
 							row
 							aria-labelledby="satellite-selection"
 							name="position"
-							defaultValue="All"
+							defaultValue={appState.filterSat}
 							onChange={handleRadioSat}
 						>
 							<FormControlLabel
@@ -361,7 +463,7 @@ export default function PanelModals(props: any) {
 							row
 							aria-labelledby="satellite-selection"
 							name="position"
-							defaultValue="change"
+							defaultValue={appState.filterMeasurament}
 							onChange={handleRadioStation}
 						>
 							<FormControlLabel
@@ -427,7 +529,7 @@ export default function PanelModals(props: any) {
 				>
 					<Slider
 						aria-label="Custom marks"
-						defaultValue={0}
+						defaultValue={appState.filterTimeDays}
 						getAriaValueText={valuetext}
 						step={1}
 						max={21}
@@ -458,7 +560,7 @@ export default function PanelModals(props: any) {
 					row
 					aria-labelledby="satellite-selection"
 					name="position"
-					defaultValue="none"
+					defaultValue={appState.filterTimeDays}
 					onChange={handleRadioTime}
 				>
 					<FormControlLabel

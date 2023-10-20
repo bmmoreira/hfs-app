@@ -12,7 +12,10 @@ export const initialState = {
 	yearEnd: 0,
 	yearData: [],
 	infoData: {},
-	selectedSat: 'vs_All',
+	filterSat: 'All',
+	filterMeasurament: 'change',
+	filterTimeDays: 0,
+	selectedSat: 'All',
 	satToast: true,
 	searchToast: true,
 	patternToast: true,
@@ -57,11 +60,23 @@ export const initialState = {
 
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
+		case 'setSat':
+			draft.selectedSat = action.value;
+			break;
 		case 'filterFeatures':
 			draft.filteredFeatures = action.value;
 			break;
 		case 'stationFeatures':
 			draft.stationFeatures = action.value;
+			break;
+		case 'setFilterSat':
+			draft.filterSat = action.filterSat;
+			break;
+		case 'setFilterMeasurament':
+			draft.filterMeasurament = action.filterMeasurament;
+			break;
+		case 'setFilterTimeDays':
+			draft.filterTimeDays = action.filterTimeDays;
 			break;
 		case 'loadStation':
 			draft.stationData = action.stValue;
