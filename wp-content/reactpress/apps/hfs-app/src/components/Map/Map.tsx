@@ -260,7 +260,7 @@ function MapComponent() {
 				const clusterId = feature.properties.cluster_id;
 
 				const mapboxSource = mapRef.current.getSource(
-					appState.selectedSat
+					'All'
 				) as GeoJSONSource;
 
 				mapboxSource.getClusterExpansionZoom(clusterId, (err, zoom) => {
@@ -642,19 +642,44 @@ function MapComponent() {
 
 					{appState.allSat && (
 						<Source
-							id="vs_All"
+							id="All"
 							type="geojson"
 							data={appState.filteredFeatures}
 							cluster={true}
 							clusterMaxZoom={6}
 							clusterRadius={50}
 						>
-							<Layer {...clusterLayer} />
+							<Layer
+								id={'clusters'}
+								type={'circle'}
+								source={'All'}
+								filter={['has', 'point_count']}
+								paint={{
+									'circle-color': [
+										'step',
+										['get', 'point_count'],
+										'#d1d6d7',
+										100,
+										'#9fa4a5',
+										750,
+										'#595c5d',
+									],
+									'circle-radius': [
+										'step',
+										['get', 'point_count'],
+										20,
+										100,
+										30,
+										750,
+										40,
+									],
+								}}
+							/>
 							<Layer {...clusterCountLayer} />
 							<Layer
 								id={'unclustered-point'}
 								type={'circle'}
-								source={'vs_All'}
+								source={'All'}
 								filter={['!', ['has', 'point_count']]}
 								paint={{
 									'circle-color': [

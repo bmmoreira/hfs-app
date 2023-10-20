@@ -5,7 +5,7 @@ import type { LayerProps } from 'react-map-gl';
 export const clusterLayer: LayerProps = {
 	id: 'clusters',
 	type: 'circle',
-	source: 'vs_All',
+	source: 'All',
 	filter: ['has', 'point_count'],
 	paint: {
 		'circle-color': [
@@ -32,7 +32,7 @@ export const clusterLayer: LayerProps = {
 export const clusterCountLayer: LayerProps = {
 	id: 'cluster-count',
 	type: 'symbol',
-	source: 'vs_All',
+	source: 'All',
 	filter: ['has', 'point_count'],
 	layout: {
 		'text-field': '{point_count_abbreviated}',
