@@ -258,7 +258,7 @@ function MapComponent() {
 				mapRef.current.resize();
 			} else {
 				const clusterId = feature.properties.cluster_id;
-
+				// resolvendo bug do zoom com erro do id
 				const mapboxSource = mapRef.current.getSource(
 					'All'
 				) as GeoJSONSource;
