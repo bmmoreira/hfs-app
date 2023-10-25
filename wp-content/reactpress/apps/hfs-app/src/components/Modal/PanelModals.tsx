@@ -23,9 +23,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import Slider from '@mui/material/Slider';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { riversList } from '../Utils/constants';
+
 import './styles.css';
 import { feature } from '@turf/turf';
 
@@ -42,8 +40,6 @@ export default function PanelModals(props: any) {
 		p: 0,
 		zIndex: 10,
 	};
-
-	const sectionTitle = '0.875rem';
 
 	const appState = useContext(StateContext);
 	const appDispatch = useContext(DispatchContext);
@@ -292,172 +288,6 @@ export default function PanelModals(props: any) {
 		}
 	};
 
-	const options = riversList.map((option) => {
-		const firstLetter = option.river[0].toUpperCase();
-		return {
-			firstLetter: /[0-9]/.test(firstLetter) ? '0-9' : firstLetter,
-			...option,
-		};
-	});
-
-	let timeoutId;
-	const riverInputHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const input = event.target as HTMLInputElement;
-
-		if (input.dataset.testid == 'CloseIcon') {
-			appDispatch({
-				type: 'filterFeatures',
-				value: appState.stationFeatures,
-			});
-			return;
-		}
-		const inputValue = (event.target as HTMLInputElement).value;
-
-		clearTimeout(timeoutId); // Clear any existing timeout
-		// if user clear input box, resert features
-		if (inputValue == '') {
-			appDispatch({
-				type: 'filterFeatures',
-				value: appState.stationFeatures,
-			});
-		} else {
-			timeoutId = setTimeout(() => {
-				if ((event.target as HTMLInputElement).value != '0') {
-					console.log(inputValue);
-					if (appState.selectedSat == 'All') {
-						const result = appState.stationFeatures.features.filter(
-							(feature) => {
-								const riverName = feature.properties.river;
-								return String(riverName.toLowerCase()).includes(
-									String(inputValue.toLowerCase())
-								);
-							}
-						);
-						appDispatch({
-							type: 'filterFeatures',
-							value: {
-								'type': 'FeatureCollection',
-								'name': 'sv',
-								'crs': {
-									'type': 'name',
-									'properties': {
-										'name': 'urn:ogc:def:crs:OGC:1.3:CRS84',
-									},
-								},
-								'features': result,
-							},
-						});
-					} else {
-						const days = Number((event.target as HTMLInputElement).value);
-						const result = appState.stationFeatures.features.filter(
-							(feature) => {
-								const dateString = feature.properties.e_date;
-								const dateFormatted = new Date(dateString);
-								const dateNow = new Date();
-								const differenceMiliseconds =
-									Number(dateNow) - Number(dateFormatted);
-								const differenceinDays =
-									differenceMiliseconds / (1000 * 60 * 60 * 24);
-								return (
-									differenceinDays <= days &&
-									feature.properties.sat.includes(appState.selectedSat)
-								);
-							}
-						);
-						appDispatch({
-							type: 'filterFeatures',
-							value: {
-								'type': 'FeatureCollection',
-								'name': 'sv',
-								'crs': {
-									'type': 'name',
-									'properties': {
-										'name': 'urn:ogc:def:crs:OGC:1.3:CRS84',
-									},
-								},
-								'features': result,
-							},
-						});
-					}
-				}
-			}, 1300);
-		}
-	};
-
-	const riverChangeHandler = (
-		event: React.ChangeEvent<HTMLInputElement>
-	) => {
-		const input = event.target as HTMLInputElement;
-		if (input.dataset.testid == 'CloseIcon') {
-			appDispatch({
-				type: 'filterFeatures',
-				value: appState.stationFeatures,
-			});
-			return;
-		}
-
-		const inputValue = (event.target as HTMLInputElement).innerText;
-
-		console.log(inputValue);
-		if (appState.selectedSat == 'All') {
-			const result = appState.stationFeatures.features.filter(
-				(feature) => {
-					const riverName = feature.properties.river;
-					return String(riverName.toLowerCase()).includes(
-						String(inputValue.toLowerCase())
-					);
-				}
-			);
-			appDispatch({
-				type: 'filterFeatures',
-				value: {
-					'type': 'FeatureCollection',
-					'name': 'sv',
-					'crs': {
-						'type': 'name',
-						'properties': {
-							'name': 'urn:ogc:def:crs:OGC:1.3:CRS84',
-						},
-					},
-					'features': result,
-				},
-			});
-		} else {
-			const days = Number((event.target as HTMLInputElement).value);
-			const result = appState.stationFeatures.features.filter(
-				(feature) => {
-					const dateString = feature.properties.e_date;
-					const dateFormatted = new Date(dateString);
-					const dateNow = new Date();
-					const differenceMiliseconds =
-						Number(dateNow) - Number(dateFormatted);
-					const differenceinDays =
-						differenceMiliseconds / (1000 * 60 * 60 * 24);
-					return (
-						differenceinDays <= days &&
-						feature.properties.sat.includes(appState.selectedSat)
-					);
-				}
-			);
-			appDispatch({
-				type: 'filterFeatures',
-				value: {
-					'type': 'FeatureCollection',
-					'name': 'sv',
-					'crs': {
-						'type': 'name',
-						'properties': {
-							'name': 'urn:ogc:def:crs:OGC:1.3:CRS84',
-						},
-					},
-					'features': result,
-				},
-			});
-		}
-	};
-
 	const projects = (
 		<Box sx={{ zIndex: 10, ...style }}>
 			<Grid
@@ -536,25 +366,28 @@ export default function PanelModals(props: any) {
 				<Grid item xs={12}>
 					<ItemTitle
 						sx={{
-							fontSize: sectionTitle,
+							fontSize: '1rem',
 							fontWeight: '600',
 							display: 'flex',
 							justifyContent: 'center',
 						}}
 					>
-						Satellite Layers - Choose stations to show by satellite:
+						Satellite Layers
 					</ItemTitle>
 				</Grid>
 				<Grid
 					item
 					xs={12}
 					sx={{
-						fontSize: sectionTitle,
+						fontSize: '1rem',
 						display: 'flex',
 						justifyContent: 'center',
 					}}
 				>
 					<FormControl>
+						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
+							Choose stations to show by satellite
+						</FormLabel>
 						<RadioGroup
 							row
 							aria-labelledby="satellite-selection"
@@ -567,54 +400,36 @@ export default function PanelModals(props: any) {
 								control={<Radio />}
 								label="All"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: '0.5rem',
-								}}
 							/>
 							<FormControlLabel
 								value="S3A"
 								control={<Radio />}
 								label="S3A"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 							<FormControlLabel
 								value="S3B"
 								control={<Radio />}
 								label="S3B"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 							<FormControlLabel
 								value="S6A"
 								control={<Radio />}
 								label="S6A"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 							<FormControlLabel
 								value="J2"
 								control={<Radio />}
 								label="J2"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 							<FormControlLabel
 								value="J3"
 								control={<Radio />}
 								label="J3"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 						</RadioGroup>
 					</FormControl>
@@ -622,25 +437,28 @@ export default function PanelModals(props: any) {
 				<Grid item xs={12}>
 					<ItemTitle
 						sx={{
-							fontSize: sectionTitle,
+							fontSize: '1rem',
 							fontWeight: '600',
 							display: 'flex',
 							justifyContent: 'center',
 						}}
 					>
-						Station Filter - Choose to show station color parameter by:
+						Station Filter
 					</ItemTitle>
 				</Grid>
 				<Grid
 					item
 					xs={12}
 					sx={{
-						fontSize: sectionTitle,
+						fontSize: '1rem',
 						display: 'flex',
 						justifyContent: 'center',
 					}}
 				>
 					<FormControl>
+						<FormLabel id="satSelection" style={{ textAlign: 'center' }}>
+							Choose to show station color parameter by
+						</FormLabel>
 						<RadioGroup
 							row
 							aria-labelledby="satellite-selection"
@@ -653,18 +471,12 @@ export default function PanelModals(props: any) {
 								control={<Radio />}
 								label="Anomaly(meters)"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 							<FormControlLabel
 								value="change"
 								control={<Radio />}
 								label="Level Change(meters)**"
 								labelPlacement="bottom"
-								sx={{
-									fontSize: sectionTitle,
-								}}
 							/>
 						</RadioGroup>
 					</FormControl>
@@ -673,7 +485,7 @@ export default function PanelModals(props: any) {
 					item
 					xs={12}
 					sx={{
-						fontSize: sectionTitle,
+						fontSize: '1rem',
 						display: 'flex',
 						justifyContent: 'center',
 					}}
@@ -684,7 +496,7 @@ export default function PanelModals(props: any) {
 				<Grid item xs={12}>
 					<ItemTitle
 						sx={{
-							fontSize: sectionTitle,
+							fontSize: '1rem',
 							fontWeight: '600',
 							display: 'flex',
 							justifyContent: 'center',
@@ -697,7 +509,7 @@ export default function PanelModals(props: any) {
 					item
 					xs={12}
 					sx={{
-						fontSize: sectionTitle,
+						fontSize: '1rem',
 						display: 'flex',
 						justifyContent: 'center',
 					}}
@@ -709,7 +521,7 @@ export default function PanelModals(props: any) {
 					item
 					xs={12}
 					sx={{
-						fontSize: sectionTitle,
+						fontSize: '1rem',
 						display: 'flex',
 						justifyContent: 'center',
 						margin: '0 50px 0 50px',
@@ -726,43 +538,6 @@ export default function PanelModals(props: any) {
 						onChange={handleChangeSlider}
 					/>
 				</Grid>
-				<Grid item xs={12}>
-					<ItemTitle
-						sx={{
-							fontSize: sectionTitle,
-							fontWeight: '600',
-							display: 'flex',
-							justifyContent: 'center',
-						}}
-					>
-						Station Filter - Choose to show station by river name:
-					</ItemTitle>
-				</Grid>
-				<Grid
-					item
-					xs={12}
-					sx={{
-						fontSize: sectionTitle,
-						display: 'flex',
-						justifyContent: 'center',
-						margin: '0 50px 0 50px',
-					}}
-				>
-					<Autocomplete
-						id="grouped-rivernames"
-						onInputChange={riverInputHandler}
-						onChange={riverChangeHandler}
-						options={options.sort(
-							(a, b) => -b.firstLetter.localeCompare(a.firstLetter)
-						)}
-						groupBy={(option) => option.firstLetter}
-						getOptionLabel={(option) => option.river}
-						sx={{ width: 300, marginTop: '10px' }}
-						renderInput={(params) => (
-							<TextField {...params} label="type name or select list" />
-						)}
-					/>
-				</Grid>
 			</Grid>
 		</Box>
 	);
@@ -772,7 +547,7 @@ export default function PanelModals(props: any) {
 			item
 			xs={12}
 			sx={{
-				fontSize: sectionTitle,
+				fontSize: '1rem',
 				display: 'flex',
 				justifyContent: 'center',
 			}}
