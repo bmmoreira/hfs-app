@@ -1,7 +1,10 @@
 /** @format */
+import { riversList } from './components/Utils/constants';
 
 export const initialState = {
 	stationData: {},
+	stationList: [],
+	lastUpdatedStations: [],
 	filteredFeatures: [],
 	stationFeatures: [],
 	chartOverall: {},
@@ -12,10 +15,12 @@ export const initialState = {
 	yearEnd: 0,
 	yearData: [],
 	infoData: {},
+	filteredRivers: riversList,
 	filterSat: 'All',
 	filterMeasurament: 'change',
 	filterTimeDays: 0,
 	selectedSat: 'All',
+	selectedRiver: '',
 	satToast: true,
 	searchToast: true,
 	patternToast: true,
@@ -60,8 +65,17 @@ export const initialState = {
 
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
+		case 'setStationList':
+			draft.stationList = action.value;
+			break;
+		case 'setLastUpdated':
+			draft.lastUpdatedStations = action.value;
+			break;
 		case 'setSat':
 			draft.selectedSat = action.value;
+			break;
+		case 'setRiver':
+			draft.selectedRiver = action.value;
 			break;
 		case 'filterFeatures':
 			draft.filteredFeatures = action.value;
