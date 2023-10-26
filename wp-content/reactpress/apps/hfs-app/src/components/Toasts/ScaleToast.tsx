@@ -89,7 +89,7 @@ const ScaleToast = (props) => {
 			style={{
 				zIndex: '5',
 				width: '220px',
-				top: '160px',
+				top: '360px',
 				left: '15px',
 				marginRight: '25px',
 			}}

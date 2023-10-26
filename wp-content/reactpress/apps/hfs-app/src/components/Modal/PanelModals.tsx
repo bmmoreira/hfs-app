@@ -644,13 +644,17 @@ export default function PanelModals(props: any) {
 											console.log('click button');
 										}}
 									>
-										{item.name.slice(2).substring(0, 22)}...
+										<Typography
+											sx={{ fontSize: '0.8rem', color: 'white' }}
+										>
+											{item.name.slice(2).substring(0, 22)}...
+										</Typography>
 									</BootstrapButton>
 								</Tooltip>
 							</Grid>
 
 							<Grid item xs={2.2}>
-								<Item>{item.last_update}</Item>
+								<Item>{item.last_update.slice(2)}</Item>
 							</Grid>
 							<Grid item xs={1.5}>
 								<Item>{item.change}</Item>
