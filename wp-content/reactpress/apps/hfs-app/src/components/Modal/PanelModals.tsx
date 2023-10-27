@@ -107,7 +107,7 @@ export default function PanelModals(props: any) {
 			type: 'setStationList',
 			value: list,
 		});
-		const lastUpdated = filterUpdatedLastStations(list, 5);
+		const lastUpdated = filterUpdatedLastStations(list, 7);
 		appDispatch({
 			type: 'setLastUpdated',
 			value: lastUpdated,
