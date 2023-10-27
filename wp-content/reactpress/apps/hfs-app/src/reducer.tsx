@@ -2,6 +2,7 @@
 import { riversList } from './components/Utils/constants';
 
 export const initialState = {
+	timelineDayLimit: '4',
 	clusterMaxZoom: 6,
 	clusterRadius: 50,
 	stationData: {},

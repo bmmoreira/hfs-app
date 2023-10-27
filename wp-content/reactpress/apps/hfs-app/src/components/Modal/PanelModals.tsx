@@ -107,7 +107,10 @@ export default function PanelModals(props: any) {
 			type: 'setStationList',
 			value: list,
 		});
-		const lastUpdated = filterUpdatedLastStations(list, 7);
+		const lastUpdated = filterUpdatedLastStations(
+			list,
+			appState.timelineDayLimit
+		);
 		appDispatch({
 			type: 'setLastUpdated',
 			value: lastUpdated,
@@ -588,7 +591,7 @@ export default function PanelModals(props: any) {
 						component="h2"
 						sx={{ padding: '5px 0 5px 10px', color: 'white' }}
 					>
-						Timeline (Last 7 days)
+						Timeline (Last {appState.timelineDayLimit} days)
 					</Typography>
 				</Grid>
 				<Grid item xs={4}>
