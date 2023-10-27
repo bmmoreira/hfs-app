@@ -501,38 +501,7 @@ function HeaderLoggedIn(props) {
 					display: 'flex',
 					gap: '10px',
 				}}
-			>
-				<IconButton
-					aria-label={notificationsLabel(100)}
-					sx={{
-						backgroundColor: bgColorButton,
-						display: 'flex',
-						flexDirection: 'column',
-						gap: '20px',
-						justifyContent: 'center',
-						fontSize: '0.9rem',
-						height: '80px',
-						width: '80px',
-						borderRadius: '5px',
-						color: bgColorButtonTitle,
-					}}
-					onClick={toggleProjects}
-				>
-					<Badge
-						anchorOrigin={{
-							vertical: 'bottom',
-							horizontal: 'right',
-						}}
-						badgeContent={appState.lastUpdatedStations.lenght}
-						color="secondary"
-					>
-						<BookIcon
-							sx={{ position: 'relative', top: '0px', left: '0px' }}
-						/>
-					</Badge>
-					<div>Timeline</div>
-				</IconButton>
-			</Grid>
+			></Grid>
 			<Grid
 				xs={8}
 				sx={{

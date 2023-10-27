@@ -101,7 +101,7 @@ export default function PanelModals(props: any) {
 		return `${value} Days`;
 	}
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		const list = createStationList(appState.stationFeatures.features);
 		appDispatch({
 			type: 'setStationList',
@@ -115,7 +115,7 @@ export default function PanelModals(props: any) {
 			type: 'setLastUpdated',
 			value: lastUpdated,
 		});
-	}, [appState.timeline]);
+	}, [appState.timeline]); */
 
 	//const [open, setOpen] = React.useState(appState.modals.timeline);
 	//const handleOpen = () => setOpen(true);
