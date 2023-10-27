@@ -73,7 +73,9 @@ function HeaderLoggedIn(props) {
 					display: 'flex',
 					gap: '10px',
 				}}
-			></Grid>
+			>
+				<TimelineButton />
+			</Grid>
 			<Grid
 				xs={8}
 				sx={{
