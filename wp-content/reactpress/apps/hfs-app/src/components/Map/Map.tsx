@@ -28,27 +28,6 @@ import {
 	clusterLayer,
 	clusterCountLayer,
 	unclusteredPointLayer,
-	unclusteredPointSymbol,
-	clusterLayerS3A,
-	clusterCountLayerS3A,
-	unclusteredPointLayerS3A,
-	unclusteredPointSymbolS3A,
-	clusterLayerS3B,
-	clusterCountLayerS3B,
-	unclusteredPointLayerS3B,
-	unclusteredPointSymbolS3B,
-	clusterLayerS6A,
-	clusterCountLayerS6A,
-	unclusteredPointLayerS6A,
-	unclusteredPointSymbolS6A,
-	clusterLayerJ2,
-	clusterCountLayerJ2,
-	unclusteredPointLayerJ2,
-	unclusteredPointSymbolJ2,
-	clusterLayerJ3,
-	clusterCountLayerJ3,
-	unclusteredPointLayerJ3,
-	unclusteredPointSymbolJ3,
 } from '../layers';
 
 import type { LayerProps, MapRef } from 'react-map-gl';
@@ -646,8 +625,9 @@ function MapComponent() {
 							type="geojson"
 							data={appState.filteredFeatures}
 							cluster={true}
-							clusterMaxZoom={6}
-							clusterRadius={50}
+							clusterMaxZoom={appState.clusterMaxZoom}
+							clusterRadius={appState.clusterRadius}
+							clusterMinPoints={10}
 						>
 							<Layer
 								id={'clusters'}

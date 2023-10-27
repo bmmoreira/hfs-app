@@ -28,6 +28,8 @@ import Autocomplete from '@mui/material/Autocomplete';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Tooltip from '@mui/material/Tooltip';
+import { styled } from '@mui/material/styles';
+import MuiInput from '@mui/material/Input';
 import './styles.css';
 
 interface Rivers {
@@ -312,6 +314,32 @@ export default function PanelModals(props: any) {
 					'features': result,
 				},
 			});
+		}
+	};
+
+	const handleMaxZoomSlider = (
+		event: Event,
+		newValue: number | number[]
+	) => {
+		if (typeof newValue === 'number') {
+			appDispatch({
+				type: 'setClusterMaxZoom',
+				value: newValue as number,
+			});
+			console.log(newValue);
+		}
+	};
+
+	const handleClusterRadius = (
+		event: Event,
+		newValue: number | number[]
+	) => {
+		if (typeof newValue === 'number') {
+			appDispatch({
+				type: 'setClusterRadius',
+				value: newValue as number,
+			});
+			console.log(newValue);
 		}
 	};
 
@@ -831,7 +859,7 @@ export default function PanelModals(props: any) {
 								value="anomalia"
 								control={<Radio />}
 								label="Anomaly(meters)"
-								labelPlacement="bottom"
+								labelPlacement="end"
 								sx={{
 									fontSize: sectionTitle,
 								}}
@@ -840,7 +868,7 @@ export default function PanelModals(props: any) {
 								value="change"
 								control={<Radio />}
 								label="Level Change(meters)**"
-								labelPlacement="bottom"
+								labelPlacement="end"
 								sx={{
 									fontSize: sectionTitle,
 								}}
@@ -887,6 +915,7 @@ export default function PanelModals(props: any) {
 						aria-label="Custom marks"
 						defaultValue={appState.filterTimeDays}
 						getAriaValueText={valuetext}
+						value={appState.filterTimeDays}
 						step={1}
 						max={21}
 						valueLabelDisplay="auto"
@@ -908,12 +937,59 @@ export default function PanelModals(props: any) {
 				</Grid>
 				<Grid
 					item
-					xs={12}
+					xs={4}
 					sx={{
 						fontSize: sectionTitle,
 						display: 'flex',
 						justifyContent: 'center',
-						margin: '0 50px 0 50px',
+						margin: '0 0px 0 0px',
+						alignItems: 'center',
+					}}
+				>
+					<BootstrapButton
+						variant="contained"
+						aria-label="station name"
+						color="primary"
+						disableRipple
+						onClick={() => {
+							appDispatch({
+								type: 'filterFeatures',
+								value: appState.stationFeatures,
+							});
+							appDispatch({
+								type: 'setFilterSat',
+								filterSat: 'All',
+							});
+							appDispatch({
+								type: 'setFilterTimeDays',
+								filterTimeDays: 0,
+							});
+						}}
+						sx={{
+							height: '40px',
+							width: '95px',
+							marginTop: '10px',
+						}}
+					>
+						<Typography
+							sx={{
+								fontSize: '0.8rem',
+								color: 'white',
+								fontWeight: '600',
+							}}
+						>
+							Clear Filters
+						</Typography>
+					</BootstrapButton>
+				</Grid>
+				<Grid
+					item
+					xs={8}
+					sx={{
+						fontSize: sectionTitle,
+						display: 'flex',
+						justifyContent: 'center',
+						margin: '0 0px 0 0px',
 					}}
 				>
 					<Autocomplete

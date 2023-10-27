@@ -2,6 +2,8 @@
 import { riversList } from './components/Utils/constants';
 
 export const initialState = {
+	clusterMaxZoom: 6,
+	clusterRadius: 50,
 	stationData: {},
 	stationList: [],
 	lastUpdatedStations: [],
@@ -17,7 +19,7 @@ export const initialState = {
 	infoData: {},
 	filteredRivers: riversList,
 	filterSat: 'All',
-	filterMeasurament: 'change',
+	filterMeasurament: 'anomalia',
 	filterTimeDays: 0,
 	selectedSat: 'All',
 	selectedRiver: '',
@@ -44,7 +46,7 @@ export const initialState = {
 	compareStationSelection: false,
 	secondAxisOverall: false,
 	secondAxisSelection: false,
-	ucField: 'change',
+	ucField: 'anomalia',
 	showHeader: true,
 	modals: {
 		projects: false,
@@ -65,6 +67,12 @@ export const initialState = {
 
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
+		case 'setClusterMaxZoom':
+			draft.clusterMaxZoom = action.value;
+			break;
+		case 'setClusterRadius':
+			draft.clusterRadius = action.value;
+			break;
 		case 'setStationList':
 			draft.stationList = action.value;
 			break;
