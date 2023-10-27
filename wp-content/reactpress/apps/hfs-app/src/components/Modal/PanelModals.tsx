@@ -11,6 +11,7 @@ import FilterPanel from '../Panels/FilterPanel';
 import SearchPanel from '../Panels/SearchPanel';
 import TimelinePanel from '../Panels/TimelinePanel';
 import { panelStyle } from '../Utils/sytles';
+import axios from 'axios';
 
 interface Station {
 	name: string;
@@ -36,23 +37,33 @@ export default function PanelModals(props: PanelModalsProp) {
 	const [listLoaded, setListLoaded] = useState(false);
 
 	useEffect(() => {
-		if (appState.stationFeatures.features) {
-			const list = createStationList(appState.stationFeatures.features);
-			appDispatch({
-				type: 'setStationList',
-				value: list,
+		const jsonUrl = '/assets/data/geojson/vs_All.geojson';
+		axios
+			.get(jsonUrl)
+			.then((response) => {
+				// Update the state with the fetched JSON data
+				//const list = createStationList(appState.stationFeatures.features);
+				console.log(response.data);
+				const list = createStationList(response.data.features);
+
+				appDispatch({
+					type: 'setStationList',
+					value: list,
+				});
+				const lastUpdated = filterUpdatedLastStations(
+					list,
+					appState.timelineDayLimit
+				);
+				appDispatch({
+					type: 'setLastUpdated',
+					value: lastUpdated,
+				});
+				setListLoaded(true);
+			})
+			.catch((error) => {
+				console.error('Error loading JSON data:', error);
 			});
-			const lastUpdated = filterUpdatedLastStations(
-				list,
-				appState.timelineDayLimit
-			);
-			appDispatch({
-				type: 'setLastUpdated',
-				value: lastUpdated,
-			});
-			setListLoaded(true);
-		}
-	}, [appState.timeline]);
+	}, []);
 
 	const createStationList = (features) => {
 		const newArray: Station[] = features.map((item) => {
@@ -93,7 +104,6 @@ export default function PanelModals(props: PanelModalsProp) {
 			const dateB = new Date(b.last_update);
 			return Number(dateB) - Number(dateA);
 		});
-		console.log(result);
 		return result;
 	};
 

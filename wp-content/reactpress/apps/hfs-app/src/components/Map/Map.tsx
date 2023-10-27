@@ -527,7 +527,7 @@ function MapComponent() {
 					'Access-Control-Allow-Origin': true,
 				},
 			});
-			console.log(res);
+			//console.log(res);
 
 			if (res.data.features.length > 0) {
 				appDispatch({
