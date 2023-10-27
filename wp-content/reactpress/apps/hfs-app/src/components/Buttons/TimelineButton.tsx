@@ -10,14 +10,15 @@ import HistoryIcon from '@mui/icons-material/History';
 import { headerButtonStyle } from '../Utils/sytles';
 
 interface TimelinedProps {
-	message: string;
+	message?: string;
 }
 
 const TimelineButton: React.FC<TimelinedProps> = ({ message }) => {
 	const appDispatch = useContext(DispatchContext);
 
 	function toggleTimeline() {
-		appDispatch({ type: 'togleTimeLineModal' });
+		appDispatch({ type: 'togleProjectsModal' });
+		appDispatch({ type: 'setTimelinePanel' });
 	}
 
 	return (
@@ -25,14 +26,12 @@ const TimelineButton: React.FC<TimelinedProps> = ({ message }) => {
 			aria-label="Timeline Button"
 			sx={{ ...headerButtonStyle }}
 			onClick={toggleTimeline}
-			disabled
 		>
 			<Badge
 				anchorOrigin={{
 					vertical: 'bottom',
 					horizontal: 'right',
 				}}
-				badgeContent={15}
 				color="secondary"
 			>
 				<HistoryIcon

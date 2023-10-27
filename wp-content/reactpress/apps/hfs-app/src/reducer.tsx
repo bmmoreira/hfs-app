@@ -70,7 +70,7 @@ export const initialState = {
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
 		case 'setTimelinePanel':
-			draft.timeLine = action.value;
+			draft.timeLine = true;
 			break;
 		case 'setClusterMaxZoom':
 			draft.clusterMaxZoom = action.value;

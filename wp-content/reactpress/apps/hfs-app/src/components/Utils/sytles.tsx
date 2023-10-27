@@ -148,3 +148,15 @@ export const headerStyle = {
 	borderTop: '2px solid #4cadc5',
 	m: 0,
 };
+
+export const panelStyle = {
+	position: 'relative',
+	top: '0px',
+	height: window.innerHeight - 200,
+	bgcolor: '#dddddd',
+	border: '1px solid #000',
+	borderRadius: '3px',
+	boxShadow: '0 0 5px 5px gray',
+	p: 0,
+	zIndex: 10,
+};

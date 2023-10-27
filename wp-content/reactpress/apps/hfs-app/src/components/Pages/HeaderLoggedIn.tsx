@@ -7,6 +7,7 @@ import Grid from '@mui/system/Unstable_Grid';
 import { headerStyle } from '../Utils/sytles';
 import FilterButton from '../Buttons/FilterButton';
 import SearchComponent from './SearchComponent';
+import TimelineButton from '../Buttons/TimelineButton';
 
 function HeaderLoggedIn(props) {
 	const headerLeftPanel = (
@@ -72,7 +73,9 @@ function HeaderLoggedIn(props) {
 					display: 'flex',
 					gap: '10px',
 				}}
-			></Grid>
+			>
+				<TimelineButton />
+			</Grid>
 			<Grid
 				xs={8}
 				sx={{

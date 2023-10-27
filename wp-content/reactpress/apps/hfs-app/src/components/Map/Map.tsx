@@ -20,7 +20,6 @@ import {
 	Source,
 	Layer,
 	NavigationControl,
-	FullscreenControl,
 	ScaleControl,
 } from 'react-map-gl';
 
@@ -30,9 +29,7 @@ import {
 	unclusteredPointLayer,
 } from '../layers';
 
-import type { LayerProps, MapRef } from 'react-map-gl';
-
-import type { GeoJSONSource } from 'react-map-gl';
+import type { LayerProps, MapRef, GeoJSONSource } from 'react-map-gl';
 import StationPopup from '../popup/StationPopup';
 import ScaleToast from '../Toasts/ScaleToast';
 import PanelModals from '../Modal/PanelModals';
@@ -680,25 +677,25 @@ function MapComponent() {
 										1.5,
 										'#001a33',
 									],
-									'circle-radius': 18,
+									'circle-radius': 13,
 									'circle-stroke-width': [
 										'step',
 										['get', appState.ucField],
-										5,
+										2,
 										-1.5,
-										4,
+										2,
 										-1.0,
-										3,
+										2,
 										-0.5,
 										2,
 										0,
 										2,
 										0.5,
-										3,
+										2,
 										1.0,
-										4,
+										2,
 										1.5,
-										5,
+										2,
 									],
 									'circle-stroke-color': '#fff',
 								}}
@@ -710,7 +707,7 @@ function MapComponent() {
 										'DIN Offc Pro Medium',
 										'Arial Unicode MS Bold',
 									],
-									'text-size': 11,
+									'text-size': 10,
 								}}
 								{...unclustered}
 							/>
