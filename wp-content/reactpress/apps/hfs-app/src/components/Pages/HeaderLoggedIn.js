@@ -53,6 +53,7 @@ function HeaderLoggedIn(props) {
 	}
 
 	function toggleProjects() {
+		appDispatch({ type: 'setTimelinePanel', value: true });
 		appDispatch({ type: 'togleProjectsModal' });
 	}
 

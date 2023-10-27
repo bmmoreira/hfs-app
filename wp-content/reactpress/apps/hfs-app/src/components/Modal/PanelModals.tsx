@@ -115,7 +115,7 @@ export default function PanelModals(props: any) {
 			type: 'setLastUpdated',
 			value: lastUpdated,
 		});
-	}, []);
+	}, [appState.timeline]);
 
 	//const [open, setOpen] = React.useState(appState.modals.timeline);
 	//const handleOpen = () => setOpen(true);

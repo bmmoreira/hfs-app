@@ -2,6 +2,7 @@
 import { riversList } from './components/Utils/constants';
 
 export const initialState = {
+	timeLine: false,
 	timelineDayLimit: '4',
 	clusterMaxZoom: 6,
 	clusterRadius: 50,
@@ -68,6 +69,9 @@ export const initialState = {
 
 export function mapReducer(draft: any, action: any) {
 	switch (action.type) {
+		case 'setTimelinePanel':
+			draft.timeLine = action.value;
+			break;
 		case 'setClusterMaxZoom':
 			draft.clusterMaxZoom = action.value;
 			break;
