@@ -35,22 +35,24 @@ export default function PanelModals(props: PanelModalsProp) {
 	const appDispatch = useContext(DispatchContext);
 	const [listLoaded, setListLoaded] = useState(false);
 
-	/* 	useEffect(() => {
-		const list = createStationList(appState.stationFeatures.features);
-		appDispatch({
-			type: 'setStationList',
-			value: list,
-		});
-		const lastUpdated = filterUpdatedLastStations(
-			list,
-			appState.timelineDayLimit
-		);
-		appDispatch({
-			type: 'setLastUpdated',
-			value: lastUpdated,
-		});
-		setListLoaded(true);
-	}, [appState.timeline]); */
+	useEffect(() => {
+		if (appState.stationFeatures.features) {
+			const list = createStationList(appState.stationFeatures.features);
+			appDispatch({
+				type: 'setStationList',
+				value: list,
+			});
+			const lastUpdated = filterUpdatedLastStations(
+				list,
+				appState.timelineDayLimit
+			);
+			appDispatch({
+				type: 'setLastUpdated',
+				value: lastUpdated,
+			});
+			setListLoaded(true);
+		}
+	}, [appState.timeline]);
 
 	const createStationList = (features) => {
 		const newArray: Station[] = features.map((item) => {
