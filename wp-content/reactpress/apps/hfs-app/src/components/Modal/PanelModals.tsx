@@ -43,7 +43,7 @@ export default function PanelModals(props: PanelModalsProp) {
 			.then((response) => {
 				// Update the state with the fetched JSON data
 				//const list = createStationList(appState.stationFeatures.features);
-				console.log(response.data);
+				//console.log(response.data);
 				const list = createStationList(response.data.features);
 
 				appDispatch({

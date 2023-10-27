@@ -452,9 +452,9 @@ function MapComponent() {
 	}
 
 	const _onIdle = () => {
-		console.log(mapRef.current);
+		//console.log(mapRef.current);
 		setShowOverlay(false);
-		console.log('teste onIdle');
+		console.log('map engine onIdle');
 	};
 
 	const Overlay = () => {
