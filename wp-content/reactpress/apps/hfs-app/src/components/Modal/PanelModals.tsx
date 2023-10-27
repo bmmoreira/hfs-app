@@ -35,7 +35,7 @@ export default function PanelModals(props: PanelModalsProp) {
 	const appDispatch = useContext(DispatchContext);
 	const [listLoaded, setListLoaded] = useState(false);
 
-	useEffect(() => {
+	/* 	useEffect(() => {
 		const list = createStationList(appState.stationFeatures.features);
 		appDispatch({
 			type: 'setStationList',
@@ -50,7 +50,7 @@ export default function PanelModals(props: PanelModalsProp) {
 			value: lastUpdated,
 		});
 		setListLoaded(true);
-	}, [appState.timeline]);
+	}, [appState.timeline]); */
 
 	const createStationList = (features) => {
 		const newArray: Station[] = features.map((item) => {
