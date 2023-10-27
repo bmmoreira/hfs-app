@@ -583,7 +583,6 @@ function MapComponent() {
 	return (
 		<>
 			<div id="map-wrap" className="map-wrap">
-				{showOverlay && <Overlay />}
 				<Map
 					initialViewState={{
 						latitude: iniLat,

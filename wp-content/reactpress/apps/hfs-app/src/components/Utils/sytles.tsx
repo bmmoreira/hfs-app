@@ -4,6 +4,11 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 
+export const bgColor = '#312f38';
+export const bgColorButton = '#44414d';
+export const bgColorBox = '#615d6f';
+export const bgColorButtonTitle = '#f0f0f0';
+
 export const darkGray = {
 	bg: '#44414d',
 	bgButton: '#9e9e9e',
@@ -118,4 +123,28 @@ export const styleHow = {
 	borderRadius: '3px',
 	boxShadow: '0 0 5px 5px gray',
 	p: 0,
+};
+
+export const headerButtonStyle = {
+	backgroundColor: bgColorButton,
+	display: 'flex',
+	flexDirection: 'column',
+	gap: '20px',
+	justifyContent: 'center',
+	fontSize: '0.9rem',
+	height: '80px',
+	width: '80px',
+	borderRadius: '5px',
+	color: bgColorButtonTitle,
+};
+
+export const headerStyle = {
+	display: 'grid',
+	gridTemplateColumns: 'repeat(3, 1fr)',
+	alignItems: { xs: 'center', md: 'center' },
+	backgroundColor: bgColor,
+	height: '90px',
+	borderBottom: '2px solid #4cadc5',
+	borderTop: '2px solid #4cadc5',
+	m: 0,
 };
