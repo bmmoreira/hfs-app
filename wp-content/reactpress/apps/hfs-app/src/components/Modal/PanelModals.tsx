@@ -37,14 +37,16 @@ export default function PanelModals(props: PanelModalsProp) {
 	const [listLoaded, setListLoaded] = useState(false);
 
 	useEffect(() => {
-		const jsonUrl = '/assets/data/geojson/vs_All.geojson';
+		const jsonUrl = 'https://api.hydrologyfromspace.org/api/geojson';
 		axios
 			.get(jsonUrl)
 			.then((response) => {
 				// Update the state with the fetched JSON data
 				//const list = createStationList(appState.stationFeatures.features);
 				//console.log(response.data);
-				const list = createStationList(response.data.features);
+				const list = createStationList(
+					response.data.data.attributes.stations.features
+				);
 
 				appDispatch({
 					type: 'setStationList',

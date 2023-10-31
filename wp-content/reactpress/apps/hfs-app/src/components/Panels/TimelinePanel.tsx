@@ -18,6 +18,7 @@ import {
 	ItemTitle,
 	darkGray,
 } from '../Utils/sytles';
+import { BackgroundColor } from 'devextreme-react/chart';
 
 interface TimelineProps {
 	flyTo(coord: [long: number, lat: number]): void;
@@ -35,6 +36,52 @@ export default function Timeline(props: TimelineProps) {
 	const handleCloseSearch = () => {
 		appDispatch({ type: 'closeSearchModal' });
 		appDispatch({ type: 'toglePanelModal', value: false });
+	};
+
+	const column = (value: number) => {
+		let color: string;
+		let textColor: string;
+		if (value >= 1.5) {
+			color = '#8f0000';
+			textColor = '#fff';
+		} else if (value >= 1.0) {
+			color = '#ff9400';
+			textColor = '#000';
+		} else if (value >= 0.5) {
+			color = '#fbc500';
+			textColor = '#000';
+		} else if (value >= 0) {
+			color = '#f9f602';
+			textColor = '#000';
+		} else if (value >= -0.5) {
+			color = '#b2d9ff';
+			textColor = '#000';
+		} else if (value >= -1) {
+			color = '#0080ff';
+			textColor = '#fff';
+		} else if (value >= -1.5) {
+			color = '#004d99';
+			textColor = '#fff';
+		} else if (value < -1.5) {
+			color = '#001a33';
+			textColor = '#fff';
+		}
+		return (
+			<Item
+				style={{
+					backgroundColor: color,
+				}}
+			>
+				<Typography
+					style={{
+						color: textColor,
+						fontSize: '0.8rem',
+					}}
+				>
+					{value}
+				</Typography>
+			</Item>
+		);
 	};
 
 	return (
@@ -155,7 +202,7 @@ export default function Timeline(props: TimelineProps) {
 									<Item>{item.change}</Item>
 								</Grid>
 								<Grid item xs={1.3}>
-									<Item>{item.anomaly}</Item>
+									{column(item.anomaly)}
 								</Grid>
 								<Grid item xs={1.5}>
 									<Item>{item.value}</Item>
