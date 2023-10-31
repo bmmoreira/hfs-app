@@ -42,28 +42,28 @@ export default function Timeline(props: TimelineProps) {
 		let color: string;
 		let textColor: string;
 		if (value >= 1.5) {
-			color = '#8f0000';
+			color = '#001a33';
 			textColor = '#fff';
 		} else if (value >= 1.0) {
-			color = '#ff9400';
-			textColor = '#000';
+			color = '#001a33';
+			textColor = '#fff';
 		} else if (value >= 0.5) {
-			color = '#fbc500';
-			textColor = '#000';
-		} else if (value >= 0) {
-			color = '#f9f602';
-			textColor = '#000';
-		} else if (value >= -0.5) {
-			color = '#b2d9ff';
-			textColor = '#000';
-		} else if (value >= -1) {
 			color = '#0080ff';
 			textColor = '#fff';
+		} else if (value >= 0) {
+			color = '#b2d9ff';
+			textColor = '#000';
+		} else if (value >= -0.5) {
+			color = '#f9f602';
+			textColor = '#000';
+		} else if (value >= -1) {
+			color = '#fbc500';
+			textColor = '#000';
 		} else if (value >= -1.5) {
-			color = '#004d99';
-			textColor = '#fff';
+			color = '#ff9400';
+			textColor = '#000';
 		} else if (value < -1.5) {
-			color = '#001a33';
+			color = '#8f0000';
 			textColor = '#fff';
 		}
 		return (
