@@ -199,7 +199,7 @@ export default function Timeline(props: TimelineProps) {
 									<Item>{item.last_update.slice(2)}</Item>
 								</Grid>
 								<Grid item xs={1.5}>
-									<Item>{item.change}</Item>
+									{column(item.change)}
 								</Grid>
 								<Grid item xs={1.3}>
 									{column(item.anomaly)}
